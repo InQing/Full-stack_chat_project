@@ -1,0 +1,37 @@
+# Visual Studio相关文件
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# 编译文件
+*.obj
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.idb
+*.lib
+*.log
+
+# 中间文件和生成文件夹
+Debug/
+Release/
+x64/
+ipch/
+node_modules/
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 其他缓存或临时文件
+*.log
+*.tmp
+*.cache
+*.bak

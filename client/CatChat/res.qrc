@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pictures/cat1.jpg</file>
+        <file>pictures/cat1.ico</file>
+        <file>style/stylesheet.qss</file>
+        <file>pictures/unvisible.png</file>
+        <file>pictures/unvisible_hover.png</file>
+        <file>pictures/visible.png</file>
+        <file>pictures/visible_hover.png</file>
+    </qresource>
+</RCC>
