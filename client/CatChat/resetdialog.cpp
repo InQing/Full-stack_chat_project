@@ -233,6 +233,5 @@ void ResetDialog::on_sure_btn_clicked()
 
 void ResetDialog::on_return_btn_clicked()
 {
-    qDebug() << "sure btn clicked ";
     emit switchLogin();
 }

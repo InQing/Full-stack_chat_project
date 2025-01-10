@@ -1,0 +1,462 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.4">
+  <diagram name="Page-1" id="13e1069c-82ec-6db2-03f1-153e76fe0fe0">
+    <mxGraphModel dx="724" dy="360" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="7baba1c4bc27f4b0-2" value=":GateServer" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="240" y="80" width="100" height="1590" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-10" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-2" vertex="1">
+          <mxGeometry x="45" y="40" width="10" height="1550" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-17" value="HttpPost：&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;注册用户&lt;/font&gt;&lt;div&gt;url：/user_register&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;exitX=0.99;exitY=0.588;exitDx=0;exitDy=0;exitPerimeter=0;" parent="7baba1c4bc27f4b0-2" edge="1">
+          <mxGeometry x="0.0041" width="80" relative="1" as="geometry">
+            <mxPoint x="-85.00000000000003" y="370" as="sourcePoint" />
+            <mxPoint x="40" y="370" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-34" value="Redis：检查验证码&lt;div&gt;Mysql：验证用户，&lt;/div&gt;&lt;div&gt;更新密码&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="7baba1c4bc27f4b0-2" edge="1">
+          <mxGeometry x="0.2727" y="51" width="80" relative="1" as="geometry">
+            <mxPoint x="60" y="620" as="sourcePoint" />
+            <mxPoint x="60" y="650" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="100" y="620" />
+              <mxPoint x="100" y="640" />
+              <mxPoint x="100" y="650" />
+              <mxPoint x="80" y="650" />
+            </Array>
+            <mxPoint x="-1" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-35" value="HttpRsp(error)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="7baba1c4bc27f4b0-2" edge="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="40" y="670" as="sourcePoint" />
+            <mxPoint x="-80" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-24" value="sig_reset_mod_finish" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="7baba1c4bc27f4b0-2" edge="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="-80" y="700" as="sourcePoint" />
+            <mxPoint x="-80" y="720" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-34.81" y="700" />
+              <mxPoint x="5.189999999999998" y="700" />
+              <mxPoint x="5" y="720" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-40" value="&lt;span style=&quot;font-size: 10px; background-color: rgb(251, 251, 251);&quot;&gt;handle：重置密码成功/失败&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="3nICaZtGuewsAWwFQMu_-24" vertex="1" connectable="0">
+          <mxGeometry x="0.5808" y="4" relative="1" as="geometry">
+            <mxPoint x="20" y="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-44" value="HttpPost：&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;登录（建立连接）&lt;/font&gt;&lt;div&gt;url：/user_login&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;exitX=0.99;exitY=0.588;exitDx=0;exitDy=0;exitPerimeter=0;" parent="7baba1c4bc27f4b0-2" edge="1">
+          <mxGeometry x="0.0043" width="80" relative="1" as="geometry">
+            <mxPoint x="-80.00000000000003" y="800" as="sourcePoint" />
+            <mxPoint x="45" y="800" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-46" value="Mysql：验证登录信息" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="7baba1c4bc27f4b0-2" edge="1">
+          <mxGeometry x="0.0909" y="50" width="80" relative="1" as="geometry">
+            <mxPoint x="60" y="820" as="sourcePoint" />
+            <mxPoint x="60" y="850" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="100" y="820" />
+              <mxPoint x="100" y="840" />
+              <mxPoint x="100" y="850" />
+              <mxPoint x="80" y="850" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-3" value="ChatServerInfo" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="7baba1c4bc27f4b0-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="940" as="sourcePoint" />
+            <mxPoint x="-80" y="940" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-41" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;hanlder：sig_swich_chatdlg&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="7baba1c4bc27f4b0-2">
+          <mxGeometry x="-95" y="1540" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-3" value=":VarifyServer" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="400" y="80" width="100" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-13" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-3" vertex="1">
+          <mxGeometry x="45" y="40" width="10" height="1760" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-4" value="grpc：GetVarifyCode" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="7baba1c4bc27f4b0-3" edge="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="-105" y="140" as="sourcePoint" />
+            <mxPoint x="44.50000000000023" y="140" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-55" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-43" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="7baba1c4bc27f4b0-3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-240" y="750" as="sourcePoint" />
+            <mxPoint x="325" y="750" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-14" value="TCP：connected" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="7baba1c4bc27f4b0-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="320" y="1070" as="sourcePoint" />
+            <mxPoint x="-240" y="1070" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-39" value="sesson-&amp;gt;Send(error)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="7baba1c4bc27f4b0-3">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="320" y="1500" as="sourcePoint" />
+            <mxPoint x="-240" y="1500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-4" value=":StatusServer" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="540" y="80" width="100" height="1580" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-16" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-4" vertex="1">
+          <mxGeometry x="45" y="40" width="10" height="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-8" value="TCP：connectToHost(host, port)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="7baba1c4bc27f4b0-4">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="-380" y="1010" as="sourcePoint" />
+            <mxPoint x="180" y="1010" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-25" value="TCP：send_data(uid, token)：&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;携带token登录聊天服务器&lt;/font&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="7baba1c4bc27f4b0-4">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="-380" y="1190" as="sourcePoint" />
+            <mxPoint x="180" y="1190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-33" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" edge="1" parent="7baba1c4bc27f4b0-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-380" y="1150" as="sourcePoint" />
+            <mxPoint x="185" y="1150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-5" value=":ChatServer" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="680" y="80" width="100" height="580" as="geometry" />
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-13" value="StartAccept" style="html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;edgeStyle=orthogonalEdgeStyle;curved=0;rounded=0;" edge="1" parent="7baba1c4bc27f4b0-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60" y="60" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="90" y="90" />
+            </Array>
+            <mxPoint x="60" y="90" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-8" value=":Client" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="80" y="80" width="140" height="1680" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-9" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-8" vertex="1">
+          <mxGeometry x="65" y="40" width="10" height="1640" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-40" value="Note" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="100" y="30" width="100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-41" value="Note" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="240" y="30" width="100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-42" value="Note" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="400" y="30" width="100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-43" value="Note" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="540" y="30" width="100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="7baba1c4bc27f4b0-44" value="Note" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="680" y="30" width="100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-5" value="SendMail" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.5634" width="80" relative="1" as="geometry">
+            <mxPoint x="460" y="240" as="sourcePoint" />
+            <mxPoint x="454.9966666666667" y="260" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="525.33" y="240" />
+              <mxPoint x="525" y="260" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-7" value="HttpRsp(error)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="280" y="316" as="sourcePoint" />
+            <mxPoint x="160" y="316" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-8" value="sig_reg_mod_finish" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="160" y="351" as="sourcePoint" />
+            <mxPoint x="160" y="371" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="205.19" y="351" />
+              <mxPoint x="245.19" y="351" />
+              <mxPoint x="245" y="371" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-18" value="Redis：检查验证码&lt;div&gt;Mysql：验证用户&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.2727" y="-50" width="80" relative="1" as="geometry">
+            <mxPoint x="300" y="470" as="sourcePoint" />
+            <mxPoint x="300" y="500" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="340" y="470" />
+              <mxPoint x="340" y="490" />
+              <mxPoint x="340" y="500" />
+              <mxPoint x="320" y="500" />
+            </Array>
+            <mxPoint x="100" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-23" value="HttpRsp(error)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="280" y="520" as="sourcePoint" />
+            <mxPoint x="160" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-26" value="RegModule" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="180" y="180" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-27" value="RegModule" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="170" y="448" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-29" value="HttpPost：&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;注册用户&lt;/font&gt;&lt;div&gt;url：/user_reset&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;exitX=0.99;exitY=0.588;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+          <mxGeometry x="0.0041" width="80" relative="1" as="geometry">
+            <mxPoint x="154.99999999999997" y="670" as="sourcePoint" />
+            <mxPoint x="280" y="670" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-30" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="410" as="sourcePoint" />
+            <mxPoint x="724.9999999999998" y="410.00000000000006" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xy5YB62I2_EAy_54OwLS-1" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="1" vertex="1">
+          <mxGeometry x="725" y="120" width="10" height="1510" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-31" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="620" as="sourcePoint" />
+            <mxPoint x="725" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-33" value="ResetModule" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="170" y="670" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-36" value="sig_reg_mod_finish" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;entryX=0.077;entryY=0.333;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="160" y="560" as="sourcePoint" />
+            <mxPoint x="155.01" y="579.99" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="210" y="560" />
+              <mxPoint x="252.6" y="560" />
+              <mxPoint x="252.41" y="580" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-12" value="handle：验证码已发送" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="150" y="370" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-42" value="&lt;span style=&quot;font-size: 10px; background-color: rgb(251, 251, 251);&quot;&gt;handle：注册成功/失败&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="219.99607489343148" y="660" as="geometry">
+            <mxPoint x="-2" y="-65" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-1" value="callback(error)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="280" as="sourcePoint" />
+            <mxPoint x="300" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-6" value="slot_tcp_connect" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="160" y="1050" as="sourcePoint" />
+            <mxPoint x="160" y="1070" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="200" y="1050" />
+              <mxPoint x="240" y="1050" />
+              <mxPoint x="239.81" y="1070" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-9" value="创建新的Session" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="740" y="1110" as="sourcePoint" />
+            <mxPoint x="740" y="1130" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="780" y="1110" />
+              <mxPoint x="820" y="1110" />
+              <mxPoint x="819.81" y="1130" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-10" value="HandleAccept" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="740" y="1170" as="sourcePoint" />
+            <mxPoint x="740" y="1190" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="775" y="1170" />
+              <mxPoint x="815" y="1170" />
+              <mxPoint x="814.81" y="1190" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-11" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;new_session-&amp;gt;Start()&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="725" y="1180" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-15" value="slot_tcp_con_finish" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="160" y="1180" as="sourcePoint" />
+            <mxPoint x="160" y="1200" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="200" y="1180" />
+              <mxPoint x="240" y="1180" />
+              <mxPoint x="239.81" y="1200" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3nICaZtGuewsAWwFQMu_-47" value="grpc：GetChatServer" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="300" y="950" as="sourcePoint" />
+            <mxPoint x="580" y="950" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="440" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-2" value="ChatServerInfo(token, host, port)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580" y="1000" as="sourcePoint" />
+            <mxPoint x="300" y="1000" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-21" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;generate token&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="600" y="980" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-20" value="getChatServer" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="600" y="960" as="sourcePoint" />
+            <mxPoint x="600" y="980" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="640" y="960" />
+              <mxPoint x="660" y="960" />
+              <mxPoint x="680" y="960" />
+              <mxPoint x="679.81" y="980" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-24" value="HttpPost：&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;发送验证码&lt;/font&gt;&lt;div&gt;url：/get_Verifycode&lt;/div&gt;" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="160" y="180" as="sourcePoint" />
+            <mxPoint x="280" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-26" value="AsyncReadHead、AsyncReadBody" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="742.5" y="1300" as="sourcePoint" />
+            <mxPoint x="742.5" y="1320" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="777.5" y="1300" />
+              <mxPoint x="817.5" y="1300" />
+              <mxPoint x="817.31" y="1320" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-28" value="PostMsgToQue" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="742.5" y="1350" as="sourcePoint" />
+            <mxPoint x="742.5" y="1370" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="777.5" y="1350" />
+              <mxPoint x="817.5" y="1350" />
+              <mxPoint x="817.31" y="1370" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-29" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;DealMsg&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="747.5" y="1360" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-31" value="LoginHandler" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="742.5" y="1410" as="sourcePoint" />
+            <mxPoint x="742.5" y="1430" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="782.5" y="1410" />
+              <mxPoint x="822.5" y="1410" />
+              <mxPoint x="822.31" y="1430" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-34" value="grpc：Login" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="720" y="1450" as="sourcePoint" />
+            <mxPoint x="600" y="1450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-35" value="验证uid与token" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="600" y="1480" as="sourcePoint" />
+            <mxPoint x="600" y="1500" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="640" y="1480" />
+              <mxPoint x="660" y="1480" />
+              <mxPoint x="680" y="1480" />
+              <mxPoint x="679.81" y="1500" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-36" value="error" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="1520" as="sourcePoint" />
+            <mxPoint x="720" y="1520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-38" value="Mysql：GetUser(uid)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0909" y="50" width="80" relative="1" as="geometry">
+            <mxPoint x="740" y="1530" as="sourcePoint" />
+            <mxPoint x="740" y="1560" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="780" y="1530" />
+              <mxPoint x="780" y="1550" />
+              <mxPoint x="780" y="1560" />
+              <mxPoint x="760" y="1560" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7ke3I2orcnBCBuK2kPDC-40" value="handleMsg" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.4979" width="80" relative="1" as="geometry">
+            <mxPoint x="160" y="1610" as="sourcePoint" />
+            <mxPoint x="160" y="1630" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="200" y="1610" />
+              <mxPoint x="240" y="1610" />
+              <mxPoint x="239.81" y="1630" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

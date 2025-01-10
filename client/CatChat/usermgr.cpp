@@ -5,15 +5,15 @@ UserMgr::~UserMgr(){}
 
 void UserMgr::SetName(QString name)
 {
-    _name = name;
+    name_ = name;
 }
 
 void UserMgr::SetUid(int uid)
 {
-    _uid = uid;
+    uid_ = uid;
 }
 
 void UserMgr::SetToken(QString token)
 {
-    _token = token;
+    token_ = token;
 }

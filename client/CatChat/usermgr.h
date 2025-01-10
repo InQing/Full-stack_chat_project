@@ -14,11 +14,15 @@ public:
     void SetName(QString name);
     void SetUid(int uid);
     void SetToken(QString token);
+    QString GetName(){return name_;}
+    QString GetToken(){return token_;}
+    int GetUid(){return uid_;}
+
 private:
     UserMgr();
-    QString _name;
-    QString _token;
-    int _uid;
+    QString name_;
+    QString token_;
+    int uid_;
 };
 
 #endif // USERMGR_H

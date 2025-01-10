@@ -96,9 +96,16 @@ void TcpMgr::initHandlers()
             return;
         }
 
+        // 登录成功
         UserMgr::getInstance()->SetUid(jsonObj["uid"].toInt());
         UserMgr::getInstance()->SetName(jsonObj["name"].toString());
         UserMgr::getInstance()->SetToken(jsonObj["token"].toString());
+
+        qDebug() << "登录成功";
+        qDebug() << "uid: " << UserMgr::getInstance()->GetUid();
+        qDebug() << "Name: " << UserMgr::getInstance()->GetName();
+        qDebug() << "Token: " << UserMgr::getInstance()->GetToken();
+
         emit sig_swich_chatdlg();
     });
 }
