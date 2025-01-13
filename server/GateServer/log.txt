@@ -283,3 +283,566 @@
 [2024-12-05 22:02:55][INFO] CServer: Starts to listen!
 [2024-12-05 22:05:01][INFO] GateServer: Server start, port is 8888
 [2024-12-05 22:05:01][INFO] CServer: Starts to listen!
+[2025-01-11 15:17:13][INFO] GateServer: Server start, port is 8888
+[2025-01-11 15:17:13][INFO] CServer: Starts to listen!
+[2025-01-11 15:28:35][INFO] Cserver: New connection!
+[2025-01-11 15:28:35][INFO] CServer: Starts to listen!
+[2025-01-11 15:28:35][INFO] HttpConnection: Received request
+[2025-01-11 15:28:35][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 15:28:35][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 15:28:35][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-11 15:28:35][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 15:28:57][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 15:28:57][INFO] HttpConnection: Handle post succeed, url is 'Ќ�ߙ'
+[2025-01-11 15:39:54][INFO] GateServer: Server start, port is 8888
+[2025-01-11 15:39:54][INFO] CServer: Starts to listen!
+[2025-01-11 15:40:20][INFO] Cserver: New connection!
+[2025-01-11 15:40:20][INFO] CServer: Starts to listen!
+[2025-01-11 15:40:20][INFO] HttpConnection: Received request
+[2025-01-11 15:40:20][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 15:40:20][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 15:40:20][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-11 15:40:20][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 15:40:20][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 15:40:20][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 15:40:37][INFO] Cserver: New connection!
+[2025-01-11 15:40:37][INFO] CServer: Starts to listen!
+[2025-01-11 15:40:37][INFO] HttpConnection: Received request
+[2025-01-11 15:40:37][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 15:40:37][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 15:40:37][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 15:40:37][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 15:40:37][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 15:42:49][INFO] Cserver: New connection!
+[2025-01-11 15:42:49][INFO] CServer: Starts to listen!
+[2025-01-11 15:42:49][INFO] HttpConnection: Received request
+[2025-01-11 15:42:49][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 15:42:49][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 15:42:49][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 15:42:50][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 15:42:50][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 15:42:50][WARNING] HttpConnection: Http connection time out!
+[2025-01-11 15:43:55][INFO] Cserver: New connection!
+[2025-01-11 15:43:55][INFO] CServer: Starts to listen!
+[2025-01-11 15:43:55][INFO] HttpConnection: Received request
+[2025-01-11 15:43:55][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "143c"
+}
+
+[2025-01-11 15:43:56][INFO] RedisConPool: Redis connect succeed!
+[2025-01-11 15:43:56][ERROR] MysqlPool: mysql pool init failed
+[2025-01-11 15:45:23][INFO] GateServer: Server start, port is 8888
+[2025-01-11 15:45:23][INFO] CServer: Starts to listen!
+[2025-01-11 15:45:28][INFO] Cserver: New connection!
+[2025-01-11 15:45:28][INFO] CServer: Starts to listen!
+[2025-01-11 15:45:28][INFO] HttpConnection: Received request
+[2025-01-11 15:45:28][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "143c"
+}
+
+[2025-01-11 15:45:28][INFO] RedisConPool: Redis connect succeed!
+[2025-01-11 15:45:29][ERROR] MysqlPool: mysql pool init failed
+[2025-01-11 15:47:47][INFO] GateServer: Server start, port is 8888
+[2025-01-11 15:47:47][INFO] CServer: Starts to listen!
+[2025-01-11 15:47:49][INFO] Cserver: New connection!
+[2025-01-11 15:47:49][INFO] CServer: Starts to listen!
+[2025-01-11 15:47:49][INFO] HttpConnection: Received request
+[2025-01-11 15:47:49][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "143c"
+}
+
+[2025-01-11 15:47:50][INFO] RedisConPool: Redis connect succeed!
+[2025-01-11 15:47:50][WARNING] LogicSystem: Varify code expired
+[2025-01-11 15:47:50][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 15:51:25][INFO] Cserver: New connection!
+[2025-01-11 15:51:25][INFO] CServer: Starts to listen!
+[2025-01-11 15:51:25][INFO] HttpConnection: Received request
+[2025-01-11 15:51:25][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 15:51:25][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 15:51:25][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-11 15:51:25][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 15:51:45][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 15:51:45][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 15:55:05][INFO] Cserver: New connection!
+[2025-01-11 15:55:05][INFO] CServer: Starts to listen!
+[2025-01-11 15:55:05][INFO] HttpConnection: Received request
+[2025-01-11 15:55:05][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 15:55:05][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 15:55:05][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 15:55:06][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 15:55:06][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 15:55:06][WARNING] HttpConnection: Http connection time out!
+[2025-01-11 15:55:17][INFO] Cserver: New connection!
+[2025-01-11 15:55:17][INFO] CServer: Starts to listen!
+[2025-01-11 15:55:17][INFO] HttpConnection: Received request
+[2025-01-11 15:55:17][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "49d2"
+}
+
+[2025-01-11 15:55:33][INFO] Cserver: New connection!
+[2025-01-11 15:55:33][INFO] CServer: Starts to listen!
+[2025-01-11 15:55:33][INFO] HttpConnection: Received request
+[2025-01-11 15:55:33][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "49d2"
+}
+
+[2025-01-11 15:55:36][WARNING] LogicSystem: Varify code expired
+[2025-01-11 15:55:36][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 15:55:52][WARNING] LogicSystem: Varify code expired
+[2025-01-11 15:55:52][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 15:56:03][INFO] Cserver: New connection!
+[2025-01-11 15:56:03][INFO] CServer: Starts to listen!
+[2025-01-11 15:56:03][INFO] HttpConnection: Received request
+[2025-01-11 15:56:03][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "49d2"
+}
+
+[2025-01-11 15:56:23][WARNING] LogicSystem: Varify code expired
+[2025-01-11 15:56:23][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 16:09:09][INFO] Cserver: New connection!
+[2025-01-11 16:09:09][INFO] CServer: Starts to listen!
+[2025-01-11 16:09:09][INFO] HttpConnection: Received request
+[2025-01-11 16:09:09][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 16:09:09][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 16:09:09][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 16:09:28][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 16:09:28][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 16:09:28][WARNING] HttpConnection: Http connection time out!
+[2025-01-11 16:13:36][INFO] Cserver: New connection!
+[2025-01-11 16:13:36][INFO] CServer: Starts to listen!
+[2025-01-11 16:13:36][INFO] HttpConnection: Received request
+[2025-01-11 16:13:36][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 16:13:36][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 16:13:36][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 16:13:36][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 16:13:36][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 16:13:49][INFO] Cserver: New connection!
+[2025-01-11 16:13:49][INFO] CServer: Starts to listen!
+[2025-01-11 16:13:49][INFO] HttpConnection: Received request
+[2025-01-11 16:13:49][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "9681"
+}
+
+[2025-01-11 16:14:08][WARNING] LogicSystem: Varify code expired
+[2025-01-11 16:14:08][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 16:16:23][INFO] Cserver: New connection!
+[2025-01-11 16:16:23][INFO] CServer: Starts to listen!
+[2025-01-11 16:16:23][INFO] HttpConnection: Received request
+[2025-01-11 16:16:23][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "9681"
+}
+
+[2025-01-11 16:16:42][WARNING] LogicSystem: Varify code expired
+[2025-01-11 16:16:42][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 20:38:55][INFO] GateServer: Server start, port is 8888
+[2025-01-11 20:38:55][INFO] CServer: Starts to listen!
+[2025-01-11 20:40:03][INFO] Cserver: New connection!
+[2025-01-11 20:40:03][INFO] CServer: Starts to listen!
+[2025-01-11 20:40:03][INFO] HttpConnection: Received request
+[2025-01-11 20:40:03][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 20:40:03][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 20:40:03][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-11 20:40:03][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 20:40:04][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 20:40:04][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 20:40:04][WARNING] HttpConnection: Http connection time out!
+[2025-01-11 20:41:40][INFO] Cserver: New connection!
+[2025-01-11 20:41:40][INFO] CServer: Starts to listen!
+[2025-01-11 20:41:40][INFO] HttpConnection: Received request
+[2025-01-11 20:41:40][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "4e5c"
+}
+
+[2025-01-11 20:41:41][INFO] RedisConPool: Redis connect succeed!
+[2025-01-11 20:41:41][ERROR] MysqlPool: mysql pool init failed
+[2025-01-11 20:43:27][INFO] Cserver: New connection!
+[2025-01-11 20:43:27][INFO] CServer: Starts to listen!
+[2025-01-11 20:43:27][INFO] HttpConnection: Received request
+[2025-01-11 20:43:27][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "4e5c"
+}
+
+[2025-01-11 20:43:44][INFO] Cserver: New connection!
+[2025-01-11 20:43:44][INFO] CServer: Starts to listen!
+[2025-01-11 20:43:44][INFO] HttpConnection: Received request
+[2025-01-11 20:43:44][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "4e5c"
+}
+
+[2025-01-11 20:46:26][INFO] GateServer: Server start, port is 8888
+[2025-01-11 20:46:26][INFO] CServer: Starts to listen!
+[2025-01-11 20:47:09][INFO] Cserver: New connection!
+[2025-01-11 20:47:09][INFO] CServer: Starts to listen!
+[2025-01-11 20:47:09][INFO] HttpConnection: Received request
+[2025-01-11 20:47:09][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "4e5c"
+}
+
+[2025-01-11 20:47:10][INFO] RedisConPool: Redis connect succeed!
+[2025-01-11 20:47:10][WARNING] LogicSystem: Varify code expired
+[2025-01-11 20:47:10][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 20:47:21][INFO] Cserver: New connection!
+[2025-01-11 20:47:21][INFO] CServer: Starts to listen!
+[2025-01-11 20:47:21][INFO] HttpConnection: Received request
+[2025-01-11 20:47:21][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 20:47:21][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 20:47:21][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-11 20:47:21][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 20:47:40][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 20:47:40][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 20:47:53][INFO] Cserver: New connection!
+[2025-01-11 20:47:53][INFO] CServer: Starts to listen!
+[2025-01-11 20:47:53][INFO] HttpConnection: Received request
+[2025-01-11 20:47:53][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 20:47:53][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 20:47:53][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 20:47:54][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 20:47:54][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 20:48:15][INFO] Cserver: New connection!
+[2025-01-11 20:48:15][INFO] CServer: Starts to listen!
+[2025-01-11 20:48:15][INFO] HttpConnection: Received request
+[2025-01-11 20:48:15][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "f649"
+}
+
+[2025-01-11 20:48:15][ERROR] MysqlPool: mysql pool init failed, Access denied for user 'root'@'36.148.251.251' (using password: YES)
+[2025-01-11 21:02:25][INFO] GateServer: Server start, port is 8888
+[2025-01-11 21:02:25][INFO] CServer: Starts to listen!
+[2025-01-11 21:02:32][INFO] Cserver: New connection!
+[2025-01-11 21:02:32][INFO] CServer: Starts to listen!
+[2025-01-11 21:02:32][INFO] HttpConnection: Received request
+[2025-01-11 21:02:32][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 21:02:32][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 21:02:32][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-11 21:02:32][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 21:02:32][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 21:02:32][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 21:02:41][INFO] Cserver: New connection!
+[2025-01-11 21:02:41][INFO] CServer: Starts to listen!
+[2025-01-11 21:02:41][INFO] HttpConnection: Received request
+[2025-01-11 21:02:41][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "5f61"
+}
+
+[2025-01-11 21:02:42][INFO] RedisConPool: Redis connect succeed!
+[2025-01-11 21:02:45][INFO] MysqlDAO: Register user succeed! UID = -1
+[2025-01-11 21:02:45][WARNING] LogicSystem: user or email exist!
+[2025-01-11 21:02:45][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 21:10:20][INFO] Cserver: New connection!
+[2025-01-11 21:10:20][INFO] CServer: Starts to listen!
+[2025-01-11 21:10:20][INFO] HttpConnection: Received request
+[2025-01-11 21:10:20][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-11 21:10:20][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-11 21:10:20][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-11 21:10:21][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-11 21:10:21][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-11 21:10:38][INFO] Cserver: New connection!
+[2025-01-11 21:10:38][INFO] CServer: Starts to listen!
+[2025-01-11 21:10:38][INFO] HttpConnection: Received request
+[2025-01-11 21:10:38][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "51a1"
+}
+
+[2025-01-11 21:10:58][WARNING] LogicSystem: Varify code expired
+[2025-01-11 21:10:58][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 21:11:07][INFO] Cserver: New connection!
+[2025-01-11 21:11:07][INFO] CServer: Starts to listen!
+[2025-01-11 21:11:07][INFO] HttpConnection: Received request
+[2025-01-11 21:11:07][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "51a1"
+}
+
+[2025-01-11 21:11:26][WARNING] LogicSystem: Varify code expired
+[2025-01-11 21:11:26][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-11 21:12:22][INFO] Cserver: New connection!
+[2025-01-11 21:12:22][INFO] CServer: Starts to listen!
+[2025-01-11 21:12:22][INFO] HttpConnection: Received request
+[2025-01-11 21:12:22][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "51a1"
+}
+
+[2025-01-11 21:12:55][INFO] GateServer: Server start, port is 8888
+[2025-01-11 21:12:55][INFO] CServer: Starts to listen!
+[2025-01-11 21:13:09][INFO] Cserver: New connection!
+[2025-01-11 21:13:09][INFO] CServer: Starts to listen!
+[2025-01-11 21:13:09][INFO] HttpConnection: Received request
+[2025-01-11 21:13:09][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "51a1"
+}
+
+[2025-01-11 21:13:10][INFO] RedisConPool: Redis connect succeed!
+[2025-01-11 21:13:12][INFO] MysqlDAO: Register user succeed! UID = -1
+[2025-01-11 21:13:12][WARNING] LogicSystem: user or email exist!
+[2025-01-11 21:13:12][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-12 19:09:55][INFO] GateServer: Server start, port is 8888
+[2025-01-12 19:09:55][INFO] CServer: Starts to listen!
+[2025-01-12 19:23:11][INFO] Cserver: New connection!
+[2025-01-12 19:23:11][INFO] CServer: Starts to listen!
+[2025-01-12 19:23:11][INFO] HttpConnection: Received request
+[2025-01-12 19:23:11][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-12 19:23:11][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-12 19:23:11][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-12 19:23:11][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-12 19:23:30][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-12 19:23:30][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-12 19:26:35][INFO] Cserver: New connection!
+[2025-01-12 19:26:35][INFO] CServer: Starts to listen!
+[2025-01-12 19:26:35][INFO] HttpConnection: Received request
+[2025-01-12 19:26:35][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-12 19:26:35][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-12 19:26:35][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-12 19:26:37][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-12 19:26:37][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-12 19:26:37][WARNING] HttpConnection: Http connection time out!
+[2025-01-12 19:26:44][INFO] Cserver: New connection!
+[2025-01-12 19:26:44][INFO] CServer: Starts to listen!
+[2025-01-12 19:26:44][INFO] HttpConnection: Received request
+[2025-01-12 19:26:44][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "fe7c"
+}
+
+[2025-01-12 19:26:45][INFO] RedisConPool: Redis connect succeed!
+[2025-01-12 19:26:47][INFO] MysqlDAO: Register user succeed! UID = 1
+[2025-01-12 19:26:47][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-12 20:27:53][INFO] Cserver: New connection!
+[2025-01-12 20:27:53][INFO] CServer: Starts to listen!
+[2025-01-12 20:27:53][INFO] HttpConnection: Received request
+[2025-01-12 20:27:53][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-12 20:27:53][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-12 20:27:53][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-12 20:27:54][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-12 20:27:54][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-12 20:27:54][WARNING] HttpConnection: Http connection time out!
+[2025-01-12 20:28:17][INFO] Cserver: New connection!
+[2025-01-12 20:28:17][INFO] CServer: Starts to listen!
+[2025-01-12 20:28:17][INFO] HttpConnection: Received request
+[2025-01-12 20:28:17][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "bd0c"
+}
+
+[2025-01-12 20:28:36][WARNING] LogicSystem: Varify code expired
+[2025-01-12 20:28:36][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-13 09:18:54][INFO] GateServer: Server start, port is 8888
+[2025-01-13 09:18:54][INFO] CServer: Starts to listen!
+[2025-01-13 09:19:50][INFO] Cserver: New connection!
+[2025-01-13 09:19:50][INFO] CServer: Starts to listen!
+[2025-01-13 09:19:50][INFO] HttpConnection: Received request
+[2025-01-13 09:19:50][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-13 09:19:50][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-13 09:19:51][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-13 09:19:51][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-13 09:19:51][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-13 09:19:51][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-13 09:20:40][INFO] Cserver: New connection!
+[2025-01-13 09:20:40][INFO] CServer: Starts to listen!
+[2025-01-13 09:20:40][INFO] HttpConnection: Received request
+[2025-01-13 09:20:40][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-13 09:20:40][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-13 09:20:40][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-13 09:20:40][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-13 09:20:40][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-13 09:26:43][INFO] Cserver: New connection!
+[2025-01-13 09:26:43][INFO] CServer: Starts to listen!
+[2025-01-13 09:26:43][INFO] HttpConnection: Received request
+[2025-01-13 09:26:43][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-13 09:26:43][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-13 09:26:43][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-13 09:26:43][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-13 09:26:43][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-13 09:26:43][WARNING] HttpConnection: Http connection time out!
+[2025-01-13 10:32:29][INFO] GateServer: Server start, port is 8888
+[2025-01-13 10:32:29][INFO] CServer: Starts to listen!
+[2025-01-13 10:32:31][INFO] Cserver: New connection!
+[2025-01-13 10:32:31][INFO] CServer: Starts to listen!
+[2025-01-13 10:32:31][INFO] HttpConnection: Received request
+[2025-01-13 10:32:31][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-13 10:32:31][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-13 10:32:31][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-13 10:32:31][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-13 10:32:33][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-13 10:32:33][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-13 10:32:50][INFO] Cserver: New connection!
+[2025-01-13 10:32:50][INFO] CServer: Starts to listen!
+[2025-01-13 10:32:50][INFO] HttpConnection: Received request
+[2025-01-13 10:32:50][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "56d8"
+}
+
+[2025-01-13 10:32:51][INFO] RedisConPool: Redis connect succeed!
+[2025-01-13 10:32:54][INFO] MysqlDAO: Register user succeed! UID = 2
+[2025-01-13 10:32:54][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-13 11:07:18][INFO] GateServer: Server start, port is 8888
+[2025-01-13 11:07:18][INFO] CServer: Starts to listen!
+[2025-01-13 11:14:25][INFO] Cserver: New connection!
+[2025-01-13 11:14:25][INFO] CServer: Starts to listen!
+[2025-01-13 11:14:25][INFO] HttpConnection: Received request
+[2025-01-13 11:14:25][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-13 11:14:25][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-13 11:14:25][INFO] VarifyGrpcClient: Grpc stubs created�� VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-13 11:14:25][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-13 11:14:27][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-13 11:14:27][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-13 11:14:27][WARNING] HttpConnection: Http connection time out!
+[2025-01-13 11:14:32][INFO] Cserver: New connection!
+[2025-01-13 11:14:32][INFO] CServer: Starts to listen!
+[2025-01-13 11:14:32][INFO] HttpConnection: Received request
+[2025-01-13 11:14:32][INFO] LogicSystem: receive user_register post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?",
+    "user": "小黑猫",
+    "varifycode": "4278"
+}
+
+[2025-01-13 11:14:34][INFO] RedisConPool: Redis connect succeed!
+[2025-01-13 11:14:39][INFO] MysqlDAO: Register user succeed! UID = 3
+[2025-01-13 11:14:39][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-13 11:17:17][INFO] Cserver: New connection!
+[2025-01-13 11:17:17][INFO] CServer: Starts to listen!
+[2025-01-13 11:17:17][INFO] HttpConnection: Received request
+[2025-01-13 11:17:17][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "ljf3040218941@gmail.com"
+}
+
+[2025-01-13 11:17:17][INFO] LogicSystem: User's email is ljf3040218941@gmail.com
+[2025-01-13 11:17:17][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-13 11:17:17][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-13 11:17:17][INFO] HttpConnection: Handle post succeed, url is '/get_Varifycode'
+[2025-01-13 11:17:17][WARNING] HttpConnection: Http connection time out!
+[2025-01-13 11:17:44][INFO] Cserver: New connection!
+[2025-01-13 11:17:44][INFO] CServer: Starts to listen!
+[2025-01-13 11:17:44][INFO] HttpConnection: Received request
+[2025-01-13 11:17:44][INFO] LogicSystem: receive user_register post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco8;:=<?",
+    "user": "狸花猫",
+    "varifycode": "d576"
+}
+
+[2025-01-13 11:17:44][INFO] MysqlDAO: Register user succeed! UID = 4
+[2025-01-13 11:17:44][INFO] HttpConnection: Handle post succeed, url is '/user_register'

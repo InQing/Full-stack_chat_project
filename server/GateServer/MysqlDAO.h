@@ -44,7 +44,7 @@ public:
 			check_thread_.detach();
 		}
 		catch (sql::SQLException& exp) {
-			LOGE("MysqlPool: mysql pool init failed");
+			LOGE("MysqlPool: mysql pool init failed, %s", exp.what());
 		}
 	}
 
@@ -74,19 +74,25 @@ public:
 
 	void CheckConnection()
 	{
-		std::lock_guard<std::mutex> lock(mutex_);
-		int pool_size = pool_.size();
 		// 获取当前时间戳
 		auto current_time = std::chrono::system_clock::now().time_since_epoch();
 		// 将时间戳转换成秒
 		long long timestamp = std::chrono::duration_cast<std::chrono::seconds>(current_time).count();
+
+		int pool_size = pool_.size();
 		for (std::size_t i = 0; i < pool_size; ++i) {
-			auto con = std::move(pool_.front());
-			pool_.pop();
-			// Defer操作，每个分支结束后，都会自动执行pool_.push(std::move(con))操作
+			// 获取一个连接
+			auto con = GetConnection();  // 使用线程安全的GetConnection
+			if (!con) {
+				continue;
+			}
+
+			// Defer操作，每个分支结束后，都会自动执行ReturnConnection操作
 			Defer defer([this, &con]() {
-				pool_.push(std::move(con));
+				ReturnConnection(std::move(con));  // 使用线程安全的ReturnConnection
 				});
+
+			// 检查连接的最后操作时间
 			if (timestamp - con->last_oper_time_ < 60) {
 				continue;
 			}
@@ -103,9 +109,9 @@ public:
 				con->con_.reset(new_con);
 				con->last_oper_time_ = timestamp;
 			}
-
 		}
 	}
+
 
 	void Close()
 	{

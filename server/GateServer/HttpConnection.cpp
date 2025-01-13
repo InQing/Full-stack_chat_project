@@ -68,7 +68,7 @@ void HttpConnection::HandleReq()
 			return;
 		}
 
-		LOGI("HttpConnection: Handle post succeed, url is '%s'", post_url);
+		LOGI("HttpConnection: Handle post succeed, url is '%s'", post_url.c_str());
 		_response.result(http::status::ok);
 		_response.set(http::field::server, "GateServer");
 		WriteResponse();

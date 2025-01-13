@@ -90,7 +90,7 @@ LogicSystem::LogicSystem() {
 		Json::Value src_root;
 		bool parse_success = reader.parse(body_str, src_root);
 		if (!parse_success) {
-			LOGW("LogicSystem: parse Json fate failed!");
+			LOGW("LogicSystem: Failed to parse JSON data!");
 			root["error"] = ErrorCodes::ERR_JSON;
 			std::string jsonstr = root.toStyledString();
 			beast::ostream(connection->_response.body()) << jsonstr;
@@ -123,7 +123,7 @@ LogicSystem::LogicSystem() {
 	
 		//查找数据库判断用户是否存在
 		int uid = MysqlMgr::GetInstance()->RegUser(name, email, pwd);
-		if (uid == 0 || uid == -1) {
+		if (uid == -1) {
 			LOGW("LogicSystem: user or email exist!");
 			root["error"] = ErrorCodes::ERR_USER_EXIT;
 			std::string jsonstr = root.toStyledString();

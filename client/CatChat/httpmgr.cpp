@@ -17,7 +17,7 @@ void HttpMgr::postHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
     // 通过url构造请求
     QNetworkRequest request(url);
     // 设置请求头
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json; charset=UTF-8");
     request.setHeader(QNetworkRequest::ContentLengthHeader, QByteArray::number(data.length()));
     // 获取自己的智能指针，构造伪闭包并增加智能指针的引用计数
     // 目的：防止HttpMgr提前析构，导致下面操作奔溃

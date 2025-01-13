@@ -29,7 +29,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -283,7 +283,7 @@
        <item>
         <widget class="QLabel" name="tip_lable">
          <property name="text">
-          <string>注册成功，5s后返回登录</string>
+          <string>注册成功，10s后返回登录</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

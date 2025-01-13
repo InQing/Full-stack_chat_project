@@ -5,7 +5,7 @@
 
 RegisterDialog::RegisterDialog(QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::RegisterDialog)
+    , ui(new Ui::RegisterDialog), countdown_(10)
 {
     ui->setupUi(this);
 
