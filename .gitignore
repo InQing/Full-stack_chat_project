@@ -35,3 +35,6 @@ desktop.ini
 *.tmp
 *.cache
 *.bak
+
+# 配置文件
+**/config.ini
