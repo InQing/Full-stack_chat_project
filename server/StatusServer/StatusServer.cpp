@@ -26,7 +26,7 @@ void RunServer() {
 
 	// 构建并启动grpc服务器
 	std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-	LOGI("StatusServer: Server listening on %s", server_address.c_str());
+	LOGI("[StatusServer] start success! listen on : %s", server_address.c_str());
 
 	// 创建Boost.Asio的异步调度器io_context
 	boost::asio::io_context io_context;

@@ -75,7 +75,7 @@ void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& m
 	reader.parse(msg_data, root);
 	auto uid = root["uid"].asInt();
 	auto token = root["token"].asString();
-	LOGI("LoginSystem::LoginHandler: user login uid is %d, user token is %s", uid, token);
+	LOGI("LoginSystem::LoginHandler: user login uid is %d, user token is %s", uid, token.c_str());
 	// 从状态服务器获取token匹配是否准确
 	auto rsp = StatusGrpcClient::GetInstance()->Login(uid, token);
 	Json::Value rt_value; // 回包数据

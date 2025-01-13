@@ -148,7 +148,7 @@ void LoginDialog::initHttpHandlers()
             enableBtn(true);
             return;
         }
-        auto user = jsonObj["user"].toString();
+        auto name = jsonObj["name"].toString();
 
         // 发送信号通知tcpMgr，发送消息与通信服务器建立长连接
         ServerInfo si;
@@ -159,8 +159,8 @@ void LoginDialog::initHttpHandlers()
 
         _uid = si.Uid;
         _token = si.Token;
-        qDebug()<< "user is " << user << " uid is " << si.Uid <<" host is "
-                << si.Host << " Port is " << si.Port << " Token is " << si.Token;
+        qDebug()<< "user is " << name << "， uid is " << si.Uid <<"， host is "
+                << si.Host << "， Port is " << si.Port << " Token is " << si.Token;
         emit sig_connect_tcp(si);
     });
 }

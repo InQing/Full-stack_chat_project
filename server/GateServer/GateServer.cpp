@@ -35,8 +35,7 @@ int main()
 			});
 
 		// 启动ioc
-		
-		LOGI("GateServer: Server start, port is %d", gate_port);
+		LOGI("[GateServer] start success! listen on : %d", gate_port);
 		std::make_shared<CServer>(ioc, gate_port)->Start();
 		ioc.run();
 

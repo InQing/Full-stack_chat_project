@@ -146,13 +146,14 @@ bool MysqlDAO::CheckPwd(const std::string& email, const std::string& pwd, UserIn
         while (res->next()) {
             origin_pwd = res->getString("pwd");
             // 输出查询到的密码
-            LOGI("MysqlDAO: Password: %s", origin_pwd);
+            LOGI("MysqlDAO: Password: %s", origin_pwd.c_str());
             break;
         }
 
         if (pwd != origin_pwd) {
             return false;
         }
+
         userInfo.name = res->getString("name");
         userInfo.email = email;
         userInfo.uid = res->getInt("uid");

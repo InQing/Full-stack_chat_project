@@ -846,3 +846,310 @@
 
 [2025-01-13 11:17:44][INFO] MysqlDAO: Register user succeed! UID = 4
 [2025-01-13 11:17:44][INFO] HttpConnection: Handle post succeed, url is '/user_register'
+[2025-01-13 14:42:11][INFO] GateServer: Server start, port is 8888
+[2025-01-13 14:42:11][INFO] CServer: Starts to listen!
+[2025-01-13 14:45:04][INFO] Cserver: New connection!
+[2025-01-13 14:45:04][INFO] CServer: Starts to listen!
+[2025-01-13 14:45:04][INFO] HttpConnection: Received request
+[2025-01-13 14:45:04][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 14:45:09][INFO] MysqlDAO: Password: ðã„
+[2025-01-13 14:49:20][INFO] GateServer: Server start, port is 8888
+[2025-01-13 14:49:20][INFO] CServer: Starts to listen!
+[2025-01-13 14:49:23][INFO] Cserver: New connection!
+[2025-01-13 14:49:23][INFO] CServer: Starts to listen!
+[2025-01-13 14:49:23][INFO] HttpConnection: Received request
+[2025-01-13 14:49:23][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 14:49:26][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 14:52:07][INFO] GateServer: Server start, port is 8888
+[2025-01-13 14:52:07][INFO] CServer: Starts to listen!
+[2025-01-13 14:52:09][INFO] Cserver: New connection!
+[2025-01-13 14:52:09][INFO] CServer: Starts to listen!
+[2025-01-13 14:52:09][INFO] HttpConnection: Received request
+[2025-01-13 14:52:09][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 14:52:13][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 14:54:41][INFO] GateServer: Server start, port is 8888
+[2025-01-13 14:54:41][INFO] CServer: Starts to listen!
+[2025-01-13 14:54:43][INFO] Cserver: New connection!
+[2025-01-13 14:54:43][INFO] CServer: Starts to listen!
+[2025-01-13 14:54:43][INFO] HttpConnection: Received request
+[2025-01-13 14:54:43][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 14:54:47][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 14:59:02][INFO] GateServer: Server start, port is 8888
+[2025-01-13 14:59:02][INFO] CServer: Starts to listen!
+[2025-01-13 14:59:06][INFO] Cserver: New connection!
+[2025-01-13 14:59:06][INFO] CServer: Starts to listen!
+[2025-01-13 14:59:06][INFO] HttpConnection: Received request
+[2025-01-13 14:59:06][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 14:59:10][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:02:04][INFO] GateServer: Server start, port is 8888
+[2025-01-13 15:02:04][INFO] CServer: Starts to listen!
+[2025-01-13 15:02:06][INFO] Cserver: New connection!
+[2025-01-13 15:02:06][INFO] CServer: Starts to listen!
+[2025-01-13 15:02:06][INFO] HttpConnection: Received request
+[2025-01-13 15:02:06][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:02:09][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:03:25][INFO] GateServer: Server start, port is 8888
+[2025-01-13 15:03:25][INFO] CServer: Starts to listen!
+[2025-01-13 15:03:27][INFO] Cserver: New connection!
+[2025-01-13 15:03:27][INFO] CServer: Starts to listen!
+[2025-01-13 15:03:27][INFO] HttpConnection: Received request
+[2025-01-13 15:03:27][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:03:30][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:12:24][INFO] GateServer: Server start, port is 8888
+[2025-01-13 15:12:24][INFO] CServer: Starts to listen!
+[2025-01-13 15:12:26][INFO] Cserver: New connection!
+[2025-01-13 15:12:26][INFO] CServer: Starts to listen!
+[2025-01-13 15:12:26][INFO] HttpConnection: Received request
+[2025-01-13 15:12:26][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:12:30][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:12:30][ERROR] LogicSystem: grpc get chat server failed, error is 6
+[2025-01-13 15:12:30][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 15:13:07][INFO] GateServer: Server start, port is 8888
+[2025-01-13 15:13:07][INFO] CServer: Starts to listen!
+[2025-01-13 15:13:09][INFO] Cserver: New connection!
+[2025-01-13 15:13:09][INFO] CServer: Starts to listen!
+[2025-01-13 15:13:09][INFO] HttpConnection: Received request
+[2025-01-13 15:13:09][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:13:12][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:15:58][INFO] GateServer: Server start, port is 8888
+[2025-01-13 15:15:58][INFO] CServer: Starts to listen!
+[2025-01-13 15:16:00][INFO] Cserver: New connection!
+[2025-01-13 15:16:00][INFO] CServer: Starts to listen!
+[2025-01-13 15:16:00][INFO] HttpConnection: Received request
+[2025-01-13 15:16:00][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:16:03][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:16:03][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 15:31:13][INFO] GateServer: Server start, port is 8888
+[2025-01-13 15:31:13][INFO] CServer: Starts to listen!
+[2025-01-13 15:32:42][INFO] Cserver: New connection!
+[2025-01-13 15:32:42][INFO] CServer: Starts to listen!
+[2025-01-13 15:32:42][INFO] HttpConnection: Received request
+[2025-01-13 15:32:42][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:32:45][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:32:45][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 15:32:45][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 15:32:45][WARNING] HttpConnection: Http connection time out!
+[2025-01-13 15:40:22][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 15:40:22][INFO] CServer: Starts to listen!
+[2025-01-13 15:40:52][INFO] Cserver: New connection!
+[2025-01-13 15:40:52][INFO] CServer: Starts to listen!
+[2025-01-13 15:40:52][INFO] HttpConnection: Received request
+[2025-01-13 15:40:52][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:40:55][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:40:55][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 15:40:55][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 15:47:53][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 15:47:53][INFO] CServer: Starts to listen!
+[2025-01-13 15:47:56][INFO] Cserver: New connection!
+[2025-01-13 15:47:56][INFO] CServer: Starts to listen!
+[2025-01-13 15:47:56][INFO] HttpConnection: Received request
+[2025-01-13 15:47:56][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:48:00][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:49:07][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 15:49:40][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 15:58:27][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 15:58:27][INFO] CServer: Starts to listen!
+[2025-01-13 15:58:27][INFO] Cserver: New connection!
+[2025-01-13 15:58:27][INFO] CServer: Starts to listen!
+[2025-01-13 15:58:27][INFO] HttpConnection: Received request
+[2025-01-13 15:58:27][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 15:58:31][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 15:59:23][INFO] Cserver: New connection!
+[2025-01-13 15:59:23][INFO] CServer: Starts to listen!
+[2025-01-13 15:59:23][INFO] HttpConnection: Received request
+[2025-01-13 15:59:23][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:04:21][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:04:21][INFO] CServer: Starts to listen!
+[2025-01-13 16:04:25][INFO] Cserver: New connection!
+[2025-01-13 16:04:25][INFO] CServer: Starts to listen!
+[2025-01-13 16:04:25][INFO] HttpConnection: Received request
+[2025-01-13 16:04:25][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:04:30][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:18:36][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:18:36][INFO] CServer: Starts to listen!
+[2025-01-13 16:19:02][INFO] Cserver: New connection!
+[2025-01-13 16:19:02][INFO] CServer: Starts to listen!
+[2025-01-13 16:19:02][INFO] HttpConnection: Received request
+[2025-01-13 16:19:02][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:19:05][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:25:47][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:25:47][INFO] CServer: Starts to listen!
+[2025-01-13 16:28:09][INFO] Cserver: New connection!
+[2025-01-13 16:28:09][INFO] CServer: Starts to listen!
+[2025-01-13 16:28:09][INFO] HttpConnection: Received request
+[2025-01-13 16:28:09][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:28:25][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:32:34][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:32:34][INFO] CServer: Starts to listen!
+[2025-01-13 16:32:36][INFO] Cserver: New connection!
+[2025-01-13 16:32:36][INFO] CServer: Starts to listen!
+[2025-01-13 16:32:36][INFO] HttpConnection: Received request
+[2025-01-13 16:32:36][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:32:39][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:37:56][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:37:56][INFO] CServer: Starts to listen!
+[2025-01-13 16:38:17][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:38:17][INFO] CServer: Starts to listen!
+[2025-01-13 16:45:15][INFO] Cserver: New connection!
+[2025-01-13 16:45:15][INFO] CServer: Starts to listen!
+[2025-01-13 16:45:15][INFO] HttpConnection: Received request
+[2025-01-13 16:45:15][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:45:18][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:45:36][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 16:46:39][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:46:39][INFO] CServer: Starts to listen!
+[2025-01-13 16:46:42][INFO] Cserver: New connection!
+[2025-01-13 16:46:42][INFO] CServer: Starts to listen!
+[2025-01-13 16:46:42][INFO] HttpConnection: Received request
+[2025-01-13 16:46:42][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:46:54][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:47:58][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:47:58][INFO] CServer: Starts to listen!
+[2025-01-13 16:48:04][INFO] Cserver: New connection!
+[2025-01-13 16:48:04][INFO] CServer: Starts to listen!
+[2025-01-13 16:48:04][INFO] HttpConnection: Received request
+[2025-01-13 16:48:04][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:48:16][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:48:16][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 16:48:16][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 16:49:16][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:49:16][INFO] CServer: Starts to listen!
+[2025-01-13 16:49:18][INFO] Cserver: New connection!
+[2025-01-13 16:49:18][INFO] CServer: Starts to listen!
+[2025-01-13 16:49:18][INFO] HttpConnection: Received request
+[2025-01-13 16:49:18][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:49:21][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:58:08][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 16:58:08][INFO] CServer: Starts to listen!
+[2025-01-13 16:58:15][INFO] Cserver: New connection!
+[2025-01-13 16:58:15][INFO] CServer: Starts to listen!
+[2025-01-13 16:58:15][INFO] HttpConnection: Received request
+[2025-01-13 16:58:15][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 16:58:19][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 16:58:19][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 16:58:19][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 17:00:57][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 17:00:57][INFO] CServer: Starts to listen!
+[2025-01-13 17:01:00][INFO] Cserver: New connection!
+[2025-01-13 17:01:00][INFO] CServer: Starts to listen!
+[2025-01-13 17:01:00][INFO] HttpConnection: Received request
+[2025-01-13 17:01:00][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 17:01:05][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 17:01:05][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 17:01:05][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 17:07:58][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 17:07:58][INFO] CServer: Starts to listen!
+[2025-01-13 17:08:08][INFO] [GateServer] start success! listen on : 8888
+[2025-01-13 17:08:08][INFO] CServer: Starts to listen!
+[2025-01-13 17:11:29][INFO] Cserver: New connection!
+[2025-01-13 17:11:29][INFO] CServer: Starts to listen!
+[2025-01-13 17:11:29][INFO] HttpConnection: Received request
+[2025-01-13 17:11:29][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-13 17:11:36][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-13 17:11:36][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-13 17:11:36][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-13 17:11:36][WARNING] HttpConnection: Http connection time out!

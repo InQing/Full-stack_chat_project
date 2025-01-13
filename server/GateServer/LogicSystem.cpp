@@ -245,7 +245,8 @@ LogicSystem::LogicSystem() {
 		//查询StatusServer找到合适的连接
 		auto reply = StatusGrpcClient::GetInstance()->GetChatServer(userInfo.uid);
 		if (reply.error()) {
-			LOGE("LogicSystem: grpc get chat server failed, error is %s", reply.error());
+			std::cout << reply.error();
+			LOGE("LogicSystem: grpc get chat server failed, error is %d", reply.error());
 			root["error"] = ErrorCodes::ERR_RPC;
 			std::string jsonstr = root.toStyledString();
 			beast::ostream(connection->_response.body()) << jsonstr;
@@ -253,10 +254,12 @@ LogicSystem::LogicSystem() {
 		}
 		LOGI("LogicSystem: succeed to load userinfo, uid is %d", userInfo.uid);
 		root["error"] = ErrorCodes::SUCCESS;
+		root["name"] = userInfo.name;
 		root["email"] = email;
 		root["uid"] = userInfo.uid;
 		root["token"] = reply.token();
 		root["host"] = reply.host();
+		root["port"] = reply.port();
 		std::string jsonstr = root.toStyledString();
 		beast::ostream(connection->_response.body()) << jsonstr;
 		return true;

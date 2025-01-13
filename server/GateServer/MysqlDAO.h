@@ -27,6 +27,7 @@ public:
 				sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
 				auto* con = driver->connect(url_, user_, pass_);
 				con->setSchema(schema_);
+				con->setClientOption("characterSetResults", "utf8mb4");
 
 				auto current_time = std::chrono::system_clock::now().time_since_epoch();
 				long long time_stamp = std::chrono::duration_cast<std::chrono::seconds>(current_time).count();
@@ -106,6 +107,8 @@ public:
 				// 重新创建新连接并替换旧连接
 				sql::mysql::MySQL_Driver* driver = sql::mysql::get_driver_instance();
 				auto* new_con = driver->connect(url_, user_, pass_);
+				new_con->setSchema(schema_);
+				new_con->setClientOption("characterSetResults", "utf8mb4");
 				con->con_.reset(new_con);
 				con->last_oper_time_ = timestamp;
 			}

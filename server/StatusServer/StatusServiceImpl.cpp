@@ -1,9 +1,10 @@
-#include "StatusServiceImpl.h"
-#include "ConfigMgr.h"
-#include "const.h"
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include "StatusServiceImpl.h"
+#include "ConfigMgr.h"
+#include "const.h"
+#include "logger.h"
 
 // Éú³Étoken
 std::string generate_unique_string() {
@@ -15,7 +16,7 @@ std::string generate_unique_string() {
 
 Status StatusServiceImpl::GetChatServer(ServerContext* context, const GetChatServerReq* request, GetChatServerRsp* reply)
 {
-	std::string prefix("cat status server has received :  ");
+	LOGI("StatusServiceImpl: GetChatServer is called");
 	const auto& server = getChatServer();
 	reply->set_host(server.host);
 	reply->set_port(server.port);
@@ -31,8 +32,8 @@ StatusServiceImpl::StatusServiceImpl()
 	ChatServer server;
 	server.port = cfg["ChatServer1"]["Port"];
 	server.host = cfg["ChatServer1"]["Host"];
-	server.con_count = 0;
 	server.name = cfg["ChatServer1"]["Name"];
+	server.con_count = 0;
 	_servers[server.name] = server;
 
 	server.port = cfg["ChatServer2"]["Port"];
@@ -56,7 +57,8 @@ ChatServer StatusServiceImpl::getChatServer() {
 }
 
 Status StatusServiceImpl::Login(ServerContext* context, const LoginReq* request, LoginRsp* reply)
-{
+{	
+	LOGI("StatusServiceImpl: Login is called");
 	auto uid = request->uid();
 	auto token = request->token();
 	std::lock_guard<std::mutex> guard(_token_mtx);
