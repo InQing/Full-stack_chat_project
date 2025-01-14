@@ -50,5 +50,6 @@
         <file>res/voice_chat_press.png</file>
         <file>res/cat_1.ico</file>
         <file>res/cat_1.jpg</file>
+        <file>static/head_1.jpg</file>
     </qresource>
 </RCC>

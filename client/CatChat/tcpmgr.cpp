@@ -97,14 +97,28 @@ void TcpMgr::initHandlers()
         }
 
         // 登录成功
-        UserMgr::getInstance()->SetUid(jsonObj["uid"].toInt());
-        UserMgr::getInstance()->SetName(jsonObj["name"].toString());
-        UserMgr::getInstance()->SetToken(jsonObj["token"].toString());
+        auto uid = jsonObj["uid"].toInt();
+        auto name = jsonObj["name"].toString();
+        auto nick = jsonObj["nick"].toString();
+        auto icon = jsonObj["icon"].toString();
+        auto sex = jsonObj["sex"].toInt();
+        auto user_info = std::make_shared<UserInfo>(uid, name, nick, icon, sex);
+
+        UserMgr::GetInstance()->SetUserInfo(user_info);
+        UserMgr::GetInstance()->SetToken(jsonObj["token"].toString());
+        if(jsonObj.contains("apply_list")){
+            UserMgr::GetInstance()->AppendApplyList(jsonObj["apply_list"].toArray());
+        }
+
+        //添加好友列表
+        if (jsonObj.contains("friend_list")) {
+            UserMgr::GetInstance()->AppendFriendList(jsonObj["friend_list"].toArray());
+        }
 
         qDebug() << "登录成功";
-        qDebug() << "uid: " << UserMgr::getInstance()->GetUid();
-        qDebug() << "Name: " << UserMgr::getInstance()->GetName();
-        qDebug() << "Token: " << UserMgr::getInstance()->GetToken();
+        qDebug() << "uid: " << uid;
+        qDebug() << "Name: " << name;
+        qDebug() << "Token: " << jsonObj["token"].toString();
 
         emit sig_swich_chatdlg();
     });

@@ -29,16 +29,16 @@ LoginDialog::LoginDialog(QWidget *parent)
 
     initHttpHandlers();
     //连接登录回包信号
-    connect(HttpMgr::getInstance().get(), &HttpMgr::sig_login_mod_finish, this,
+    connect(HttpMgr::GetInstance().get(), &HttpMgr::sig_login_mod_finish, this,
             &LoginDialog::slot_login_mod_finish);
 
     // 通知TcpMgr连接通信服务器
     //连接tcp连接请求的信号和槽函数
-    connect(this, &LoginDialog::sig_connect_tcp, TcpMgr::getInstance().get(), &TcpMgr::slot_tcp_connect);
+    connect(this, &LoginDialog::sig_connect_tcp, TcpMgr::GetInstance().get(), &TcpMgr::slot_tcp_connect);
     //连接tcp管理者发出的连接成功信号
-    connect(TcpMgr::getInstance().get(), &TcpMgr::sig_con_success, this, &LoginDialog::slot_tcp_con_finish);
+    connect(TcpMgr::GetInstance().get(), &TcpMgr::sig_con_success, this, &LoginDialog::slot_tcp_con_finish);
     //连接tcp管理者发出的登陆失败信号
-    connect(TcpMgr::getInstance().get(), &TcpMgr::sig_login_failed, this, &LoginDialog::slot_login_failed);
+    connect(TcpMgr::GetInstance().get(), &TcpMgr::sig_login_failed, this, &LoginDialog::slot_login_failed);
 }
 
 LoginDialog::~LoginDialog()
@@ -183,14 +183,14 @@ void LoginDialog::on_login_btn_clicked()
     }
 
     enableBtn(false);
-    showTip("登录中，请稍后...", true);
+    showTip("连接中，请稍后...", true);
     auto user = ui->email_edit->text();
     auto pwd = ui->password_edit->text();
     //发送http请求登录
     QJsonObject json_obj;
     json_obj["email"] = user;
     json_obj["passwd"] = xorString(pwd);
-    HttpMgr::getInstance()->postHttpReq(QUrl(gate_url_prefix+"/user_login"),
+    HttpMgr::GetInstance()->postHttpReq(QUrl(gate_url_prefix+"/user_login"),
                                         json_obj, ReqId::ID_LOGIN_USER,Modules::MOD_LOGIN);
 }
 
@@ -231,10 +231,10 @@ void LoginDialog::slot_tcp_con_finish(bool is_success)
       jsonObj["token"] = _token;
 
       QJsonDocument doc(jsonObj);
-      QString jsonString = doc.toJson(QJsonDocument::Indented);
+      QByteArray jsonData = doc.toJson(QJsonDocument::Indented);
 
       //发送tcp请求给chat server
-      TcpMgr::getInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonString);
+      TcpMgr::GetInstance()->sig_send_data(ReqId::ID_CHAT_LOGIN, jsonData);
 
    }else{
       showTip(tr("网络异常"),false);

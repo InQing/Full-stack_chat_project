@@ -60,7 +60,7 @@ RegisterDialog::RegisterDialog(QWidget *parent)
 
 
     // 连接信号与槽，HTTP响应结束
-    connect(HttpMgr::getInstance().get(), &HttpMgr::sig_reg_mod_finish, this, &RegisterDialog::slot_reg_mod_finish);
+    connect(HttpMgr::GetInstance().get(), &HttpMgr::sig_reg_mod_finish, this, &RegisterDialog::slot_reg_mod_finish);
     initHttpHandlers();
 
     // 注册成功，页面跳转
@@ -93,7 +93,7 @@ void RegisterDialog::on_get_varify_btn_clicked()
         // 发送http请求获取验证码
         QJsonObject json_obj;
         json_obj["email"] = email;
-        HttpMgr::getInstance()->postHttpReq(QUrl(gate_url_prefix + "/get_varifycode"),
+        HttpMgr::GetInstance()->postHttpReq(QUrl(gate_url_prefix + "/get_varifycode"),
                                             json_obj, ReqId::ID_GET_VARIFY_CODE,Modules::MOD_REGISTER);
     }
     else{
@@ -248,7 +248,7 @@ void RegisterDialog::on_confirm_btn_clicked()
     json_obj["email"] = ui->email_edit->text();
     json_obj["passwd"] = xorString(ui->password_edit->text());
     json_obj["varifycode"] = ui->varify_edit->text();
-    HttpMgr::getInstance()->postHttpReq(QUrl(gate_url_prefix + "/user_register"),
+    HttpMgr::GetInstance()->postHttpReq(QUrl(gate_url_prefix + "/user_register"),
                                         json_obj, ReqId::ID_REG_USER, Modules::MOD_REGISTER);
 }
 
