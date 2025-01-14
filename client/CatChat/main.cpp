@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
 
-    w.setWindowIcon(QIcon(":/pictures/cat1.ico"));
+    w.setWindowIcon(QIcon(":/res/cat_1.ico"));
 
     w.show();
     return a.exec();

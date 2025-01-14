@@ -49,7 +49,7 @@ LoginDialog::~LoginDialog()
 void LoginDialog::InitLoginPicture()
 {
     // 加载图片
-    QPixmap originalPixmap(":/pictures/cat1.jpg");
+    QPixmap originalPixmap(":/res/cat_1.jpg");
     // 设置图片自动缩放
     originalPixmap = originalPixmap.scaled(ui->login_picture->size(),
                                            Qt::KeepAspectRatio, Qt::SmoothTransformation);

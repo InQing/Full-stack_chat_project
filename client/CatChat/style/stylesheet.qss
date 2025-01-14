@@ -9,38 +9,37 @@ background-color:rgb(255,255,255)
     color: red;
 }
 
-
 #pass_visible[state='unvisible']{
-   border-image: url(:/pictures/unvisible.png);
+   border-image: url(:/res/unvisible.png);
 }
 
 #pass_visible[state='unvisible_hover']{
-   border-image: url(:/pictures/unvisible_hover.png);
+   border-image: url(:/res/unvisible_hover.png);
 }
 
 #pass_visible[state='visible']{
-   border-image: url(:/pictures/visible.png);
+   border-image: url(:/res/visible.png);
 }
 
 #pass_visible[state='visible_hover']{
-   border-image: url(:/pictures/visible_hover.png);
+   border-image: url(:/res/visible_hover.png);
 }
 
 
 #confirm_visible[state='unvisible']{
-   border-image: url(:/pictures/unvisible.png);
+   border-image: url(:/res/unvisible.png);
 }
 
 #confirm_visible[state='unvisible_hover']{
-   border-image: url(:/pictures/unvisible_hover.png);
+   border-image: url(:/res/unvisible_hover.png);
 }
 
 #confirm_visible[state='visible']{
-   border-image: url(:/pictures/visible.png);
+   border-image: url(:/res/visible.png);
 }
 
 #confirm_visible[state='visible_hover']{
-   border-image: url(:/pictures/visible_hover.png);
+   border-image: url(:/res/visible_hover.png);
 }
 
 
