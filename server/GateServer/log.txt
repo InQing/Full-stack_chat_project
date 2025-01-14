@@ -1153,3 +1153,46 @@
 [2025-01-13 17:11:36][INFO] LogicSystem: succeed to load userinfo, uid is 3
 [2025-01-13 17:11:36][INFO] HttpConnection: Handle post succeed, url is '/user_login'
 [2025-01-13 17:11:36][WARNING] HttpConnection: Http connection time out!
+[2025-01-14 08:58:38][INFO] [GateServer] start success! listen on : 8888
+[2025-01-14 08:58:38][INFO] CServer: Starts to listen!
+[2025-01-14 08:58:42][INFO] Cserver: New connection!
+[2025-01-14 08:58:42][INFO] CServer: Starts to listen!
+[2025-01-14 08:58:42][INFO] HttpConnection: Received request
+[2025-01-14 08:58:42][WARNING] HttpConnection: Handle post error! url is ''
+[2025-01-14 09:20:12][INFO] Cserver: New connection!
+[2025-01-14 09:20:12][INFO] CServer: Starts to listen!
+[2025-01-14 09:20:12][INFO] HttpConnection: Received request
+[2025-01-14 09:20:12][WARNING] HttpConnection: Handle post error! url is 'êï'
+[2025-01-14 09:20:12][WARNING] HttpConnection: Http connection time out!
+[2025-01-14 09:20:41][INFO] Cserver: New connection!
+[2025-01-14 09:20:41][INFO] CServer: Starts to listen!
+[2025-01-14 09:20:41][INFO] HttpConnection: Received request
+[2025-01-14 09:20:41][WARNING] HttpConnection: Handle post error! url is '‡ï'
+[2025-01-14 09:24:17][INFO] [GateServer] start success! listen on : 8888
+[2025-01-14 09:24:17][INFO] CServer: Starts to listen!
+[2025-01-14 09:24:27][INFO] Cserver: New connection!
+[2025-01-14 09:24:27][INFO] CServer: Starts to listen!
+[2025-01-14 09:24:27][INFO] HttpConnection: Received request
+[2025-01-14 09:24:27][INFO] LogicSystem: receive get_Varifycode post, body is {
+    "email": "3040218941@qq.com"
+}
+
+[2025-01-14 09:24:27][INFO] LogicSystem: User's email is 3040218941@qq.com
+[2025-01-14 09:24:27][INFO] VarifyGrpcClient: Grpc stubs created£¨ VerifyServer host is 127.0.0.1, port is 50051
+[2025-01-14 09:24:27][INFO] VarifyGrpcClient: Send verification service!
+[2025-01-14 09:24:30][INFO] VarifyGrpcClient: verificy succeed!
+[2025-01-14 09:24:30][INFO] HttpConnection: Handle post succeed, url is '/get_varifycode'
+[2025-01-14 09:25:00][INFO] Cserver: New connection!
+[2025-01-14 09:25:00][INFO] CServer: Starts to listen!
+[2025-01-14 09:25:00][INFO] HttpConnection: Received request
+[2025-01-14 09:25:00][INFO] LogicSystem: receive reset_pwd post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230",
+    "user": "black_cat",
+    "varifycode": "bc67"
+}
+
+[2025-01-14 09:25:01][INFO] RedisConPool: Redis connect succeed!
+[2025-01-14 09:25:04][INFO] MysqlDAO: Check Email: Ã˝…^
+[2025-01-14 09:25:04][INFO] LogicSystem: succeed to update password!
+[2025-01-14 09:25:04][INFO] HttpConnection: Handle post succeed, url is '/reset_pwd'

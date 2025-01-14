@@ -7,7 +7,7 @@
     "mysql":{
       "host":"47.99.109.63",
       "port":"3306",
-      "passwd":"123456"
+      "passwd":"Ljf123456"
     },
 
     "redis":{

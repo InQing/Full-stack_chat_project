@@ -50,7 +50,7 @@ LogicSystem::LogicSystem() {
 	});
 
 	// 获取验证码
-	RegPost("/get_Varifycode", [](std::shared_ptr<HttpConnection> connection) {
+	RegPost("/get_varifycode", [](std::shared_ptr<HttpConnection> connection) {
 		auto body_str = beast::buffers_to_string(connection->_request.body().data());
 		LOGI("LogicSystem: receive get_Varifycode post, body is %s", body_str.c_str());
 		connection->_response.set(http::field::content_type, "text/json");

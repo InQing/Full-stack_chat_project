@@ -183,6 +183,7 @@ void LoginDialog::on_login_btn_clicked()
     }
 
     enableBtn(false);
+    showTip("登录中，请稍后...", true);
     auto user = ui->email_edit->text();
     auto pwd = ui->password_edit->text();
     //发送http请求登录

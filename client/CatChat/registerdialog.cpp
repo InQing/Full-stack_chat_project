@@ -93,7 +93,7 @@ void RegisterDialog::on_get_varify_btn_clicked()
         // 发送http请求获取验证码
         QJsonObject json_obj;
         json_obj["email"] = email;
-        HttpMgr::getInstance()->postHttpReq(QUrl(gate_url_prefix + "/get_Varifycode"),
+        HttpMgr::getInstance()->postHttpReq(QUrl(gate_url_prefix + "/get_varifycode"),
                                             json_obj, ReqId::ID_GET_VARIFY_CODE,Modules::MOD_REGISTER);
     }
     else{
