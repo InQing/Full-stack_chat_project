@@ -1,10 +1,6 @@
 #pragma once
 #include "Singleton.h"
-#include <queue>
-#include <thread>
-#include <queue>
-#include <unordered_map>
-#include <memory>
+#include "const.h"
 #include <functional>
 #include <json/json.h>
 #include <json/value.h>
@@ -25,6 +21,7 @@ private:
 	void DealMsg();
 	void RegisterCallBacks();
 	void LoginHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
+	bool GetBaseInfo(std::string base_key, int uid, std::shared_ptr<UserInfo>& userinfo);
 	std::thread worker_thread_;
 	std::queue<std::shared_ptr<LogicNode>> msg_que_;
 	std::mutex mutex_;

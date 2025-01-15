@@ -103,6 +103,7 @@ public:
     bool HSet(const char* key, const char* hkey, const char* hvalue, size_t hvaluelen);
     std::string HGet(const std::string& key, const std::string& hkey);
     bool Del(const std::string& key);
+    bool HDel(const std::string& key, const std::string& field);
     bool ExistsKey(const std::string& key);
     void Close();
 private:

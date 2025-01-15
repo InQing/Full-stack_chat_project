@@ -14,7 +14,7 @@ void CServer::HandleAccept(std::shared_ptr<CSession> new_session, const boost::s
 	if (!error) {
 		new_session->Start();
 		std::lock_guard<std::mutex> lock(_mutex);
-		_sessions.insert(make_pair(new_session->GetUuid(), new_session));
+		_sessions.insert(make_pair(new_session->GetSessionId(), new_session));
 	}
 	else {
 		LOGW("session accept failed, error is %s", error.what());
@@ -30,7 +30,7 @@ void CServer::StartAccept() {
 	_acceptor.async_accept(new_session->GetSocket(), std::bind(&CServer::HandleAccept, this, new_session, std::placeholders::_1));
 }
 
-void CServer::ClearSession(const std::string& uuid) {
+void CServer::ClearSession(const std::string& session_id) {
 	std::lock_guard<std::mutex> lock(_mutex);
-	_sessions.erase(uuid);
+	_sessions.erase(session_id);
 }

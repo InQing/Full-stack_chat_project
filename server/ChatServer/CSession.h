@@ -12,7 +12,9 @@ public:
 	CSession(boost::asio::io_context& io_context, CServer* server);
 	~CSession() = default;
 	tcp::socket& GetSocket();
-	std::string& GetUuid();
+	std::string& GetSessionId();
+	void SetUserId(int uid);
+	int GetUserId();
 	void Start();
 	void Send(char* msg, short max_length, short msgid);
 	void Send(const std::string& msg, short msgid);
@@ -26,8 +28,10 @@ private:
 	void AsyncReadLen(std::size_t  read_len, std::size_t total_len,
 		std::function<void(const boost::system::error_code&, std::size_t)> handler);
 	void HandleWrite(const boost::system::error_code& error, std::shared_ptr<CSession> shared_self);
+	
 	tcp::socket socket_;
-	std::string uuid_;
+	std::string session_id_;
+	int user_id_;
 	char data_[MAX_LENGTH];
 	CServer* server_;
 	bool is_close_;

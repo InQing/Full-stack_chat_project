@@ -270,6 +270,32 @@ bool RedisMgr::Del(const std::string& key)
 	return true;
 }
 
+bool RedisMgr::HDel(const std::string& key, const std::string& field)
+{
+	auto connect = con_pool_->GetConnection();
+	if (connect == nullptr) {
+		return false;
+	}
+
+	Defer defer([&connect, this]() {
+		con_pool_->ReturnConnection(std::move(connect));
+		});
+
+	redisReply* reply = (redisReply*)redisCommand(connect.get(), "HDEL %s %s", key.c_str(), field.c_str());
+	if (reply == nullptr) {
+		std::cerr << "HDEL command failed" << std::endl;
+		return false;
+	}
+
+	bool success = false;
+	if (reply->type == REDIS_REPLY_INTEGER) {
+		success = reply->integer > 0;
+	}
+
+	freeReplyObject(reply);
+	return success;
+}
+
 bool RedisMgr::ExistsKey(const std::string& key)
 {
 	auto connect = con_pool_->GetConnection();
