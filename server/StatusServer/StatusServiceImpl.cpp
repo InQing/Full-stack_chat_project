@@ -5,6 +5,7 @@
 #include "ConfigMgr.h"
 #include "const.h"
 #include "logger.h"
+#include "RedisMgr.h"
 
 // 生成token
 std::string generate_unique_string() {
@@ -29,25 +30,57 @@ Status StatusServiceImpl::GetChatServer(ServerContext* context, const GetChatSer
 StatusServiceImpl::StatusServiceImpl()
 {
 	auto& cfg = ConfigMgr::GetInstance();
-	ChatServer server;
-	server.port = cfg["ChatServer1"]["Port"];
-	server.host = cfg["ChatServer1"]["Host"];
-	server.name = cfg["ChatServer1"]["Name"];
-	server.con_count = 0;
-	_servers[server.name] = server;
+	auto server_list = cfg["ChatServer"]["Name"];
 
-	server.port = cfg["ChatServer2"]["Port"];
-	server.host = cfg["ChatServer2"]["Host"];
-	server.name = cfg["ChatServer2"]["Name"];
-	server.con_count = 0;
-	_servers[server.name] = server;
+	std::vector<std::string> servers;
+
+	std::stringstream ss(server_list);
+	std::string server;
+
+	while (std::getline(ss, server, ',')) {
+		servers.push_back(server);
+	}
+
+	for (auto& server : servers) {
+		if (cfg[server]["Name"].empty()) {
+			continue;
+		}
+
+		ChatServer chat_server;
+		chat_server.port = cfg[server]["Port"];
+		chat_server.host = cfg[server]["Host"];
+		chat_server.name = cfg[server]["Name"];
+		_servers[chat_server.name] = chat_server;
+	}
+
 }
 
 ChatServer StatusServiceImpl::getChatServer() {
 	std::lock_guard<std::mutex> guard(_server_mtx);
 	auto minServer = _servers.begin()->second;
-	// 负载均衡，提供连接数最小的服务器
-	for (const auto& server : _servers) {
+	auto count_str = RedisMgr::GetInstance()->HGet(LOGIN_COUNT, minServer.name);
+	if (count_str.empty()) {
+		// 不存在则默认设置为最大
+		minServer.con_count = INT_MAX;
+	}
+	else {
+		minServer.con_count = std::stoi(count_str);
+	}
+
+	// 负载均衡，选择连接数最少的服务器
+	for (auto& server : _servers) {
+		if (server.second.name == minServer.name) {
+			continue;
+		}
+
+		auto count_str = RedisMgr::GetInstance()->HGet(LOGIN_COUNT, server.second.name);
+		if (count_str.empty()) {
+			server.second.con_count = INT_MAX;
+		}
+		else {
+			server.second.con_count = std::stoi(count_str);
+		}
+
 		if (server.second.con_count < minServer.con_count) {
 			minServer = server.second;
 		}
