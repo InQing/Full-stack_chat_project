@@ -6,7 +6,7 @@
 CServer::CServer(boost::asio::io_context& io_context, short port) :_io_context(io_context), _port(port),
 _acceptor(io_context, tcp::endpoint(tcp::v4(), port))
 {
-	LOGI("[ChatServer] start success! listen on : %d", _port);
+	LOGI("[ChatServer1] start success! listen on : %d", _port);
 	StartAccept();
 }
 

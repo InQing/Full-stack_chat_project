@@ -24,9 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     //测试用
     // 测试用，模拟数据
-    auto user_info = std::make_shared<UserInfo>(1, "black_cat", "猫", ":/res/cat_1.ico", 1);
-    UserMgr::GetInstance()->SetUserInfo(user_info);
-    emit TcpMgr::GetInstance()->sig_swich_chatdlg();
+    // auto user_info = std::make_shared<UserInfo>(1, "black_cat", "猫", ":/res/cat_1.ico", 1);
+    // UserMgr::GetInstance()->SetUserInfo(user_info);
+    // emit TcpMgr::GetInstance()->sig_swich_chatdlg();
 }
 
 MainWindow::~MainWindow()

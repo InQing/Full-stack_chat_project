@@ -99,18 +99,19 @@ void TcpMgr::initHandlers()
         // 登录成功
         auto uid = jsonObj["uid"].toInt();
         auto name = jsonObj["name"].toString();
-        auto nick = jsonObj["nick"].toString();
-        auto icon = jsonObj["icon"].toString();
-        auto sex = jsonObj["sex"].toInt();
-        auto user_info = std::make_shared<UserInfo>(uid, name, nick, icon, sex);
+        // auto nick = jsonObj["nick"].toString();
+        // auto icon = jsonObj["icon"].toString();
+        // auto sex = jsonObj["sex"].toInt();
 
+        // 加载与用户信息
+        auto user_info = std::make_shared<UserInfo>(uid, name, "猫", ":/res/cat_1.ico", 1);
         UserMgr::GetInstance()->SetUserInfo(user_info);
+
+        // 加载好友申请列表与好友列表
         UserMgr::GetInstance()->SetToken(jsonObj["token"].toString());
         if(jsonObj.contains("apply_list")){
             UserMgr::GetInstance()->AppendApplyList(jsonObj["apply_list"].toArray());
         }
-
-        //添加好友列表
         if (jsonObj.contains("friend_list")) {
             UserMgr::GetInstance()->AppendFriendList(jsonObj["friend_list"].toArray());
         }

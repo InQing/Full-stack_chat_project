@@ -25,7 +25,7 @@ int main() {
 		builder.AddListeningPort(server_addr, grpc::InsecureServerCredentials());
 		builder.RegisterService(&service);
 		std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-		LOGI("%s GRPC server started at %s", server_name.c_str(), server_addr.c_str());
+		LOGI("[%s] GRPC server started at %s", server_name.c_str(), server_addr.c_str());
 
 		// 单独启动一个线程，处理GRPC服务
 		std::thread grpc_thread([&]() {

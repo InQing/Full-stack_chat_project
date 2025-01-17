@@ -27,14 +27,14 @@ bool RedisMgr::Get(const std::string& key, std::string& value)
 	}
 	auto reply = (redisReply*)redisCommand(connect.get(), "GET %s", key.c_str());
 	if (reply == NULL) {
-		std::cout << "[ GET  " << key << " ] failed" << std::endl;
+		std::cout << "[ GET " << key << " ] failed, value is NULL" << std::endl;
 		freeReplyObject(reply);
 		con_pool_->ReturnConnection(std::move(connect));
 		return false;
 	}
 
 	if (reply->type != REDIS_REPLY_STRING) {
-		std::cout << "[ GET  " << key << " ] failed" << std::endl;
+		std::cout << "[ GET " << key << " ] failed, reply type is not string" << std::endl;
 		freeReplyObject(reply);
 		con_pool_->ReturnConnection(std::move(connect));
 		return false;
