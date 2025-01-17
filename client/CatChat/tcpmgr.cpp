@@ -148,15 +148,12 @@ void TcpMgr::slot_tcp_connect(ServerInfo si)
 
 // 因为客户端发送数据可能在任何线程，为了保证线程安全
 // 故用信号与槽的机制来保证发送包的顺序（信号与槽会自动根据触发顺序按队列发送）
-void TcpMgr::slot_send_data(ReqId reqId, QString data)
+void TcpMgr::slot_send_data(ReqId reqId, QByteArray dataBytes)
 {
     uint16_t id = reqId;
 
-    // 将字符串转换为UTF-8编码的字节数组
-    QByteArray dataBytes = data.toUtf8();
-
     // 计算长度（使用网络字节序转换）
-    quint16 len = static_cast<quint16>(data.size());
+    quint16 len = static_cast<quint16>(dataBytes.size());
 
     // 创建一个QByteArray用于存储要发送的所有数据
     QByteArray block;
