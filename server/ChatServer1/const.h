@@ -58,8 +58,12 @@ struct UserInfo {
 };
 
 enum MSG_IDS {
-    MSG_CHAT_LOGIN = 1005, //用户登陆
-    MSG_CHAT_LOGIN_RSP = 1006, //用户登陆回包
+    ID_GET_VARIFY_CODE = 1001, // 获取验证码
+    ID_REG_USER = 1002, // 注册用户
+    ID_RESET_PWD = 1003, // 重置密码
+    ID_LOGIN_USER = 1004, // 登录
+    ID_CHAT_LOGIN = 1005, // 登录聊天服务器
+    ID_CHAT_LOGIN_RSP = 1006, //用户登陆回包
     ID_SEARCH_USER_REQ = 1007, //用户搜索请求
     ID_SEARCH_USER_RSP = 1008, //搜索用户回包
     ID_ADD_FRIEND_REQ = 1009, //申请添加好友请求

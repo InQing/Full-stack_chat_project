@@ -1233,3 +1233,17 @@
 [2025-01-17 11:22:49][INFO] LogicSystem: succeed to load userinfo, uid is 4
 [2025-01-17 11:22:49][INFO] HttpConnection: Handle post succeed, url is '/user_login'
 [2025-01-17 11:22:49][WARNING] HttpConnection: Http connection time out!
+[2025-01-17 18:57:08][INFO] [GateServer] start success! listen on : 8888
+[2025-01-17 18:57:08][INFO] CServer: Starts to listen!
+[2025-01-17 19:41:34][INFO] Cserver: New connection!
+[2025-01-17 19:41:34][INFO] CServer: Starts to listen!
+[2025-01-17 19:41:34][INFO] HttpConnection: Received request
+[2025-01-17 19:41:34][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230"
+}
+
+[2025-01-17 19:41:43][INFO] MysqlDAO: Password: 745230
+[2025-01-17 19:41:45][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-17 19:41:45][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-17 19:41:45][WARNING] HttpConnection: Http connection time out!

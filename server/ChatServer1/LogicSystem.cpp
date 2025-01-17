@@ -68,8 +68,12 @@ void LogicSystem::DealMsg() {
 }
 
 void LogicSystem::RegisterCallBacks() {
-	func_callbacks_[MSG_IDS::MSG_CHAT_LOGIN] = std::bind(&LogicSystem::LoginHandler, this,
+	// 注册登录回调
+	func_callbacks_[MSG_IDS::ID_CHAT_LOGIN] = std::bind(&LogicSystem::LoginHandler, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	// 注册搜索用户回调
+func_callbacks_[MSG_IDS::ID_SEARCH_USER_REQ] = std::bind(&LogicSystem::SearchInfoHandler, this,
+	std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
 void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data) {
@@ -83,11 +87,11 @@ void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& m
 	Json::Value rt_value; // 回包数据
 	Defer defer([this, &rt_value, session]() {
 		std::string return_str = rt_value.toStyledString();
-		session->Send(return_str, MSG_IDS::MSG_CHAT_LOGIN_RSP);
+		session->Send(return_str, MSG_IDS::ID_CHAT_LOGIN_RSP);
 	});
 
 	// 从Redis中查询用户的token是否匹配
-	std::string uid_str = std::to_string(uid);
+	auto uid_str = std::to_string(uid);
 	std::string token_key = USERTOKENPREFIX + uid_str;
 	std::string token_value = "";
 	bool success = RedisMgr::GetInstance()->Get(token_key, token_value);
@@ -102,9 +106,8 @@ void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& m
 
 	rt_value["error"] = ErrorCodes::SUCCESS;
 
-	std::string base_key = USER_BASE_INFO + uid_str;
 	auto user_info = std::make_shared<UserInfo>();
-	success = GetBaseInfo(base_key, uid, user_info);
+	success = GetUserInfo(uid, user_info);
 	if (!success) {
 		rt_value["error"] = ErrorCodes::ERR_UID_INVALID;
 		return;
@@ -143,9 +146,42 @@ void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& m
 	UserMgr::GetInstance()->SetUserSession(uid, session);
 }
 
-bool LogicSystem::GetBaseInfo(std::string base_key, int uid, std::shared_ptr<UserInfo>& userinfo)
+void LogicSystem::SearchInfoHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data)
+{
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+	auto uid_str = root["info"].asString();
+	LOGI("LogicSystem::SearchInfoHandler: user SearchInfo, uid is %s", uid_str.c_str());
+
+	Json::Value rt_value;
+
+	Defer deder([this, &rt_value, session]() {
+		std::string return_str = rt_value.toStyledString();
+		session->Send(return_str, ID_SEARCH_USER_RSP);
+		});
+
+	std::shared_ptr<UserInfo> user_info;
+	bool success = GetUserInfo(std::stoi(uid_str), user_info);
+	if (!success) {
+		rt_value["error"] = ErrorCodes::ERR_UID_INVALID;
+		return;
+	}
+
+	rt_value["error"] = ErrorCodes::SUCCESS;
+	rt_value["uid"] = user_info->uid;
+	rt_value["name"] = user_info->name;
+	rt_value["email"] = user_info->email;
+	//rtvalue["nick"] = user_info->nick;
+	//rtvalue["desc"] = user_info->desc;
+	//rtvalue["sex"] = user_info->sex;
+	//rtvalue["icon"] = user_info->icon;
+}
+
+bool LogicSystem::GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo)
 {
 	// 优先从redis中查询用户信息
+	std::string base_key = USER_BASE_INFO + std::to_string(uid);
 	std::string info_str = "";
 	bool success = RedisMgr::GetInstance()->Get(base_key, info_str);
 	if (success) {
