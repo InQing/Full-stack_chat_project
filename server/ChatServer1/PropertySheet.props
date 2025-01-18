@@ -3,8 +3,8 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>D:\cppSoft\mysql-connector-c++\include;D:\cppSoft\boost\include\boost-1_81;D:\cppSoft\libjson\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\cppSoft\mysql-connector-c++\lib64\vs14;D:\cppSoft\libjson\lib;D:\cppSoft\boost\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\soft\vcpkg\installed\x64-windows\include;D:\cppSoft\mysql-connector-c++\include;D:\cppSoft\boost\include\boost-1_81;D:\cppSoft\libjson\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\soft\vcpkg\installed\x64-windows\lib;D:\cppSoft\mysql-connector-c++\lib64\vs14;D:\cppSoft\libjson\lib;D:\cppSoft\boost\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
@@ -19,6 +19,9 @@
       <Command>xcopy $(ProjectDir)config.ini  $(SolutionDir)$(Platform)\$(Configuration)\   /y
 xcopy $(ProjectDir)*.dll   $(SolutionDir)$(Platform)\$(Configuration)\   /y</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy D:\soft\vcpkg\installed\x64-windows\bin\hiredisd.dll   $(SolutionDir)$(Platform)\$(Configuration)\   /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

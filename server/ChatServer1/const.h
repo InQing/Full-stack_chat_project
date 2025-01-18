@@ -35,9 +35,11 @@ enum ErrorCodes {
     ERR_PWD_INVALID = 12, // 密码错误
     ERR_UID_INVALID = 13, // uid错误
     ERR_TOKEN_INVALID = 14, // token错误
+    ERR_SERVER = 15, // 服务器错误
 };
 
 // Defer类，在生命周期结束时执行func操作
+// 此defer在return之前触发，与go语言中defer不同
 class Defer {
 public:
     Defer(std::function<void()> func) : func_(func) {};

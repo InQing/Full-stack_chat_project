@@ -53,6 +53,8 @@ public:
     {
         std::lock_guard<std::mutex> lock(mutex_);
         while (connections_.size()) {
+            auto* context = connections_.front().get();
+            redisFree(context);
             connections_.pop();
         }
     }
@@ -170,7 +172,7 @@ public:
     bool Del(const std::string& key);
     bool HDel(const std::string& key, const std::string& field);
     bool ExistsKey(const std::string& key);
-    void Close();
+    void Close() {con_pool_->Close();}
 private:
     RedisMgr();
     std::unique_ptr<RedisConPool> con_pool_;

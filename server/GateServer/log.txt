@@ -1247,3 +1247,165 @@
 [2025-01-17 19:41:45][INFO] LogicSystem: succeed to load userinfo, uid is 3
 [2025-01-17 19:41:45][INFO] HttpConnection: Handle post succeed, url is '/user_login'
 [2025-01-17 19:41:45][WARNING] HttpConnection: Http connection time out!
+[2025-01-18 13:39:10][INFO] [GateServer] start success! listen on : 8888
+[2025-01-18 13:39:10][INFO] CServer: Starts to listen!
+[2025-01-18 13:39:18][INFO] Cserver: New connection!
+[2025-01-18 13:39:18][INFO] CServer: Starts to listen!
+[2025-01-18 13:39:18][INFO] HttpConnection: Received request
+[2025-01-18 13:39:18][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230"
+}
+
+[2025-01-18 13:39:24][INFO] MysqlDAO: Password: 745230
+[2025-01-18 13:39:26][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-18 13:39:26][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 13:40:52][INFO] Cserver: New connection!
+[2025-01-18 13:40:52][INFO] CServer: Starts to listen!
+[2025-01-18 13:40:52][INFO] HttpConnection: Received request
+[2025-01-18 13:40:52][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@qq.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-18 13:40:52][ERROR] LogicSystem: user pwd not match!
+[2025-01-18 13:40:52][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 13:41:06][INFO] Cserver: New connection!
+[2025-01-18 13:41:06][INFO] CServer: Starts to listen!
+[2025-01-18 13:41:06][INFO] HttpConnection: Received request
+[2025-01-18 13:41:06][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-18 13:41:06][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-18 13:41:06][INFO] LogicSystem: succeed to load userinfo, uid is 4
+[2025-01-18 13:41:06][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 15:31:42][INFO] [GateServer] start success! listen on : 8888
+[2025-01-18 15:31:42][INFO] CServer: Starts to listen!
+[2025-01-18 15:40:18][INFO] Cserver: New connection!
+[2025-01-18 15:40:18][INFO] CServer: Starts to listen!
+[2025-01-18 15:40:18][INFO] HttpConnection: Received request
+[2025-01-18 15:40:18][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230"
+}
+
+[2025-01-18 15:40:22][INFO] MysqlDAO: Password: 745230
+[2025-01-18 15:40:23][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-18 15:40:23][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 15:40:23][WARNING] HttpConnection: Http connection time out!
+[2025-01-18 15:41:00][INFO] Cserver: New connection!
+[2025-01-18 15:41:00][INFO] CServer: Starts to listen!
+[2025-01-18 15:41:00][INFO] HttpConnection: Received request
+[2025-01-18 15:41:00][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-18 15:41:00][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-18 15:41:00][INFO] LogicSystem: succeed to load userinfo, uid is 4
+[2025-01-18 15:41:00][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 15:55:51][INFO] Cserver: New connection!
+[2025-01-18 15:55:51][INFO] CServer: Starts to listen!
+[2025-01-18 15:55:51][INFO] HttpConnection: Received request
+[2025-01-18 15:55:51][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230"
+}
+
+[2025-01-18 15:55:51][INFO] MysqlDAO: Password: 745230
+[2025-01-18 15:55:51][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-18 15:55:51][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 15:55:51][WARNING] HttpConnection: Http connection time out!
+[2025-01-18 15:56:13][INFO] Cserver: New connection!
+[2025-01-18 15:56:13][INFO] CServer: Starts to listen!
+[2025-01-18 15:56:13][INFO] HttpConnection: Received request
+[2025-01-18 15:56:13][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-18 15:56:13][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-18 15:56:13][INFO] LogicSystem: succeed to load userinfo, uid is 4
+[2025-01-18 15:56:13][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 16:05:13][INFO] Cserver: New connection!
+[2025-01-18 16:05:13][INFO] CServer: Starts to listen!
+[2025-01-18 16:05:13][INFO] HttpConnection: Received request
+[2025-01-18 16:05:13][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230"
+}
+
+[2025-01-18 16:05:13][INFO] MysqlDAO: Password: 745230
+[2025-01-18 16:05:13][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-18 16:05:13][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 16:05:13][WARNING] HttpConnection: Http connection time out!
+[2025-01-18 16:05:34][INFO] Cserver: New connection!
+[2025-01-18 16:05:34][INFO] CServer: Starts to listen!
+[2025-01-18 16:05:34][INFO] HttpConnection: Received request
+[2025-01-18 16:05:34][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-18 16:05:34][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-18 16:05:34][INFO] LogicSystem: succeed to load userinfo, uid is 4
+[2025-01-18 16:05:34][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 16:14:48][INFO] Cserver: New connection!
+[2025-01-18 16:14:48][INFO] CServer: Starts to listen!
+[2025-01-18 16:14:48][INFO] HttpConnection: Received request
+[2025-01-18 16:14:48][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230"
+}
+
+[2025-01-18 16:14:48][INFO] MysqlDAO: Password: 745230
+[2025-01-18 16:14:48][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-18 16:14:48][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 16:14:48][WARNING] HttpConnection: Http connection time out!
+[2025-01-18 16:15:24][INFO] Cserver: New connection!
+[2025-01-18 16:15:24][INFO] CServer: Starts to listen!
+[2025-01-18 16:15:24][INFO] HttpConnection: Received request
+[2025-01-18 16:15:24][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco:=8:99"
+}
+
+[2025-01-18 16:15:24][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-18 16:15:24][ERROR] LogicSystem: user pwd not match!
+[2025-01-18 16:15:24][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 16:15:36][INFO] Cserver: New connection!
+[2025-01-18 16:15:36][INFO] CServer: Starts to listen!
+[2025-01-18 16:15:36][INFO] HttpConnection: Received request
+[2025-01-18 16:15:36][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-18 16:15:36][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-18 16:15:36][INFO] LogicSystem: succeed to load userinfo, uid is 4
+[2025-01-18 16:15:36][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 16:19:54][INFO] Cserver: New connection!
+[2025-01-18 16:19:54][INFO] CServer: Starts to listen!
+[2025-01-18 16:19:54][INFO] HttpConnection: Received request
+[2025-01-18 16:19:54][INFO] LogicSystem: receive user_login post, body is {
+    "email": "3040218941@qq.com",
+    "passwd": "745230"
+}
+
+[2025-01-18 16:19:54][INFO] MysqlDAO: Password: 745230
+[2025-01-18 16:19:54][INFO] LogicSystem: succeed to load userinfo, uid is 3
+[2025-01-18 16:19:54][INFO] HttpConnection: Handle post succeed, url is '/user_login'
+[2025-01-18 16:19:54][WARNING] HttpConnection: Http connection time out!
+[2025-01-18 16:20:12][INFO] Cserver: New connection!
+[2025-01-18 16:20:12][INFO] CServer: Starts to listen!
+[2025-01-18 16:20:12][INFO] HttpConnection: Received request
+[2025-01-18 16:20:12][INFO] LogicSystem: receive user_login post, body is {
+    "email": "ljf3040218941@gmail.com",
+    "passwd": "eco8;:=<?"
+}
+
+[2025-01-18 16:20:12][INFO] MysqlDAO: Password: eco8;:=<?
+[2025-01-18 16:20:12][INFO] LogicSystem: succeed to load userinfo, uid is 4
+[2025-01-18 16:20:12][INFO] HttpConnection: Handle post succeed, url is '/user_login'

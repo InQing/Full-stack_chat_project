@@ -25,3 +25,7 @@ std::shared_ptr<UserInfo> MysqlMgr::GetUser(int uid)
 {
 	return dao_.GetUser(uid);
 }
+
+bool MysqlMgr::AddFriendApply(const int& from, const int& to) {
+	return dao_.AddFriendApply(from, to);
+}

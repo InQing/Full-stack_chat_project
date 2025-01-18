@@ -641,15 +641,18 @@ void ChatDialog::slot_apply_friend(std::shared_ptr<AddFriendApply> apply)
 	qDebug() << "receive apply friend slot, applyuid is " << apply->_from_uid << " name is "
 		<< apply->_name << " desc is " << apply->_desc;
 
-   bool b_already = UserMgr::GetInstance()->AlreadyApply(apply->_from_uid);
-   if(b_already){
-        return;
-   }
+    // 测试
+    return;
 
-   UserMgr::GetInstance()->AddApplyList(std::make_shared<ApplyInfo>(apply));
-    ui->side_contact_lb->ShowRedPoint(true);
-    ui->con_user_list->ShowRedPoint(true);
-    ui->friend_apply_page->AddNewApply(apply);
+   // bool is_already = UserMgr::GetInstance()->AlreadyApply(apply->_from_uid);
+   // if(is_already){
+   //      return;
+   // }
+
+   //  UserMgr::GetInstance()->AddApplyList(std::make_shared<ApplyInfo>(apply));
+   //  ui->side_contact_lb->ShowRedPoint(true);
+   //  ui->con_user_list->ShowRedPoint(true);
+   //  ui->friend_apply_page->AddNewApply(apply);
 }
 
 void ChatDialog::slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info) {

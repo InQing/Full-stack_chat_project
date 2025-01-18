@@ -22,7 +22,9 @@ private:
 	void RegisterCallBacks();
 	void LoginHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
 	void SearchInfoHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
+	void AddFriendApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
 	bool GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo);
+
 	std::thread worker_thread_;
 	std::queue<std::shared_ptr<LogicNode>> msg_que_;
 	std::mutex mutex_;

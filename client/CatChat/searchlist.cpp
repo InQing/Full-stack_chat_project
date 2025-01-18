@@ -83,7 +83,7 @@ void SearchList::slot_item_clicked(QListWidgetItem *item)
         return;
     }
 
-    // 对自定义widget进行操作， 将item 转化为基类ListItemBase
+    // 对自定义widget进行操作，将item转化为基类ListItemBase
     ListItemBase *customItem = qobject_cast<ListItemBase*>(widget);
     if(!customItem){
         qDebug()<< "slot item clicked widget is nullptr";
@@ -105,12 +105,13 @@ void SearchList::slot_item_clicked(QListWidgetItem *item)
        if (!_search_edit) {
            return;
        }
+
        waitPending(true);
        auto search_edit = dynamic_cast<CustomizeEdit*>(_search_edit);
        auto uid_str = search_edit->text();
-       //此处发送请求给server
+       // 发送请求给server
 	   QJsonObject jsonObj;
-	   jsonObj["uid"] = uid_str;
+       jsonObj["uid"] = uid_str;
 
 	   QJsonDocument doc(jsonObj);
 	   QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
@@ -135,11 +136,11 @@ void SearchList::slot_user_search(std::shared_ptr<SearchInfo> si)
         if (si->_uid == self_uid) {
                  return;
         }
-        //此处分两种情况，一种是搜多到已经是自己的朋友了，一种是未添加好友
+        //此处分两种情况，一种是搜到已经是自己的朋友了，一种是未添加好友
         //查找是否已经是好友
-        bool bExist = UserMgr::GetInstance()->CheckFriendById(si->_uid);
-        if(bExist){
-                //此处处理已经添加的好友，实现页面跳转
+        bool is_exist = UserMgr::GetInstance()->CheckFriendById(si->_uid);
+        if(is_exist){
+            //此处处理已经添加的好友，实现页面跳转
             //跳转到聊天界面指定的item中
             emit sig_jump_chat_item(si);
             return;

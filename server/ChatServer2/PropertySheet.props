@@ -19,6 +19,9 @@
       <Command>xcopy $(ProjectDir)config.ini  $(SolutionDir)$(Platform)\$(Configuration)\   /y
 xcopy $(ProjectDir)*.dll   $(SolutionDir)$(Platform)\$(Configuration)\   /y</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy D:\soft\vcpkg\installed\x64-windows\bin\hiredisd.dll   $(SolutionDir)$(Platform)\$(Configuration)\   /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

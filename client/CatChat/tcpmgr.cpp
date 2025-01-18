@@ -54,12 +54,10 @@ TcpMgr::TcpMgr() : host_(""), port_(0), is_recv_pending_(false), message_id_(0),
           Q_UNUSED(socketError)
           qDebug() << "Error:" << socket_.errorString();
     });
-
     // 处理连接断开
     connect(&socket_, &QTcpSocket::disconnected, [&](){
        qDebug() << "Disconnected from server";
     });
-
     // 连接发送信号用来发送数据
     connect(this, &TcpMgr::sig_send_data, this, &TcpMgr::slot_send_data);
     // 注册消息
@@ -70,7 +68,7 @@ void TcpMgr::initHandlers()
 {
     handlers_.insert(ID_CHAT_LOGIN_RSP, [this](ReqId id, int len, QByteArray data){
         Q_UNUSED(len);
-        qDebug()<< "handle id is "<< id << " data is " << data;
+        qDebug()<< "handle ID_CHAT_LOGIN_RSP," << " data is " << data;
         // 将QByteArray转换为QJsonDocument
         QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
@@ -122,6 +120,80 @@ void TcpMgr::initHandlers()
         qDebug() << "Token: " << jsonObj["token"].toString();
 
         emit sig_swich_chatdlg();
+    });
+
+    handlers_.insert(ID_SEARCH_USER_RSP, [this](ReqId id, int len, QByteArray data) {
+        Q_UNUSED(len);
+        qDebug() << "handle ID_SEARCH_USER_RSP," << " data is " << data;
+        // 将QByteArray转换为QJsonDocument
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
+        // 检查转换是否成功
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to create QJsonDocument.";
+            return;
+        }
+
+        QJsonObject jsonObj = jsonDoc.object();
+
+        if (!jsonObj.contains("error")) {
+            int err = ErrorCodes::ERR_JSON;
+            qDebug() << "Login Failed, err is Json Parse Err" << err;
+
+            emit sig_user_search(nullptr);
+            return;
+        }
+
+        int err = jsonObj["error"].toInt();
+        if (err != ErrorCodes::SUCCESS) {
+            qDebug() << "Login Failed, err is " << err;
+            emit sig_user_search(nullptr);
+            return;
+        }
+        auto search_info =  std::make_shared<SearchInfo>(jsonObj["uid"].toInt(), jsonObj["name"].toString(),
+                                                        "nick", "desc",
+                                                        0, "icon");
+
+        emit sig_user_search(search_info);
+    });
+
+    handlers_.insert(ID_ADD_FRIEND_RSP, [this](ReqId id, int len, QByteArray data) {
+        Q_UNUSED(len);
+        qDebug() << "handle id ID_ADD_FRIEND_RSP," << " data is " << data;
+        // 将QByteArray转换为QJsonDocument
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
+        // 检查转换是否成功
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to create QJsonDocument.";
+            return;
+        }
+
+        QJsonObject jsonObj = jsonDoc.object();
+        if (!jsonObj.contains("error")) {
+            int err = ErrorCodes::ERR_JSON;
+            qDebug() << "Login Failed, err is Json Parse Err" << err;
+            return;
+        }
+
+        int err = jsonObj["error"].toInt();
+        if (err != ErrorCodes::SUCCESS) {
+            qDebug() << "Login Failed, err is " << err;
+            return;
+        }
+
+        int from_uid = jsonObj["applyuid"].toInt();
+        QString name = jsonObj["name"].toString();
+        QString desc = jsonObj["desc"].toString();
+        // QString icon = jsonObj["icon"].toString();
+        // QString nick = jsonObj["nick"].toString();
+        // int sex = jsonObj["sex"].toInt();
+
+        auto apply_info = std::make_shared<AddFriendApply>(
+            from_uid, name, desc,
+            "", "", 0);
+
+        emit sig_friend_apply(apply_info);
     });
 }
 

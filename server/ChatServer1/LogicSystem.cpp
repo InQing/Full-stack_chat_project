@@ -7,6 +7,7 @@
 #include "RedisMgr.h"
 #include "ConfigMgr.h"
 #include "UserMgr.h"
+#include "ChatGrpcClient.h"
 
 LogicSystem::LogicSystem() :is_stop_(false) {
 	RegisterCallBacks();
@@ -72,8 +73,11 @@ void LogicSystem::RegisterCallBacks() {
 	func_callbacks_[MSG_IDS::ID_CHAT_LOGIN] = std::bind(&LogicSystem::LoginHandler, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	// 注册搜索用户回调
-func_callbacks_[MSG_IDS::ID_SEARCH_USER_REQ] = std::bind(&LogicSystem::SearchInfoHandler, this,
-	std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	func_callbacks_[MSG_IDS::ID_SEARCH_USER_REQ] = std::bind(&LogicSystem::SearchInfoHandler, this,
+		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	// 注册好友申请回调
+	func_callbacks_[ID_ADD_FRIEND_REQ] = std::bind(&LogicSystem::AddFriendApply, this,
+		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
 void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data) {
@@ -151,7 +155,7 @@ void LogicSystem::SearchInfoHandler(std::shared_ptr<CSession> session, const sho
 	Json::Reader reader;
 	Json::Value root;
 	reader.parse(msg_data, root);
-	auto uid_str = root["info"].asString();
+	auto uid_str = root["uid"].asString();
 	LOGI("LogicSystem::SearchInfoHandler: user SearchInfo, uid is %s", uid_str.c_str());
 
 	Json::Value rt_value;
@@ -161,7 +165,7 @@ void LogicSystem::SearchInfoHandler(std::shared_ptr<CSession> session, const sho
 		session->Send(return_str, ID_SEARCH_USER_RSP);
 		});
 
-	std::shared_ptr<UserInfo> user_info;
+	auto user_info = std::make_shared<UserInfo>();
 	bool success = GetUserInfo(std::stoi(uid_str), user_info);
 	if (!success) {
 		rt_value["error"] = ErrorCodes::ERR_UID_INVALID;
@@ -176,6 +180,76 @@ void LogicSystem::SearchInfoHandler(std::shared_ptr<CSession> session, const sho
 	//rtvalue["desc"] = user_info->desc;
 	//rtvalue["sex"] = user_info->sex;
 	//rtvalue["icon"] = user_info->icon;
+}
+
+void LogicSystem::AddFriendApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data)
+{
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+	auto uid = root["uid"].asInt();
+	auto applyname = root["applyname"].asString();
+	auto bakname = root["bakname"].asString();
+	auto touid = root["touid"].asInt();
+	LOGI("LogicSystem::AddFriendApply: user AddFriendApply, uid is %d, applyname is %s, bakname is %s, touid is %d", 
+		uid, applyname.c_str(), bakname.c_str(), touid);
+
+	Json::Value rtvalue;
+	rtvalue["error"] = ErrorCodes::SUCCESS;
+	Defer defer([this, &rtvalue, session]() {
+		std::string return_str = rtvalue.toStyledString();
+		session->Send(return_str, ID_ADD_FRIEND_RSP);
+		});
+
+	// 更新数据库
+	MysqlMgr::GetInstance()->AddFriendApply(uid, touid);
+
+	// 在redis查找touid对应的server ip
+	auto to_str = std::to_string(touid);
+	auto to_ip_key = USERIPPREFIX + to_str;
+	std::string to_ip_value = "";
+	bool is_ip = RedisMgr::GetInstance()->Get(to_ip_key, to_ip_value);
+	if (!is_ip) {
+		return;
+	}
+
+	auto& cfg = ConfigMgr::GetInstance();
+	auto self_name = cfg["SelfServer"]["Name"];
+
+	// 在同一个服务器中，直接通知对方有申请消息
+	if (to_ip_value == self_name) {
+		auto session = UserMgr::GetInstance()->GetSession(touid);
+		if (session) {
+			//在内存中则直接发送通知对方
+			Json::Value  notify;
+			notify["error"] = ErrorCodes::SUCCESS;
+			notify["applyuid"] = uid;
+			notify["name"] = applyname;
+			notify["desc"] = "";
+			std::string return_str = notify.toStyledString();
+			session->Send(return_str, ID_NOTIFY_ADD_FRIEND_REQ);
+		}
+
+		return;
+	}
+
+	// 不同服务器中，GRPC通知对方有申请消息
+	auto apply_info = std::make_shared<UserInfo>();
+	bool is_info = GetUserInfo(uid, apply_info);
+
+	AddFriendReq add_req;
+	add_req.set_applyuid(uid);
+	add_req.set_touid(touid);
+	add_req.set_name(applyname);
+	add_req.set_desc("");
+	if (is_info) {
+		//add_req.set_icon(apply_info->icon);
+		//add_req.set_sex(apply_info->sex);
+		//add_req.set_nick(apply_info->nick);
+	}
+
+	//发送通知
+	ChatGrpcClient::GetInstance()->NotifyAddFriend(to_ip_value, add_req);
 }
 
 bool LogicSystem::GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo)
