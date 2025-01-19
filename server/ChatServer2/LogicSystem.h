@@ -1,11 +1,12 @@
 #pragma once
-#include "Singleton.h"
-#include "const.h"
 #include <functional>
 #include <json/json.h>
 #include <json/value.h>
 #include <json/reader.h>
 #include <unordered_map>
+#include "Singleton.h"
+#include "const.h"
+#include "data.h"
 
 class CSession;
 class LogicNode;
@@ -21,8 +22,11 @@ private:
 	void DealMsg();
 	void RegisterCallBacks();
 	void LoginHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
-	void SearchInfoHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
+	void SearchInfoApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
 	void AddFriendApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
+	void AuthFriendApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data);
+	bool GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list);
+	bool GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list);
 	bool GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo);
 
 	std::thread worker_thread_;

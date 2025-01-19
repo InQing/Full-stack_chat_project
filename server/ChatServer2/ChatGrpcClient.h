@@ -1,5 +1,6 @@
 #pragma once
 #include "const.h"
+#include "data.h"
 #include "Singleton.h"
 #include "ConfigMgr.h" 
 #include "message.grpc.pb.h"

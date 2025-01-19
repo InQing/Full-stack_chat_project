@@ -73,10 +73,13 @@ void LogicSystem::RegisterCallBacks() {
 	func_callbacks_[MSG_IDS::ID_CHAT_LOGIN] = std::bind(&LogicSystem::LoginHandler, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	// 注册搜索用户回调
-	func_callbacks_[MSG_IDS::ID_SEARCH_USER_REQ] = std::bind(&LogicSystem::SearchInfoHandler, this,
+	func_callbacks_[MSG_IDS::ID_SEARCH_USER_REQ] = std::bind(&LogicSystem::SearchInfoApply, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	// 注册好友申请回调
 	func_callbacks_[ID_ADD_FRIEND_REQ] = std::bind(&LogicSystem::AddFriendApply, this,
+		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	// 注册认证好友回调
+	func_callbacks_[ID_AUTH_FRIEND_REQ] = std::bind(&LogicSystem::AuthFriendApply, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
@@ -120,14 +123,42 @@ void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& m
 	rt_value["pwd"] = user_info->pwd;
 	rt_value["name"] = user_info->name;
 	rt_value["email"] = user_info->email;
-	//rtvalue["nick"] = user_info->nick;
-	//rtvalue["desc"] = user_info->desc;
-	//rtvalue["sex"] = user_info->sex;
-	//rtvalue["icon"] = user_info->icon;
+	rt_value["nick"] = user_info->nick;
+	rt_value["desc"] = user_info->desc;
+	rt_value["sex"] = user_info->sex;
+	rt_value["icon"] = user_info->icon;
 
-	// 获取申请列表
+	// 从Mysql中获取好友申请列表
+	std::vector<std::shared_ptr<ApplyInfo>> apply_list;
+	auto b_apply = GetFriendApplyInfo(uid, apply_list);
+	if (b_apply) {
+		for (auto& apply : apply_list) {
+			Json::Value obj;
+			obj["name"] = apply->_name;
+			obj["uid"] = apply->_uid;
+			obj["icon"] = apply->_icon;
+			obj["nick"] = apply->_nick;
+			obj["sex"] = apply->_sex;
+			obj["desc"] = apply->_desc;
+			obj["status"] = apply->_status;
+			rt_value["apply_list"].append(obj);
+		}
+	}
+	// 从Mysql中获取好友列表
+	std::vector<std::shared_ptr<UserInfo>> friend_list;
+	bool b_friend_list = GetFriendList(uid, friend_list);
+	for (auto& friend_ele : friend_list) {
+		Json::Value obj;
+		obj["name"] = friend_ele->name;
+		obj["uid"] = friend_ele->uid;
+		obj["icon"] = friend_ele->icon;
+		obj["nick"] = friend_ele->nick;
+		obj["sex"] = friend_ele->sex;
+		obj["desc"] = friend_ele->desc;
+		obj["back"] = friend_ele->back;
+		rt_value["friend_list"].append(obj);
+	}
 
-	// 获取好友列表
 
 	// 将Redis中本服务器的用户数量+1
 	auto server_name = ConfigMgr::GetInstance()["SelfServer"]["Name"];
@@ -150,7 +181,7 @@ void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& m
 	UserMgr::GetInstance()->SetUserSession(uid, session);
 }
 
-void LogicSystem::SearchInfoHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data)
+void LogicSystem::SearchInfoApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data)
 {
 	Json::Reader reader;
 	Json::Value root;
@@ -176,10 +207,10 @@ void LogicSystem::SearchInfoHandler(std::shared_ptr<CSession> session, const sho
 	rt_value["uid"] = user_info->uid;
 	rt_value["name"] = user_info->name;
 	rt_value["email"] = user_info->email;
-	//rtvalue["nick"] = user_info->nick;
-	//rtvalue["desc"] = user_info->desc;
-	//rtvalue["sex"] = user_info->sex;
-	//rtvalue["icon"] = user_info->icon;
+	rt_value["nick"] = user_info->nick;
+	rt_value["desc"] = user_info->desc;
+	rt_value["sex"] = user_info->sex;
+	rt_value["icon"] = user_info->icon;
 }
 
 void LogicSystem::AddFriendApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data)
@@ -216,6 +247,9 @@ void LogicSystem::AddFriendApply(std::shared_ptr<CSession> session, const short&
 	auto& cfg = ConfigMgr::GetInstance();
 	auto self_name = cfg["SelfServer"]["Name"];
 
+	auto apply_info = std::make_shared<UserInfo>();
+	bool is_info = GetUserInfo(uid, apply_info);
+
 	// 在同一个服务器中，直接通知对方有申请消息
 	if (to_ip_value == self_name) {
 		auto session = UserMgr::GetInstance()->GetSession(touid);
@@ -225,7 +259,12 @@ void LogicSystem::AddFriendApply(std::shared_ptr<CSession> session, const short&
 			notify["error"] = ErrorCodes::SUCCESS;
 			notify["applyuid"] = uid;
 			notify["name"] = applyname;
-			notify["desc"] = "";
+			if (is_info) {
+				notify["icon"] = apply_info->icon;
+				notify["sex"] = apply_info->sex;
+				notify["nick"] = apply_info->nick;
+				notify["desc"] = apply_info->desc;
+			}
 			std::string return_str = notify.toStyledString();
 			session->Send(return_str, ID_NOTIFY_ADD_FRIEND_REQ);
 		}
@@ -234,22 +273,105 @@ void LogicSystem::AddFriendApply(std::shared_ptr<CSession> session, const short&
 	}
 
 	// 不同服务器中，GRPC通知对方有申请消息
-	auto apply_info = std::make_shared<UserInfo>();
-	bool is_info = GetUserInfo(uid, apply_info);
-
 	AddFriendReq add_req;
 	add_req.set_applyuid(uid);
 	add_req.set_touid(touid);
 	add_req.set_name(applyname);
-	add_req.set_desc("");
+	add_req.set_desc(apply_info->desc);
 	if (is_info) {
-		//add_req.set_icon(apply_info->icon);
-		//add_req.set_sex(apply_info->sex);
-		//add_req.set_nick(apply_info->nick);
+		add_req.set_icon(apply_info->icon);
+		add_req.set_sex(apply_info->sex);
+		add_req.set_nick(apply_info->nick);
 	}
 
 	//发送通知
 	ChatGrpcClient::GetInstance()->NotifyAddFriend(to_ip_value, add_req);
+}
+
+void LogicSystem::AuthFriendApply(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data) {
+
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+
+	auto uid = root["fromuid"].asInt();
+	auto touid = root["touid"].asInt();
+	auto back_name = root["back"].asString();
+	LOGI("LogicSystem::AuthFriendApply: user AuthFriendApply, fromuid is %d, touid is %d, back_name is %s",
+		uid, touid, back_name.c_str());
+
+	Json::Value  rtvalue;
+	rtvalue["error"] = ErrorCodes::SUCCESS;
+	auto user_info = std::make_shared<UserInfo>();
+
+	bool is_info = GetUserInfo(touid, user_info);
+	if (is_info) {
+		rtvalue["name"] = user_info->name;
+		rtvalue["nick"] = user_info->nick;
+		rtvalue["icon"] = user_info->icon;
+		rtvalue["sex"] = user_info->sex;
+		rtvalue["uid"] = touid;
+	}
+	else {
+		rtvalue["error"] = ErrorCodes::ERR_UID_INVALID;
+	}
+
+	Defer defer([this, &rtvalue, session]() {
+		std::string return_str = rtvalue.toStyledString();
+		session->Send(return_str, ID_AUTH_FRIEND_RSP);
+		});
+
+	//先更新数据库
+	MysqlMgr::GetInstance()->AuthFriendApply(uid, touid);
+
+	//更新数据库添加好友
+	MysqlMgr::GetInstance()->AddFriend(uid, touid, back_name);
+
+	//查询redis 查找touid对应的server ip
+	auto to_str = std::to_string(touid);
+	auto to_ip_key = USERIPPREFIX + to_str;
+	std::string to_ip_value = "";
+	bool is_ip = RedisMgr::GetInstance()->Get(to_ip_key, to_ip_value);
+	if (!is_ip) {
+		return;
+	}
+
+	auto& cfg = ConfigMgr::GetInstance();
+	auto self_name = cfg["SelfServer"]["Name"];
+	// 在同一个服务器中，直接通知对方有认证通过消息
+	if (to_ip_value == self_name) {
+		auto session = UserMgr::GetInstance()->GetSession(touid);
+		if (session) {
+			//在内存中则直接发送通知对方
+			Json::Value  notify;
+			notify["error"] = ErrorCodes::SUCCESS;
+			notify["fromuid"] = uid;
+			notify["touid"] = touid;
+			auto user_info = std::make_shared<UserInfo>();
+			bool is_info = GetUserInfo(uid, user_info);
+			if (is_info) {
+				notify["name"] = user_info->name;
+				notify["nick"] = user_info->nick;
+				notify["icon"] = user_info->icon;
+				notify["sex"] = user_info->sex;
+			}
+			else {
+				notify["error"] = ErrorCodes::ERR_UID_INVALID;
+			}
+
+			std::string return_str = notify.toStyledString();
+			session->Send(return_str, ID_NOTIFY_AUTH_FRIEND_REQ);
+		}
+		return;
+	}
+
+
+	AuthFriendReq auth_req;
+	auth_req.set_fromuid(uid);
+	auth_req.set_touid(touid);
+
+	// 不在同一个服务器中，GRPC发送通知
+	ChatGrpcClient::GetInstance()->NotifyAuthFriend(to_ip_value, auth_req);
 }
 
 bool LogicSystem::GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo)
@@ -266,15 +388,15 @@ bool LogicSystem::GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo)
 		userinfo->name = root["name"].asString();
 		userinfo->pwd = root["pwd"].asString();
 		userinfo->email = root["email"].asString();
-		// userinfo->nick = root["nick"].asString();
-		// userinfo->desc = root["desc"].asString();
-		// userinfo->sex = root["sex"].asInt();
-		// userinfo->icon = root["icon"].asString();
+		userinfo->nick = root["nick"].asString();
+		userinfo->desc = root["desc"].asString();
+		userinfo->sex = root["sex"].asInt();
+		userinfo->icon = root["icon"].asString();
 	}
 	else {
 		//redis中没有则查询mysql
 		std::shared_ptr<UserInfo> user_info = nullptr;
-		user_info = MysqlMgr::GetInstance()->GetUser(uid);
+		user_info = MysqlMgr::GetInstance()->GetUserInfo(uid);
 		if (user_info == nullptr) {
 			return false;
 		}
@@ -287,12 +409,22 @@ bool LogicSystem::GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo)
 		redis_root["pwd"] = userinfo->pwd;
 		redis_root["name"] = userinfo->name;
 		redis_root["email"] = userinfo->email;
-		//redis_root["nick"] = userinfo->nick;
-		//redis_root["desc"] = userinfo->desc;
-		//redis_root["sex"] = userinfo->sex;
-		//redis_root["icon"] = userinfo->icon;
+		redis_root["nick"] = userinfo->nick;
+		redis_root["desc"] = userinfo->desc;
+		redis_root["sex"] = userinfo->sex;
+		redis_root["icon"] = userinfo->icon;
 		RedisMgr::GetInstance()->Set(base_key, redis_root.toStyledString());
 	}
 
 	return true;
+}
+
+bool LogicSystem::GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list) {
+	//从mysql获取好友申请列表
+	return MysqlMgr::GetInstance()->GetApplyList(to_uid, list, 0, 10);
+}
+
+bool LogicSystem::GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list) {
+	//从mysql获取好友列表
+	return MysqlMgr::GetInstance()->GetFriendList(self_id, user_list);
 }

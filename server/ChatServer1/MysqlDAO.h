@@ -8,6 +8,7 @@
 #include <jdbc/cppconn/exception.h>
 #include <jdbc/cppconn/prepared_statement.h>
 #include "const.h"
+#include "data.h"
 #include "logger.h"
 
 class SqlConnection {
@@ -145,7 +146,11 @@ public:
 	bool UpdatePwd(const std::string& name, const std::string& new_pwd);
 	bool CheckPwd(const std::string& email, const std::string& pwd, UserInfo& userInfo);
 	bool AddFriendApply(const int& from, const int& to);
-	std::shared_ptr<UserInfo> GetUser(int uid);
+	bool AuthFriendApply(const int& from, const int& to);
+	bool AddFriend(const int& from, const int& to, std::string back_name);
+	bool GetApplyList(int touid, std::vector<std::shared_ptr<ApplyInfo>>& applyList, int offset, int limit);
+	bool GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo> >& user_info);
+	std::shared_ptr<UserInfo> GetUserInfo(int uid);
 private:
 	std::unique_ptr<MysqlPool> pool_;
 };

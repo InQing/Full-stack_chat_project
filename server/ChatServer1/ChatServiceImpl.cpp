@@ -4,6 +4,7 @@
 #include "ChatServiceImpl.h"
 #include "UserMgr.h"
 #include "CSession.h"
+#include "data.h"
 
 
 Status ChatServiceImpl::NotifyAddFriend(ServerContext* context, const AddFriendReq* request,
@@ -13,7 +14,6 @@ Status ChatServiceImpl::NotifyAddFriend(ServerContext* context, const AddFriendR
     auto session = UserMgr::GetInstance()->GetSession(touid);
 
     Defer defer([request, reply]() {
-        reply->set_error(ErrorCodes::SUCCESS);
         reply->set_applyuid(request->applyuid());
         reply->set_touid(request->touid());
         });
@@ -29,9 +29,9 @@ Status ChatServiceImpl::NotifyAddFriend(ServerContext* context, const AddFriendR
     rtvalue["applyuid"] = request->applyuid();
     rtvalue["name"] = request->name();
     rtvalue["desc"] = request->desc();
-    //rtvalue["icon"] = request->icon();
-    //rtvalue["sex"] = request->sex();
-    //rtvalue["nick"] = request->nick();
+    rtvalue["icon"] = request->icon();
+    rtvalue["sex"] = request->sex();
+    rtvalue["nick"] = request->nick();
 
     std::string return_str = rtvalue.toStyledString();
 

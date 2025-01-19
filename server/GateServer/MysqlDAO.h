@@ -105,10 +105,9 @@ public:
 			}
 			catch (sql::SQLException& exp) {
 				// 重新创建新连接并替换旧连接
-				sql::mysql::MySQL_Driver* driver = sql::mysql::get_driver_instance();
+				sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
 				auto* new_con = driver->connect(url_, user_, pass_);
 				new_con->setSchema(schema_);
-				new_con->setClientOption("characterSetResults", "utf8mb4");
 				con->con_.reset(new_con);
 				con->last_oper_time_ = timestamp;
 			}

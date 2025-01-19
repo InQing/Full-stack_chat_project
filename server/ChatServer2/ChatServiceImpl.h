@@ -1,7 +1,7 @@
 #pragma once
 #include "message.grpc.pb.h"
 #include "message.pb.h"
-#include "const.h"
+#include "data.h"
 #include <grpcpp/grpcpp.h>
 
 using grpc::Server;

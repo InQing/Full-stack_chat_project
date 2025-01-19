@@ -35,15 +35,15 @@ void ApplyFriendPage::AddNewApply(std::shared_ptr<AddFriendApply> apply)
 	auto* apply_item = new ApplyFriendItem();
     auto apply_info = std::make_shared<ApplyInfo>(apply->_from_uid,
              apply->_name, apply->_desc,heads[head_i], apply->_name, 0, 0);
-    apply_item->SetInfo( apply_info);
-	QListWidgetItem* item = new QListWidgetItem;
-	//qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
+    apply_item->SetInfo(apply_info);
+
+    QListWidgetItem* item = new QListWidgetItem;
 	item->setSizeHint(apply_item->sizeHint());
 	item->setFlags(item->flags() & ~Qt::ItemIsEnabled & ~Qt::ItemIsSelectable);
 	ui->apply_friend_list->insertItem(0,item);
 	ui->apply_friend_list->setItemWidget(item, apply_item);
     apply_item->ShowAddBtn(true);
-	//收到审核好友信号
+    // 收到审核好友信号
     connect(apply_item, &ApplyFriendItem::sig_auth_friend, [this](std::shared_ptr<ApplyInfo> apply_info) {
 		auto* authFriend = new AuthenFriend(this);
 		authFriend->setModal(true);

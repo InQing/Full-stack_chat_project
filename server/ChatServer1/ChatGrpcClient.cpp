@@ -23,7 +23,6 @@ ChatGrpcClient::ChatGrpcClient() {
 AddFriendRsp ChatGrpcClient::NotifyAddFriend(std::string server_ip, const AddFriendReq& req) {
     AddFriendRsp rsp;
     Defer defer([&rsp, &req]() {
-        rsp.set_error(ErrorCodes::SUCCESS);
         rsp.set_applyuid(req.applyuid());
         rsp.set_touid(req.touid());
         });

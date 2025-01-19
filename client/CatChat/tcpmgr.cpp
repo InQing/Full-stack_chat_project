@@ -97,12 +97,12 @@ void TcpMgr::initHandlers()
         // 登录成功
         auto uid = jsonObj["uid"].toInt();
         auto name = jsonObj["name"].toString();
-        // auto nick = jsonObj["nick"].toString();
-        // auto icon = jsonObj["icon"].toString();
-        // auto sex = jsonObj["sex"].toInt();
+        auto nick = jsonObj["nick"].toString();
+        auto icon = jsonObj["icon"].toString();
+        auto sex = jsonObj["sex"].toInt();
 
         // 加载与用户信息
-        auto user_info = std::make_shared<UserInfo>(uid, name, "猫", ":/res/cat_1.ico", 1);
+        auto user_info = std::make_shared<UserInfo>(uid, name, nick, icon, sex);
         UserMgr::GetInstance()->SetUserInfo(user_info);
 
         // 加载好友申请列表与好友列表
@@ -151,16 +151,85 @@ void TcpMgr::initHandlers()
             return;
         }
         auto search_info =  std::make_shared<SearchInfo>(jsonObj["uid"].toInt(), jsonObj["name"].toString(),
-                                                        "nick", "desc",
-                                                        0, "icon");
+                                                        jsonObj["nick"].toString(), jsonObj["desc"].toString(),
+                                                        jsonObj["sex"].toInt(), jsonObj["icon"].toString());
 
         emit sig_user_search(search_info);
     });
 
     handlers_.insert(ID_ADD_FRIEND_RSP, [this](ReqId id, int len, QByteArray data) {
         Q_UNUSED(len);
-        qDebug() << "handle id ID_ADD_FRIEND_RSP," << " data is " << data;
-        // 将QByteArray转换为QJsonDocument
+        qDebug() << "handle id is " << id << " data is " << data;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
+        // 检查转换是否成功
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to create QJsonDocument.";
+            return;
+        }
+
+        QJsonObject jsonObj = jsonDoc.object();
+
+        if (!jsonObj.contains("error")) {
+            int err = ErrorCodes::ERR_JSON;
+            qDebug() << "Add Friend Failed, err is Json Parse Err" << err;
+            return;
+        }
+
+        int err = jsonObj["error"].toInt();
+        if (err != ErrorCodes::SUCCESS) {
+            qDebug() << "Add Friend Failed, err is " << err;
+            return;
+        }
+
+        qDebug() << "Add Friend Success " ;
+    });
+
+    handlers_.insert(ID_NOTIFY_ADD_FRIEND_REQ, [this](ReqId id, int len, QByteArray data) {
+        Q_UNUSED(len);
+        qDebug() << "handle id is " << id << " data is " << data;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
+        // 检查转换是否成功
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to create QJsonDocument.";
+            return;
+        }
+
+        QJsonObject jsonObj = jsonDoc.object();
+
+        if (!jsonObj.contains("error")) {
+            int err = ErrorCodes::ERR_JSON;
+            qDebug() << "Login Failed, err is Json Parse Err" << err;
+
+            emit sig_user_search(nullptr);
+            return;
+        }
+
+        int err = jsonObj["error"].toInt();
+        if (err != ErrorCodes::SUCCESS) {
+            qDebug() << "Login Failed, err is " << err;
+            emit sig_user_search(nullptr);
+            return;
+        }
+
+        int from_uid = jsonObj["applyuid"].toInt();
+        QString name = jsonObj["name"].toString();
+        QString desc = jsonObj["desc"].toString();
+        QString icon = jsonObj["icon"].toString();
+        QString nick = jsonObj["nick"].toString();
+        int sex = jsonObj["sex"].toInt();
+
+        auto apply_info = std::make_shared<AddFriendApply>(
+            from_uid, name, desc,
+            icon, nick, sex);
+
+        emit sig_friend_apply(apply_info);
+    });
+
+    handlers_.insert(ID_NOTIFY_AUTH_FRIEND_REQ, [this](ReqId id, int len, QByteArray data) {
+        Q_UNUSED(len);
+        qDebug() << "handle id is " << id << " data is " << data;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
         // 检查转换是否成功
@@ -172,28 +241,63 @@ void TcpMgr::initHandlers()
         QJsonObject jsonObj = jsonDoc.object();
         if (!jsonObj.contains("error")) {
             int err = ErrorCodes::ERR_JSON;
-            qDebug() << "Login Failed, err is Json Parse Err" << err;
+            qDebug() << "Auth Friend Failed, err is " << err;
             return;
         }
 
         int err = jsonObj["error"].toInt();
         if (err != ErrorCodes::SUCCESS) {
-            qDebug() << "Login Failed, err is " << err;
+            qDebug() << "Auth Friend Failed, err is " << err;
             return;
         }
 
-        int from_uid = jsonObj["applyuid"].toInt();
+        int from_uid = jsonObj["fromuid"].toInt();
         QString name = jsonObj["name"].toString();
-        QString desc = jsonObj["desc"].toString();
-        // QString icon = jsonObj["icon"].toString();
-        // QString nick = jsonObj["nick"].toString();
-        // int sex = jsonObj["sex"].toInt();
+        QString nick = jsonObj["nick"].toString();
+        QString icon = jsonObj["icon"].toString();
+        int sex = jsonObj["sex"].toInt();
 
-        auto apply_info = std::make_shared<AddFriendApply>(
-            from_uid, name, desc,
-            "", "", 0);
+        auto auth_info = std::make_shared<AuthInfo>(from_uid,name,
+                                                    nick, icon, sex);
 
-        emit sig_friend_apply(apply_info);
+        emit sig_add_auth_friend(auth_info);
+    });
+
+    handlers_.insert(ID_AUTH_FRIEND_RSP, [this](ReqId id, int len, QByteArray data) {
+        Q_UNUSED(len);
+        qDebug() << "handle id is " << id << " data is " << data;
+        // 将QByteArray转换为QJsonDocument
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
+        // 检查转换是否成功
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to create QJsonDocument.";
+            return;
+        }
+
+        QJsonObject jsonObj = jsonDoc.object();
+
+        if (!jsonObj.contains("error")) {
+            int err = ErrorCodes::ERR_JSON;
+            qDebug() << "Auth Friend Failed, err is Json Parse Err" << err;
+            return;
+        }
+
+        int err = jsonObj["error"].toInt();
+        if (err != ErrorCodes::SUCCESS) {
+            qDebug() << "Auth Friend Failed, err is " << err;
+            return;
+        }
+
+        auto name = jsonObj["name"].toString();
+        auto nick = jsonObj["nick"].toString();
+        auto icon = jsonObj["icon"].toString();
+        auto sex = jsonObj["sex"].toInt();
+        auto uid = jsonObj["uid"].toInt();
+        auto rsp = std::make_shared<AuthRsp>(uid, name, nick, icon, sex);
+        emit sig_auth_rsp(rsp);
+
+        qDebug() << "Auth Friend Success " ;
     });
 }
 

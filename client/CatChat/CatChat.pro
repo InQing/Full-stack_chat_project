@@ -136,7 +136,8 @@ RESOURCES += \
     res.qrc
 
 DISTFILES += \
-    config.ini
+    config.ini \
+    res/cat_2.jpg
 
 CONFIG(debug, debug|release) {
     message("debug mode")

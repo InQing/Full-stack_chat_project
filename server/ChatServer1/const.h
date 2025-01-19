@@ -51,14 +51,6 @@ private:
     std::function<void()> func_;
 };
 
-// 用户信息
-struct UserInfo {
-    std::string name;
-    std::string pwd;
-    int uid;
-    std::string email;
-};
-
 enum MSG_IDS {
     ID_GET_VARIFY_CODE = 1001, // 获取验证码
     ID_REG_USER = 1002, // 注册用户

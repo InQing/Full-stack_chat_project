@@ -1,7 +1,6 @@
 #include "applyfriendlist.h"
 #include <QWheelEvent>
 #include <QScrollBar>
-#include "listitembase.h"
 
 ApplyFriendList::ApplyFriendList(QWidget *parent)
 {

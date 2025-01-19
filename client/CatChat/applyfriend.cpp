@@ -1,9 +1,9 @@
+#include <QScrollBar>
+#include <QJsonDocument>
 #include "applyfriend.h"
 #include "ui_applyfriend.h"
 #include "clickedlabel.h"
 #include "friendlabel.h"
-#include <QScrollBar>
-#include <QJsonDocument>
 #include "usermgr.h"
 #include "tcpmgr.h"
 
@@ -16,7 +16,7 @@ ApplyFriend::ApplyFriend(QWidget *parent) :
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     this->setObjectName("ApplyFriend");
     this->setModal(true);
-    ui->name_ed->setPlaceholderText(tr("恋恋风辰"));
+    ui->name_ed->setPlaceholderText(UserMgr::GetInstance()->GetName());
     ui->lb_ed->setPlaceholderText("搜索、添加标签");
     ui->back_ed->setPlaceholderText("燃烧的胸毛");
 

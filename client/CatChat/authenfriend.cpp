@@ -414,7 +414,6 @@ void AuthenFriend::SlotAddFirendLabelByClickTip(QString text)
 
 void AuthenFriend::SlotApplySure()
 {
-    qDebug() << "Slot Apply Sure ";
     //添加发送逻辑
     QJsonObject jsonObj;
     auto uid = UserMgr::GetInstance()->GetUid();

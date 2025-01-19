@@ -334,25 +334,23 @@ void ChatDialog::addChatUserList()
         UserMgr::GetInstance()->UpdateChatLoadedCount();
     }
 
-    //模拟测试条目
-    // 创建QListWidgetItem，并设置自定义的widget
-    for(int i = 0; i < 13; i++){
-        int randomValue = QRandomGenerator::global()->bounded(100); // 生成0到99之间的随机整数
-        int str_i = randomValue%strs.size();
-        int head_i = randomValue%heads.size();
-        int name_i = randomValue%names.size();
+    // 假数据
+    // for(int i = 0; i < 13; i++){
+    //     int randomValue = QRandomGenerator::global()->bounded(100); // 生成0到99之间的随机整数
+    //     int str_i = randomValue%strs.size();
+    //     int head_i = randomValue%heads.size();
+    //     int name_i = randomValue%names.size();
 
-        auto *chat_user_wid = new ChatUserWid();
-        auto user_info = std::make_shared<UserInfo>(0,names[name_i],
-                                                    names[name_i],heads[head_i],0,strs[str_i]);
-        chat_user_wid->SetInfo(user_info);
-        QListWidgetItem *item = new QListWidgetItem;
-        //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
-        item->setSizeHint(chat_user_wid->sizeHint());
-        ui->chat_user_list->addItem(item);
-        ui->chat_user_list->setItemWidget(item, chat_user_wid);
-    }
-
+    //     auto *chat_user_wid = new ChatUserWid();
+    //     auto user_info = std::make_shared<UserInfo>(0,names[name_i],
+    //                                                 names[name_i],heads[head_i],0,strs[str_i]);
+    //     chat_user_wid->SetInfo(user_info);
+    //     QListWidgetItem *item = new QListWidgetItem;
+    //     //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
+    //     item->setSizeHint(chat_user_wid->sizeHint());
+    //     ui->chat_user_list->addItem(item);
+    //     ui->chat_user_list->setItemWidget(item, chat_user_wid);
+    // }
 }
 
 void ChatDialog::loadMoreChatUser() {
@@ -641,18 +639,15 @@ void ChatDialog::slot_apply_friend(std::shared_ptr<AddFriendApply> apply)
 	qDebug() << "receive apply friend slot, applyuid is " << apply->_from_uid << " name is "
 		<< apply->_name << " desc is " << apply->_desc;
 
-    // 测试
-    return;
+   bool is_already = UserMgr::GetInstance()->AlreadyApply(apply->_from_uid);
+   if(is_already){
+        return;
+   }
 
-   // bool is_already = UserMgr::GetInstance()->AlreadyApply(apply->_from_uid);
-   // if(is_already){
-   //      return;
-   // }
-
-   //  UserMgr::GetInstance()->AddApplyList(std::make_shared<ApplyInfo>(apply));
-   //  ui->side_contact_lb->ShowRedPoint(true);
-   //  ui->con_user_list->ShowRedPoint(true);
-   //  ui->friend_apply_page->AddNewApply(apply);
+    UserMgr::GetInstance()->AddApplyList(std::make_shared<ApplyInfo>(apply));
+    ui->side_contact_lb->ShowRedPoint(true);
+    ui->con_user_list->ShowRedPoint(true);
+    ui->friend_apply_page->AddNewApply(apply);
 }
 
 void ChatDialog::slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info) {

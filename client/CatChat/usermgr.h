@@ -41,8 +41,8 @@ private:
     std::vector<std::shared_ptr<FriendInfo>> _friend_list;
     QMap<int, std::shared_ptr<FriendInfo>> _friend_map;
     QString _token;
-    size_t _chat_loaded;
-    size_t _contact_loaded;
+    int _chat_loaded;
+    int _contact_loaded;
 
 public slots:
     void SlotAddFriendRsp(std::shared_ptr<AuthRsp> rsp);
