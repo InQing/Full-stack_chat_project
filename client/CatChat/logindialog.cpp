@@ -26,6 +26,8 @@ LoginDialog::LoginDialog(QWidget *parent)
 
     InitLoginPicture();
     showTip("登录状态", true);
+    ui->email_edit->setText("3040218941@qq.com");
+    ui->password_edit->setText("123456");
 
     initHttpHandlers();
     //连接登录回包信号

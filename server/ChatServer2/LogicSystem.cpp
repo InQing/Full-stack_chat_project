@@ -81,6 +81,9 @@ void LogicSystem::RegisterCallBacks() {
 	// 注册认证好友回调
 	func_callbacks_[ID_AUTH_FRIEND_REQ] = std::bind(&LogicSystem::AuthFriendApply, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	// 注册文本消息回调
+	func_callbacks_[ID_TEXT_CHAT_MSG_REQ] = std::bind(&LogicSystem::DealChatTextMsg, this,
+		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
 void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data) {
@@ -427,4 +430,68 @@ bool LogicSystem::GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<App
 bool LogicSystem::GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list) {
 	//从mysql获取好友列表
 	return MysqlMgr::GetInstance()->GetFriendList(self_id, user_list);
+}
+
+void LogicSystem::DealChatTextMsg(std::shared_ptr<CSession> session, const short& msg_id, const std::string& msg_data) {
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+
+	auto uid = root["fromuid"].asInt();
+	auto touid = root["touid"].asInt();
+	LOGI("LogicSystem::DealChatTextMsg: user DealChatTextMsg, fromuid is %d, touid is %d, msg_data is %s",
+		uid, touid, msg_data.c_str());
+
+	const Json::Value  arrays = root["text_array"];
+
+	Json::Value  rtvalue;
+	rtvalue["error"] = ErrorCodes::SUCCESS;
+	rtvalue["text_array"] = arrays;
+	rtvalue["fromuid"] = uid;
+	rtvalue["touid"] = touid;
+
+	Defer defer([this, &rtvalue, session]() {
+		std::string return_str = rtvalue.toStyledString();
+		session->Send(return_str, ID_TEXT_CHAT_MSG_RSP);
+		});
+
+
+	//查询redis 查找touid对应的server ip
+	auto to_str = std::to_string(touid);
+	auto to_ip_key = USERIPPREFIX + to_str;
+	std::string to_ip_value = "";
+	bool is_ip = RedisMgr::GetInstance()->Get(to_ip_key, to_ip_value);
+	// 对方不在线，不推送消息
+	// TODO... 将消息存入redis，待对方上线后再推送
+	if (!is_ip) {
+		return;
+	}
+
+	auto& cfg = ConfigMgr::GetInstance();
+	auto self_name = cfg["SelfServer"]["Name"];
+	// 对方位于同一个服务器中，直接通知对方有新消息
+	if (to_ip_value == self_name) {
+		auto session = UserMgr::GetInstance()->GetSession(touid);
+		if (session) {
+			//在内存中则直接发送通知对方
+			std::string return_str = rtvalue.toStyledString();
+			session->Send(return_str, ID_NOTIFY_TEXT_CHAT_MSG_REQ);
+		}
+
+		return;
+	}
+
+	// 不同服务器中，GRPC通知对方有新消息
+	TextChatMsgReq text_msg_req;
+	text_msg_req.set_fromuid(uid);
+	text_msg_req.set_touid(touid);
+	for (const auto& txt_obj : arrays) {
+		auto content = txt_obj["content"].asString();
+		auto msgid = txt_obj["msgid"].asString();
+		auto* text_msg = text_msg_req.add_textmsgs();
+		text_msg->set_msgid(msgid);
+		text_msg->set_msgcontent(content);
+	}
+
+	ChatGrpcClient::GetInstance()->NotifyTextChatMsg(to_ip_value, text_msg_req, rtvalue);
 }

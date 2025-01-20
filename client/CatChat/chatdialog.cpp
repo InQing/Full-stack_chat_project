@@ -210,7 +210,7 @@ void ChatDialog::slot_text_chat_msg(std::shared_ptr<TextChatMsg> msg)
     //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
     item->setSizeHint(chat_user_wid->sizeHint());
     chat_user_wid->updateLastMsg(msg->_chat_msgs);
-     UserMgr::GetInstance()->AppendFriendChatMsg(msg->_from_uid,msg->_chat_msgs);
+    UserMgr::GetInstance()->AppendFriendChatMsg(msg->_from_uid,msg->_chat_msgs);
     ui->chat_user_list->insertItem(0, item);
     ui->chat_user_list->setItemWidget(item, chat_user_wid);
     _chat_items_added.insert(msg->_from_uid, item);
