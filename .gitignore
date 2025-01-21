@@ -38,3 +38,15 @@ desktop.ini
 
 # 配置文件
 **/config.ini
+**/config.yaml
+
+# 编译输出
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# IDE 文件
+.idea/
+.vscode/
