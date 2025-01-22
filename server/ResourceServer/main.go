@@ -1,23 +1,45 @@
 package main
 
 import (
+	"fmt"
 	"log"
+
+	"resource-server/api"
+	"resource-server/config"
+	"resource-server/middleware"
+	"resource-server/storage"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	// 初始化 Gin 引擎
+	// 加载配置文件
+	if err := config.Init("config/config.yaml"); err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
+	// 创建 Gin 引擎
 	r := gin.Default()
 
-	// TODO: 初始化配置
+	// 添加中间件
+	r.Use(middleware.LogMiddleware()) // 添加日志中间件
 
-	// TODO: 注册路由
+	// 创建存储实例
+	cfg := config.Get()
+	storage, err := storage.NewStorage(cfg)
+	if err != nil {
+		log.Fatalf("Failed to create storage: %v", err)
+	}
 
-	// TODO: 注册中间件
+	// 注册路由
+	api.RegisterRoutes(r, cfg.Server.UploadDir, storage)
 
 	// 启动服务器
-	if err := r.Run(":8080"); err != nil {
-		log.Fatalf("服务器启动失败: %v", err)
+	serverConfig := config.GetServer()
+	addr := fmt.Sprintf("%s:%d", serverConfig.Host, serverConfig.Port)
+	middleware.Info("Server starting at %s", addr)
+	if err := r.Run(addr); err != nil {
+		middleware.Error("Server failed to start: %v", err)
+		log.Fatalf("Server failed to start: %v", err)
 	}
 }
