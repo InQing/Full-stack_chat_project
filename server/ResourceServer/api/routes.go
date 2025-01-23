@@ -18,7 +18,7 @@ func RegisterRoutes(r *gin.Engine, tempDir string, storage storage.Storage) {
 	downloadHandler := NewDownloadHandler(downloadService)
 
 	// 上传相关路由
-	r.POST("/upload", uploadHandler.HandleChunkUpload)
+	r.POST("/upload", uploadHandler.Upload)  // 使用Upload处理JSON格式的请求
 
 	// 下载相关路由
 	r.GET("/download/:fileId", downloadHandler.Download)

@@ -1,13 +1,14 @@
 package api
 
 import (
+	"bytes"
+	"encoding/base64"
 	"io"
+	"log"
 	"net/http"
 	"resource-server/service"
 
 	"resource-server/models"
-
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,9 +34,33 @@ func NewUploadHandler(uploadService *service.UploadService) *UploadHandler {
 
 // Upload 处理文件分片上传
 func (h *UploadHandler) Upload(c *gin.Context) {
+	log.Printf("=== 开始处理分片上传请求 ===")
+
+	// 读取并打印原始请求数据
+	rawData, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Printf("读取请求体失败: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "读取请求失败"})
+		return
+	}
+	// 因为已经读取了body，需要重新设置
+	c.Request.Body = io.NopCloser(bytes.NewBuffer(rawData))
+
 	var req UploadRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("解析JSON请求失败: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	log.Printf("请求数据: FileID=%s, ChunkNumber=%d, TotalChunks=%d, MD5=%s, ChunkSize=%d字节",
+		req.FileID, req.ChunkNumber, req.TotalChunks, req.MD5, len(req.Chunk))
+
+	// Base64解码分片数据
+	chunkData, err := base64.StdEncoding.DecodeString(req.Chunk)
+	if err != nil {
+		log.Printf("Base64解码失败: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的分片数据"})
 		return
 	}
 
@@ -48,84 +73,19 @@ func (h *UploadHandler) Upload(c *gin.Context) {
 	}
 
 	// 处理上传
-	err := h.uploadService.HandleChunkUpload(chunkInfo, []byte(req.Chunk))
+	err = h.uploadService.HandleChunkUpload(chunkInfo, chunkData)
 	if err != nil {
+		log.Printf("保存分片失败: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"status":  "success",
-		"message": "分片上传成功",
-	})
-}
-
-// HandleChunkUpload 处理分片上传请求
-func (h *UploadHandler) HandleChunkUpload(c *gin.Context) {
-	// 获取表单字段
-	fileID := c.PostForm("file_id")
-	chunkNumber := c.PostForm("chunk_number")
-	totalChunks := c.PostForm("total_chunks")
-	md5Value := c.PostForm("md5")
-
-	// 转换数字字段
-	chunkNum, err := strconv.Atoi(chunkNumber)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的分片编号"})
-		return
-	}
-	totalNum, err := strconv.Atoi(totalChunks)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的总分片数"})
-		return
-	}
-
-	// 创建ChunkInfo
-	chunkInfo := &models.ChunkInfo{
-		FileID:      fileID,
-		ChunkNumber: chunkNum,
-		TotalChunks: totalNum,
-		MD5:         md5Value,
-	}
-
-	// 获取文件数据
-	file, err := c.FormFile("chunk")
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "获取文件数据失败",
-		})
-		return
-	}
-
-	// 读取文件数据
-	f, err := file.Open()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "读取文件数据失败",
-		})
-		return
-	}
-	defer f.Close()
-
-	data, err := io.ReadAll(f)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "读取文件数据失败",
-		})
-		return
-	}
-
-	// 处理分片上传
-	err = h.uploadService.HandleChunkUpload(chunkInfo, data)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
+	log.Printf("分片 %d/%d 上传成功", req.ChunkNumber, req.TotalChunks)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "success",
 		"message": "分片上传成功",
 	})
+
+	log.Printf("=== 分片上传请求处理完成 ===\n")
 }
