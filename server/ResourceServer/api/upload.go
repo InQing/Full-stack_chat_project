@@ -16,6 +16,7 @@ import (
 // UploadRequest 上传请求的结构体
 type UploadRequest struct {
 	FileID      string `json:"file_id"`
+	UploadID    string `json:"upload_id"`
 	Chunk       string `json:"chunk"`
 	ChunkNumber int    `json:"chunk_number"`
 	TotalChunks int    `json:"total_chunks"`
@@ -88,4 +89,36 @@ func (h *UploadHandler) Upload(c *gin.Context) {
 	})
 
 	log.Printf("=== 分片上传请求处理完成 ===\n")
+}
+
+// InitUpload 处理文件上传初始化请求
+func (h *UploadHandler) InitUpload(c *gin.Context) {
+	var req models.UploadInitRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "请求参数错误",
+		})
+		return
+	}
+
+	// 调用service层处理初始化
+	uploadID, err := h.uploadService.InitUpload(req.Filename, req.FileID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "初始化上传失败",
+		})
+		return
+	}
+
+	// 返回成功响应
+	response := models.UploadInitResponse{
+		Code:    http.StatusOK,
+		Message: "初始化成功",
+	}
+	response.Data.UploadID = uploadID
+	response.Data.FileID = req.FileID
+
+	c.JSON(http.StatusOK, response)
 }

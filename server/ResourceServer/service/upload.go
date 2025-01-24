@@ -5,14 +5,20 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
-	"strings"
 	"sync"
+	"time"
 
+	"resource-server/interfaces"
 	"resource-server/models"
 	"resource-server/storage"
+
+	"github.com/google/uuid"
 )
+
+var _ interfaces.UploadService = (*UploadService)(nil) // 确保实现了接口
 
 type UploadService struct {
 	uploadStatusMap sync.Map
@@ -27,26 +33,19 @@ func NewUploadService(tempDir string, storage storage.Storage) *UploadService {
 	}
 }
 
-// 从FileId中提取原始文件名
-// FileId格式: yyyyMMddHHmmss_filename
-func extractFileName(fileId string) string {
-	parts := strings.SplitN(fileId, "_", 2)
-	if len(parts) != 2 {
-		return fileId // 如果格式不对，返回原始fileId
-	}
-	return parts[1]
-}
-
 // HandleChunkUpload 处理分片上传
 func (s *UploadService) HandleChunkUpload(chunk *models.ChunkInfo, data []byte) error {
-	// 获取或创建上传状态
-	statusInterface, _ := s.uploadStatusMap.LoadOrStore(chunk.FileID, &models.UploadStatus{
-		FileID:         chunk.FileID,
-		TotalChunks:    chunk.TotalChunks,
-		UploadedChunks: make(map[int]string),
-		TempDir:        filepath.Join(s.tempDir, chunk.FileID),
-	})
+	// 获取上传状态
+	statusInterface, ok := s.uploadStatusMap.Load(chunk.FileID)
+	if !ok {
+		return fmt.Errorf("未找到上传状态，请先初始化上传")
+	}
 	status := statusInterface.(*models.UploadStatus)
+
+	// 更新总分片数
+	if status.TotalChunks == 0 {
+		status.TotalChunks = chunk.TotalChunks
+	}
 
 	// 创建临时目录
 	if err := os.MkdirAll(status.TempDir, 0755); err != nil {
@@ -85,11 +84,8 @@ func (s *UploadService) mergeAndUpload(status *models.UploadStatus) error {
 		s.uploadStatusMap.Delete(status.FileID)
 	}()
 
-	// 从FileId中提取原始文件名
-	fileName := extractFileName(status.FileID)
-	
 	// 1. 合并文件
-	mergedFilePath := filepath.Join(status.TempDir, fileName)
+	mergedFilePath := filepath.Join(status.TempDir, status.Filename)
 	if err := s.mergeChunks(status, mergedFilePath); err != nil {
 		return err
 	}
@@ -101,7 +97,7 @@ func (s *UploadService) mergeAndUpload(status *models.UploadStatus) error {
 	}
 	defer file.Close()
 
-	if err := s.storage.Upload(fileName, file); err != nil {
+	if err := s.storage.Upload(status.FileID, file); err != nil {
 		return fmt.Errorf("上传文件失败: %v", err)
 	}
 
@@ -146,4 +142,39 @@ func calculateMD5(data []byte) string {
 	hash := md5.New()
 	hash.Write(data)
 	return hex.EncodeToString(hash.Sum(nil))
+}
+
+// InitUpload 初始化文件上传
+func (s *UploadService) InitUpload(filename string, fileId string) (string, error) {
+	log.Printf("=== 开始初始化文件上传 ===")
+	log.Printf("文件名: %s", filename)
+	log.Printf("文件ID: %s", fileId)
+
+	// 生成上传会话ID
+	uploadID := generateUploadID()
+	log.Printf("生成的uploadID: %s", uploadID)
+
+	// 创建上传状态
+	status := &models.UploadStatus{
+		FileID:         fileId,
+		UploadID:       uploadID,
+		Filename:       filename,
+		UploadedChunks: make(map[int]string),
+		TempDir:        filepath.Join(s.tempDir, fileId),
+	}
+	s.uploadStatusMap.Store(fileId, status)
+	log.Printf("创建上传状态成功，临时目录: %s", status.TempDir)
+
+	log.Printf("=== 初始化文件上传完成 ===")
+	return uploadID, nil
+}
+
+// generateUploadID 生成上传会话ID
+func generateUploadID() string {
+	return fmt.Sprintf("upload_%d_%s", time.Now().Unix(), uuid.New().String())
+}
+
+// GetUploadStatus 获取上传状态
+func (s *UploadService) GetUploadStatus(fileId string) (interface{}, bool) {
+	return s.uploadStatusMap.Load(fileId)
 }

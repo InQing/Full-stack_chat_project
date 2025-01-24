@@ -13,9 +13,15 @@ import (
 )
 
 func main() {
-	// 加载配置文件
+	// 加载配置
 	if err := config.Init("config/config.yaml"); err != nil {
-		log.Fatalf("Failed to load config: %v", err)
+		log.Fatalf("加载配置失败: %v", err)
+	}
+
+	// 初始化Redis
+	cfg := config.Get()
+	if err := middleware.InitRedis(cfg); err != nil {
+		log.Fatalf("初始化Redis失败: %v", err)
 	}
 
 	// 创建 Gin 引擎
@@ -25,7 +31,6 @@ func main() {
 	r.Use(middleware.LogMiddleware()) // 添加日志中间件
 
 	// 创建存储实例
-	cfg := config.Get()
 	storage, err := storage.NewStorage(cfg)
 	if err != nil {
 		log.Fatalf("Failed to create storage: %v", err)

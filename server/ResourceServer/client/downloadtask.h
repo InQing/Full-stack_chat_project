@@ -1,3 +1,4 @@
+// downloadtask.h
 #ifndef DOWNLOADTASK_H
 #define DOWNLOADTASK_H
 
@@ -28,8 +29,6 @@ private:
     QString m_fileId;
     QString m_savePath;
     QFile m_file;
-    QNetworkAccessManager* m_networkManager;
-    QEventLoop m_eventLoop;
 };
 
 #endif // DOWNLOADTASK_H

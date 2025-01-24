@@ -18,26 +18,32 @@ class UploadTask : public QObject, public QRunnable
     Q_OBJECT
 
 public:
-    explicit UploadTask(const QString& filePath, const QString& fileId, QObject *parent = nullptr);
+    explicit UploadTask(const QString &filePath, const QString &fileId,
+                        const QString &token, const QString &uid,
+                        QObject *parent = nullptr);
     ~UploadTask();
     void run() override;
 
 signals:
-    void progressUpdated(const QString& fileId, int progress);
-    void completed(const QString& fileId);
-    void error(const QString& fileId, const QString& errorMessage);
+    void progressUpdated(const QString &fileId, int progress);
+    void completed(const QString &fileId);
+    void error(const QString &fileId, const QString &errorMessage);
 
 private slots:
     void onChunkCompleted(int chunkNumber);
-    void onChunkError(int chunkNumber, const QString& errorMessage);
+    void onChunkError(int chunkNumber, const QString &errorMessage);
     void onChunkProgress(int chunkNumber, qint64 bytesSent, qint64 bytesTotal);
 
 private:
+    bool initializeUpload();
     void startChunkUploads();
     void checkCompletion();
 
     QString m_filePath;
     QString m_fileId;
+    QString m_token;
+    QString m_uid;
+    QString m_uploadId;
     QFile m_file;
     int m_totalChunks;
     QSet<int> m_completedChunks;

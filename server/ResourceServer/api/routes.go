@@ -1,6 +1,7 @@
 package api
 
 import (
+	"resource-server/middleware"
 	"resource-server/service"
 	"resource-server/storage"
 
@@ -17,8 +18,15 @@ func RegisterRoutes(r *gin.Engine, tempDir string, storage storage.Storage) {
 	downloadService := service.NewDownloadService(storage)
 	downloadHandler := NewDownloadHandler(downloadService)
 
-	// 上传相关路由
-	r.POST("/upload", uploadHandler.Upload)  // 使用Upload处理JSON格式的请求
+	// 上传相关路由组
+	uploadGroup := r.Group("/upload")
+	{
+		// 初始化上传接口 - 使用token验证
+		uploadGroup.POST("/init", middleware.TokenAuth(), uploadHandler.InitUpload)
+
+		// 分片上传接口 - 使用uploadID验证
+		uploadGroup.POST("/chunk", middleware.UploadIDAuth(uploadService), uploadHandler.Upload)
+	}
 
 	// 下载相关路由
 	r.GET("/download/:fileId", downloadHandler.Download)

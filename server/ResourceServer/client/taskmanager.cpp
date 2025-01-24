@@ -35,7 +35,7 @@ void TaskManager::startTask(QRunnable* task)
 
 void TaskManager::addUploadTask(const QString& filePath, const QString& fileId)
 {
-    UploadTask* task = new UploadTask(filePath, fileId);
+    UploadTask* task = new UploadTask(filePath, fileId, "5225f70b-1662-488f-a055-c11dbd856574", "3");
     
     // 连接信号
     connect(task, &UploadTask::progressUpdated,

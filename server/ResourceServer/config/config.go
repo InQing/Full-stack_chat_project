@@ -9,6 +9,7 @@ import (
 // Config 配置结构体
 type Config struct {
 	Server ServerConfig `yaml:"server"`
+	Redis  RedisConfig  `yaml:"redis"` // 添加Redis配置
 	Log    LogConfig    `yaml:"log"`
 	Qiniu  QiniuConfig  `yaml:"qiniu"`
 }
@@ -42,6 +43,14 @@ type QiniuConfig struct {
 	Domain    string `yaml:"domain"`    // 访问域名
 	Zone      string `yaml:"zone"`      // 存储区域
 	UseHTTPS  bool   `yaml:"use_https"` // 是否使用HTTPS
+}
+
+// Redis配置
+type RedisConfig struct {
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
 }
 
 var globalConfig Config

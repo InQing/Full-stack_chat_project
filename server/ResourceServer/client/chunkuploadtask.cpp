@@ -5,115 +5,86 @@
 #include <QEventLoop>
 #include <QDebug>
 
-ChunkUploadTask::ChunkUploadTask(const QString& fileId,
-                               const QByteArray& chunkData,
-                               int chunkNumber,
-                               int totalChunks,
-                               QObject* parent)
-    : QObject(parent)
-    , m_fileId(fileId)
-    , m_chunkData(chunkData)
-    , m_chunkNumber(chunkNumber)
-    , m_totalChunks(totalChunks)
+ChunkUploadTask::ChunkUploadTask(const QString &fileId,
+                                 const QString &uploadId,
+                                 const QByteArray &chunkData,
+                                 int chunkNumber,
+                                 int totalChunks,
+                                 QObject *parent)
+    : QObject(parent), m_fileId(fileId), m_uploadId(uploadId), m_chunkData(chunkData), m_chunkNumber(chunkNumber), m_totalChunks(totalChunks)
 {
     setAutoDelete(true);
 }
 
 void ChunkUploadTask::run()
 {
-    qDebug() << "\n=== 开始上传分片 ===" 
+    qDebug() << "\n=== 开始上传分片 ==="
              << "\n文件ID:" << m_fileId
+             << "\nUploadID:" << m_uploadId
              << "\n分片编号:" << m_chunkNumber
              << "\n总分片数:" << m_totalChunks
              << "\n分片大小:" << m_chunkData.size() << "字节";
-    
+
     QNetworkAccessManager networkManager;
-    
-    // 先计算原始数据的MD5
+    QEventLoop eventLoop;
+
+    // 计算MD5
     QString md5 = calculateMD5(m_chunkData);
-    
+
     // 准备JSON数据
     QJsonObject json;
     json["file_id"] = m_fileId;
+    json["upload_id"] = m_uploadId;
     json["chunk"] = QString::fromLatin1(m_chunkData.toBase64());
     json["chunk_number"] = m_chunkNumber;
     json["total_chunks"] = m_totalChunks;
     json["md5"] = md5;
 
     QJsonDocument doc(json);
+    QByteArray postData = doc.toJson();
 
     // 发送请求
-    QUrl url("http://localhost:8080/upload");
+    QUrl url("http://localhost:8080/upload/chunk");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Upload-ID", m_uploadId.toUtf8());
 
-    qDebug() << "\n=== 发送请求 ===\n"
-             << "URL:" << url.toString()
-             << "\nContent-Type:" << request.header(QNetworkRequest::ContentTypeHeader).toString();
+    QNetworkReply *reply = networkManager.post(request, postData);
 
-    QNetworkReply* reply = networkManager.post(request, doc.toJson());
-    
-    // 连接信号
-    QEventLoop loop;
-    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    
-    // 使用errorOccurred信号替代error信号
-    #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-        connect(reply, &QNetworkReply::errorOccurred,
-                [this, reply, &loop](QNetworkReply::NetworkError error) {
-                    qDebug() << "\n=== 上传错误 ===\n"
-                            << "分片编号:" << m_chunkNumber
-                            << "\n错误类型:" << error
-                            << "\n错误信息:" << reply->errorString();
-                    
-                    // 输出服务器响应
-                    QByteArray response = reply->readAll();
-                    qDebug() << "服务器响应:" << QString::fromUtf8(response);
-                    
-                    emit this->error(m_chunkNumber, reply->errorString());
-                    reply->deleteLater();
-                    loop.quit();
-                });
-    #else
-        connect(reply, static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error),
-                [this, reply, &loop](QNetworkReply::NetworkError error) {
-                    qDebug() << "\n=== 上传错误 ===\n"
-                            << "分片编号:" << m_chunkNumber
-                            << "\n错误类型:" << error
-                            << "\n错误信息:" << reply->errorString();
-                    
-                    // 输出服务器响应
-                    QByteArray response = reply->readAll();
-                    qDebug() << "服务器响应:" << QString::fromUtf8(response);
-                    
-                    emit this->error(m_chunkNumber, reply->errorString());
-                    reply->deleteLater();
-                    loop.quit();
-                });
-    #endif
+    // 连接完成信号
+    connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+    eventLoop.exec();
 
-    connect(reply, &QNetworkReply::uploadProgress,
-            [this](qint64 bytesSent, qint64 bytesTotal) {
-                qDebug() << "分片" << m_chunkNumber << "上传进度:" 
-                        << bytesSent << "/" << bytesTotal;
-                emit progressUpdated(m_chunkNumber, bytesSent, bytesTotal);
-            });
+    if (reply->error() != QNetworkReply::NoError)
+    {
+        qDebug() << "分片" << m_chunkNumber << "上传错误:" << reply->errorString();
+        emit error(m_chunkNumber, reply->errorString());
+        reply->deleteLater();
+        return;
+    }
 
-    loop.exec();
+    // 解析响应
+    QJsonDocument response = QJsonDocument::fromJson(reply->readAll());
+    QJsonObject responseObj = response.object();
 
-    if (reply->error() == QNetworkReply::NoError) {
-        QByteArray response = reply->readAll();
-        qDebug() << "\n=== 上传成功 ===\n"
-                 << "分片编号:" << m_chunkNumber
-                 << "\n服务器响应:" << QString::fromUtf8(response);
+    if (responseObj["status"].toString() != "success")
+    {
+        qDebug() << "分片" << m_chunkNumber << "上传失败:" << responseObj["message"].toString();
+        emit error(m_chunkNumber, responseObj["message"].toString());
+    }
+    else
+    {
+        qDebug() << "分片" << m_chunkNumber << "上传完成";
+        // 计算上传进度
+        int progress = static_cast<int>((m_chunkNumber * 100.0) / m_totalChunks);
+        emit progressUpdated(m_chunkNumber, progress, 100);
         emit completed(m_chunkNumber);
     }
 
     reply->deleteLater();
-    emit finished();
 }
 
-QByteArray ChunkUploadTask::calculateMD5(const QByteArray& data)
+QByteArray ChunkUploadTask::calculateMD5(const QByteArray &data)
 {
     return QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex();
 }

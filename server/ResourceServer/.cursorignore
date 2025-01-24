@@ -1,0 +1,50 @@
+# 编译输出
+bin/
+dist/
+build/
+
+# 依赖目录
+vendor/
+node_modules/
+
+# IDE 和编辑器文件
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
+
+# 测试覆盖率报告
+coverage/
+
+# 环境变量文件
+.env
+.env.*
+
+# 编译的二进制文件
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go 特定文件
+*.test
+*.out
+
+# 缓存文件
+*.cache
+
+# 上传的文件（如果有临时存储）
+uploads/ 
+
+
+client/FileTransferClient.pro.user
+build-FileTransferClient-Desktop_Qt_6_4_3_MSVC2019_64bit-Debug
