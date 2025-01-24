@@ -1,31 +1,36 @@
-#include "chatpage.h"
-#include "ui_chatpage.h"
 #include <QStyleOption>
 #include <QPainter>
 #include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QUuid>
+#include <QFileDialog>
+#include "chatpage.h"
+#include "ui_chatpage.h"
 #include "ChatItemBase.h"
 #include "TextBubble.h"
 #include "PictureBubble.h"
-#include "applyfrienditem.h"
 #include "usermgr.h"
-#include <QJsonArray>
-#include <QJsonObject>
 #include "tcpmgr.h"
-#include <QUuid>
+#include "clickedlabel.h"
+#include "FileBubble.h"
 
 ChatPage::ChatPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ChatPage)
 {
     ui->setupUi(this);
-    //设置按钮样式
+    // 设置按钮样式
     ui->receive_btn->SetState("normal","hover","press");
     ui->send_btn->SetState("normal","hover","press");
 
-    //设置图标样式
+    // 设置图标样式
     ui->emo_lb->SetState("normal","hover","press","normal","hover","press");
     ui->file_lb->SetState("normal","hover","press","normal","hover","press");
 
+    // 连接点击文件图标信号
+    // 不需要！由于槽函数的名称，qt会自动匹配，如果这里连接会导致槽函数触发两次
+    // connect(ui->file_lb, &ClickedLabel::clicked, this, &ChatPage::on_file_lb_clicked);
 }
 
 ChatPage::~ChatPage()
@@ -39,7 +44,7 @@ void ChatPage::SetUserInfo(std::shared_ptr<UserInfo> user_info)
     //设置ui界面
     ui->title_lb->setText(_user_info->_name);
     ui->chat_data_list->removeAllItem();
-    for(auto & msg : user_info->_chat_msgs){
+    for(auto &msg : user_info->_chat_msgs){
         AppendChatMsg(msg);
     }
 }
@@ -74,8 +79,6 @@ void ChatPage::AppendChatMsg(std::shared_ptr<TextChatData> msg)
         pChatItem->setWidget(pBubble);
         ui->chat_data_list->appendChatItem(pChatItem);
     }
-
-
 }
 
 void ChatPage::paintEvent(QPaintEvent *event)
@@ -213,6 +216,37 @@ void ChatPage::on_receive_btn_clicked()
         }
         if(pBubble != nullptr)
         {
+            pChatItem->setWidget(pBubble);
+            ui->chat_data_list->appendChatItem(pChatItem);
+        }
+    }
+}
+
+void ChatPage::on_file_lb_clicked()
+{
+    qDebug() << _user_info->_name;
+    QStringList files = QFileDialog::getOpenFileNames(
+        this,
+        "选择要上传的文件",
+        QString(),
+        "所有文件 (*.*)"
+        );
+
+    if (!files.isEmpty()) {
+        for (const QString& file : files) {
+            QString currentDateTime = QDateTime::currentDateTime().toString("yyyyMMddHHmmss");
+            QString fileId = currentDateTime + "_" + QFileInfo(file).fileName(); // 日期 + 文件名
+            // createProgressBar(fileId, QFileInfo(file).fileName());
+            // TaskManager::instance()->addUploadTask(file, fileId);
+            auto self_info = UserMgr::GetInstance()->GetUserInfo();
+            ChatRole role;
+            role = ChatRole::Self;
+            ChatItemBase* pChatItem = new ChatItemBase(role);
+
+            pChatItem->setUserName(self_info->_name);
+            pChatItem->setUserIcon(QPixmap(self_info->_icon));
+            QWidget* pBubble = nullptr;
+            pBubble = new FileBubble(role, "我是一只小黑猫.txt", "100Mb");
             pChatItem->setWidget(pBubble);
             ui->chat_data_list->appendChatItem(pChatItem);
         }

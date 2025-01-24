@@ -335,22 +335,22 @@ void ChatDialog::addChatUserList()
     }
 
     // 假数据
-    // for(int i = 0; i < 13; i++){
-    //     int randomValue = QRandomGenerator::global()->bounded(100); // 生成0到99之间的随机整数
-    //     int str_i = randomValue%strs.size();
-    //     int head_i = randomValue%heads.size();
-    //     int name_i = randomValue%names.size();
+    for(int i = 0; i < 13; i++){
+        int randomValue = QRandomGenerator::global()->bounded(100); // 生成0到99之间的随机整数
+        int str_i = randomValue%strs.size();
+        int head_i = randomValue%heads.size();
+        int name_i = randomValue%names.size();
 
-    //     auto *chat_user_wid = new ChatUserWid();
-    //     auto user_info = std::make_shared<UserInfo>(0,names[name_i],
-    //                                                 names[name_i],heads[head_i],0,strs[str_i]);
-    //     chat_user_wid->SetInfo(user_info);
-    //     QListWidgetItem *item = new QListWidgetItem;
-    //     //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
-    //     item->setSizeHint(chat_user_wid->sizeHint());
-    //     ui->chat_user_list->addItem(item);
-    //     ui->chat_user_list->setItemWidget(item, chat_user_wid);
-    // }
+        auto *chat_user_wid = new ChatUserWid();
+        auto user_info = std::make_shared<UserInfo>(0,names[name_i],
+                                                    names[name_i],heads[head_i],0,strs[str_i]);
+        chat_user_wid->SetInfo(user_info);
+        QListWidgetItem *item = new QListWidgetItem;
+        //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
+        item->setSizeHint(chat_user_wid->sizeHint());
+        ui->chat_user_list->addItem(item);
+        ui->chat_user_list->setItemWidget(item, chat_user_wid);
+    }
 }
 
 void ChatDialog::loadMoreChatUser() {
@@ -486,7 +486,7 @@ void ChatDialog::SetSelectChatPage(int uid)
         return;
     }
 
-    //判断转化为自定义的widget
+    // 判断转化为自定义的widget
     // 对自定义widget进行操作， 将item 转化为基类ListItemBase
     ListItemBase *customItem = qobject_cast<ListItemBase*>(widget);
     if(!customItem){

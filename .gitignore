@@ -24,6 +24,7 @@ Release/
 x64/
 ipch/
 node_modules/
+bin/
 
 # 系统文件
 Thumbs.db

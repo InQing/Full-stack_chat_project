@@ -52,5 +52,6 @@
         <file>res/cat_1.jpg</file>
         <file>static/head_1.jpg</file>
         <file>res/cat_2.jpg</file>
+        <file>res/file_icon.png</file>
     </qresource>
 </RCC>
