@@ -29,6 +29,10 @@ using message::TextChatMsgReq;
 using message::TextChatMsgRsp;
 using message::TextChatData;
 
+using message::FileChatMsgReq;
+using message::FileChatMsgRsp;
+using message::FileChatData;
+
 class ChatConPool {
 public:
 	ChatConPool(size_t pool_size, const std::string host, const std::string port)
@@ -93,6 +97,7 @@ public:
 	AuthFriendRsp NotifyAuthFriend(std::string server_ip, const AuthFriendReq& req);
 	bool GetBaseInfo(std::string base_key, int uid, std::shared_ptr<UserInfo>& userinfo);
 	TextChatMsgRsp NotifyTextChatMsg(std::string server_ip, const TextChatMsgReq& req, const Json::Value& rtvalue);
+	FileChatMsgRsp NotifyFileChatMsg(std::string server_ip, const FileChatMsgReq& req, const Json::Value& rtvalue);
 private:
 	ChatGrpcClient();
 	std::unordered_map <std::string, std::unique_ptr<ChatConPool>> pools_;

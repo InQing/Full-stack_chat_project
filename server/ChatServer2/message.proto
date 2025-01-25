@@ -112,10 +112,30 @@ message TextChatMsgRsp {
 	repeated TextChatData textmsgs = 4;
 }
 
+message FileChatMsgReq {
+	int32 fromuid = 1;
+    int32 touid = 2;
+	repeated FileChatData filemsgs = 3;
+}
+
+message FileChatData{
+	string file_name = 1;
+	string file_size = 2;
+	string file_id = 3;
+}
+
+message FileChatMsgRsp {
+	int32 error = 1;
+	int32 fromuid = 2;
+	int32 touid = 3; 
+	repeated FileChatData filemsgs = 4;
+}
+
 service ChatService {
 	rpc NotifyAddFriend(AddFriendReq) returns (AddFriendRsp) {}
 	rpc RplyAddFriend(RplyFriendReq) returns (RplyFriendRsp) {}
 	rpc SendChatMsg(SendChatMsgReq) returns (SendChatMsgRsp) {}
 	rpc NotifyAuthFriend(AuthFriendReq) returns (AuthFriendRsp) {}
 	rpc NotifyTextChatMsg(TextChatMsgReq) returns (TextChatMsgRsp){}
+	rpc NotifyFileChatMsg(FileChatMsgReq) returns (FileChatMsgRsp){}
 }

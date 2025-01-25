@@ -19,6 +19,10 @@ using message::TextChatMsgReq;
 using message::TextChatMsgRsp;
 using message::TextChatData;
 
+using message::FileChatMsgReq;
+using message::FileChatMsgRsp;
+using message::FileChatData;
+
 
 class ChatServiceImpl final : public ChatService::Service
 {
@@ -32,6 +36,9 @@ public:
 
     Status NotifyTextChatMsg(ServerContext* context,
         const TextChatMsgReq* request, TextChatMsgRsp* response) override;
+
+    Status NotifyFileChatMsg(ServerContext* context,
+        const FileChatMsgReq* request, FileChatMsgRsp* response) override;
 
     bool GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo);
 

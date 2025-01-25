@@ -140,7 +140,7 @@ void ChatPage::on_send_btn_clicked()
                 txt_size = 0;
                 textArray = QJsonArray();
                 textObj = QJsonObject();
-                //发送tcp请求给chat server
+                // 发送tcp请求给chatserver
                 emit TcpMgr::GetInstance()->sig_send_data(ReqId::ID_TEXT_CHAT_MSG_REQ, jsonData);
             }
 
@@ -234,7 +234,9 @@ void ChatPage::on_file_lb_clicked()
     auto role = ChatRole::Self;
 
     if (!files.isEmpty()) {
-        for (const QString& file : files) {
+        auto file_array = QJsonArray();
+        for (const QString &file : files)
+        {
             QString currentDateTime = QDateTime::currentDateTime().toString("yyyyMMddHHmmss");
             QString file_size = FileManager::GetInstance()->formatFileSize(QFileInfo(file).size());
             QString file_name = QFileInfo(file).fileName();
@@ -252,7 +254,20 @@ void ChatPage::on_file_lb_clicked()
             FileManager::GetInstance()->addUploadTask(file, file_id);
 
             // 发送文件消息到ChatServer
+            QJsonObject obj;
+            obj["file_name"] = file_name;
+            obj["file_size"] = file_size;
+            obj["file_id"] = file_id;
+            file_array.append(obj);
         }
+
+        QJsonObject file_obj;
+        file_obj["fromuid"] = self_info->_uid;
+        file_obj["touid"] = _user_info->_uid;
+        file_obj["file_array"] = file_array;
+        QJsonDocument doc(file_obj);
+        QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
+        emit TcpMgr::GetInstance()->sig_send_data(ReqId::ID_FILE_CHAT_MSG_REQ, jsonData);
     }
 }
 

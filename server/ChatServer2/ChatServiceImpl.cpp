@@ -123,6 +123,42 @@ Status ChatServiceImpl::NotifyTextChatMsg(::grpc::ServerContext* context,
 	return Status::OK;
 }
 
+Status ChatServiceImpl::NotifyFileChatMsg(ServerContext* context, const FileChatMsgReq* request, FileChatMsgRsp* reply)
+{
+	// 查找用户是否在本服务器
+	auto touid = request->touid();
+	auto session = UserMgr::GetInstance()->GetSession(touid);
+	LOGI("ChatServiceImpl::NotifyFileChatMsg, touid:%d", touid);
+	reply->set_error(ErrorCodes::SUCCESS);
+
+	// 用户不在内存中则直接返回
+	// TODO.. 用户不在线则存入Redis离线消息队列
+	if (session == nullptr) {
+		return Status::OK;
+	}
+
+	// 在内存中则直接发送通知对方
+	Json::Value  rtvalue;
+	rtvalue["error"] = ErrorCodes::SUCCESS;
+	rtvalue["fromuid"] = request->fromuid();
+	rtvalue["touid"] = request->touid();
+
+	// 将聊天数据组织为数组
+	Json::Value file_array;
+	for (auto& msg : request->filemsgs()) {
+		Json::Value element;
+		element["file_name"] = msg.file_name();
+		element["file_id"] = msg.file_id();
+		element["file_size"] = msg.file_size();
+		file_array.append(element);
+	}
+	rtvalue["file_array"] = file_array;
+
+	std::string return_str = rtvalue.toStyledString();
+
+	session->Send(return_str, ID_NOTIFY_FILE_CHAT_MSG_REQ);
+	return Status::OK;
+}
 
 bool ChatServiceImpl::GetUserInfo(int uid, std::shared_ptr<UserInfo>& userinfo) {
 	// 优先从redis中查询用户信息

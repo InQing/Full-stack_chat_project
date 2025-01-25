@@ -123,3 +123,41 @@ TextChatMsgRsp ChatGrpcClient::NotifyTextChatMsg(std::string server_ip,
 
 	return rsp;
 }
+
+FileChatMsgRsp ChatGrpcClient::NotifyFileChatMsg(std::string server_ip, const FileChatMsgReq& req, const Json::Value& rtvalue)
+{
+	LOGI("ChatGrpcClient::NotifyFileChatMsg");
+	FileChatMsgRsp rsp;
+	rsp.set_error(ErrorCodes::SUCCESS);
+
+	Defer defer([&rsp, &req]() {
+		rsp.set_fromuid(req.fromuid());
+		rsp.set_touid(req.touid());
+		for (const auto& file_info : req.filemsgs()) {
+			FileChatData* new_msg = rsp.add_filemsgs();
+			new_msg->set_file_name(file_info.file_name());
+			new_msg->set_file_id(file_info.file_id());
+			new_msg->set_file_size(file_info.file_size());
+		}
+		});
+
+	auto find_iter = pools_.find(server_ip);
+	if (find_iter == pools_.end()) {
+		return rsp;
+	}
+
+	auto& pool = find_iter->second;
+	ClientContext context;
+	auto stub = pool->GetConnection();
+	Status status = stub->NotifyFileChatMsg(&context, req, &rsp);
+	Defer defercon([&stub, this, &pool]() {
+		pool->ReturnConnection(std::move(stub));
+		});
+
+	if (!status.ok()) {
+		rsp.set_error(ErrorCodes::ERR_RPC);
+		return rsp;
+	}
+
+	return rsp;
+}
