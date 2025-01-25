@@ -4,6 +4,7 @@
 #include <QCryptographicHash>
 #include <QEventLoop>
 #include <QDebug>
+#include <QThread>
 
 ChunkUploadTask::ChunkUploadTask(const QString &fileId,
                                  const QString &uploadId,
@@ -11,9 +12,24 @@ ChunkUploadTask::ChunkUploadTask(const QString &fileId,
                                  int chunkNumber,
                                  int totalChunks,
                                  QObject *parent)
-    : QObject(parent), m_fileId(fileId), m_uploadId(uploadId), m_chunkData(chunkData), m_chunkNumber(chunkNumber), m_totalChunks(totalChunks)
+    : QObject(parent), m_fileId(fileId), m_uploadId(uploadId), m_chunkData(chunkData),
+      m_chunkNumber(chunkNumber), m_totalChunks(totalChunks),
+      m_httpClient(nullptr), m_eventLoop(nullptr)
 {
     setAutoDelete(true);
+}
+
+ChunkUploadTask::~ChunkUploadTask()
+{
+    if (m_eventLoop)
+    {
+        m_eventLoop->quit();
+        delete m_eventLoop;
+    }
+    if (m_httpClient)
+    {
+        m_httpClient->deleteLater();
+    }
 }
 
 void ChunkUploadTask::run()
@@ -23,10 +39,20 @@ void ChunkUploadTask::run()
              << "\nUploadID:" << m_uploadId
              << "\n分片编号:" << m_chunkNumber
              << "\n总分片数:" << m_totalChunks
-             << "\n分片大小:" << m_chunkData.size() << "字节";
+             << "\n分片大小:" << m_chunkData.size() << "字节"
+             << "\n线程ID:" << QThread::currentThreadId();
 
-    QNetworkAccessManager networkManager;
-    QEventLoop eventLoop;
+    // 创建事件循环
+    m_eventLoop = new QEventLoop();
+
+    // 创建HttpClient并移动到当前线程
+    m_httpClient = new HttpClient();
+    m_httpClient->moveToThread(QThread::currentThread());
+
+    // 连接信号
+    connect(m_httpClient, &HttpClient::requestFinished, this, &ChunkUploadTask::handleUploadFinished);
+    connect(m_httpClient, &HttpClient::requestError, this, &ChunkUploadTask::handleUploadError);
+    connect(m_httpClient, &HttpClient::uploadProgress, this, &ChunkUploadTask::handleUploadProgress);
 
     // 计算MD5
     QString md5 = calculateMD5(m_chunkData);
@@ -43,29 +69,22 @@ void ChunkUploadTask::run()
     QJsonDocument doc(json);
     QByteArray postData = doc.toJson();
 
+    // 准备请求头
+    QMap<QString, QString> headers;
+    headers["Content-Type"] = "application/json";
+    headers["Upload-ID"] = m_uploadId;
+
     // 发送请求
-    QUrl url("http://localhost:8080/upload/chunk");
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("Upload-ID", m_uploadId.toUtf8());
+    m_httpClient->sendPostRequest("http://localhost:8080/upload/chunk", postData, headers);
 
-    QNetworkReply *reply = networkManager.post(request, postData);
+    // 等待上传完成
+    m_eventLoop->exec();
+}
 
-    // 连接完成信号
-    connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
-    eventLoop.exec();
-
-    if (reply->error() != QNetworkReply::NoError)
-    {
-        qDebug() << "分片" << m_chunkNumber << "上传错误:" << reply->errorString();
-        emit error(m_chunkNumber, reply->errorString());
-        reply->deleteLater();
-        return;
-    }
-
-    // 解析响应
-    QJsonDocument response = QJsonDocument::fromJson(reply->readAll());
-    QJsonObject responseObj = response.object();
+void ChunkUploadTask::handleUploadFinished(const QByteArray &response)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(response);
+    QJsonObject responseObj = doc.object();
 
     if (responseObj["status"].toString() != "success")
     {
@@ -75,13 +94,24 @@ void ChunkUploadTask::run()
     else
     {
         qDebug() << "分片" << m_chunkNumber << "上传完成";
-        // 计算上传进度
-        int progress = static_cast<int>((m_chunkNumber * 100.0) / m_totalChunks);
-        emit progressUpdated(m_chunkNumber, progress, 100);
         emit completed(m_chunkNumber);
     }
 
-    reply->deleteLater();
+    m_eventLoop->quit();
+    emit finished();
+}
+
+void ChunkUploadTask::handleUploadError(const QString &error)
+{
+    qDebug() << "分片" << m_chunkNumber << "上传错误:" << error;
+    emit this->error(m_chunkNumber, error);
+    m_eventLoop->quit();
+    emit finished();
+}
+
+void ChunkUploadTask::handleUploadProgress(qint64 bytesSent, qint64 bytesTotal)
+{
+    emit progressUpdated(m_chunkNumber, bytesSent, bytesTotal);
 }
 
 QByteArray ChunkUploadTask::calculateMD5(const QByteArray &data)

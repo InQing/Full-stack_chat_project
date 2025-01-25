@@ -14,6 +14,7 @@
 #include "tcpmgr.h"
 #include "clickedlabel.h"
 #include "FileBubble.h"
+#include "filemanager.h""
 
 ChatPage::ChatPage(QWidget *parent) :
     QWidget(parent),
@@ -159,10 +160,7 @@ void ChatPage::on_send_btn_clicked()
         {
              pBubble = new PictureBubble(QPixmap(msgList[i].content) , role);
         }
-        else if(type == "file")
-        {
 
-        }
         //发送消息
         if(pBubble != nullptr)
         {
@@ -232,23 +230,28 @@ void ChatPage::on_file_lb_clicked()
         "所有文件 (*.*)"
         );
 
+    auto self_info = UserMgr::GetInstance()->GetUserInfo();
+    auto role = ChatRole::Self;
+
     if (!files.isEmpty()) {
         for (const QString& file : files) {
             QString currentDateTime = QDateTime::currentDateTime().toString("yyyyMMddHHmmss");
-            QString fileId = currentDateTime + "_" + QFileInfo(file).fileName(); // 日期 + 文件名
-            // createProgressBar(fileId, QFileInfo(file).fileName());
-            // TaskManager::instance()->addUploadTask(file, fileId);
-            auto self_info = UserMgr::GetInstance()->GetUserInfo();
-            ChatRole role;
-            role = ChatRole::Self;
-            ChatItemBase* pChatItem = new ChatItemBase(role);
+            QString file_size = FileManager::GetInstance()->formatFileSize(QFileInfo(file).size());
+            QString file_name = QFileInfo(file).fileName();
+            QString file_id = currentDateTime + "_" + file_name; // 日期 + 文件名
 
+            // 创建文件气泡并发送到聊天界面
+            ChatItemBase* pChatItem = new ChatItemBase(role);
             pChatItem->setUserName(self_info->_name);
             pChatItem->setUserIcon(QPixmap(self_info->_icon));
-            QWidget* pBubble = nullptr;
-            pBubble = new FileBubble(role, "我是一只小黑猫.txt", "100Mb");
+            QWidget* pBubble = new FileBubble(role, file_name, file_size);
             pChatItem->setWidget(pBubble);
             ui->chat_data_list->appendChatItem(pChatItem);
+
+            // 添加文件上传任务
+            FileManager::GetInstance()->addUploadTask(file, file_id);
+
+            // 发送文件消息到ChatServer
         }
     }
 }

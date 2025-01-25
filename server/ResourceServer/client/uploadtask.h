@@ -12,6 +12,7 @@
 #include <QMutex>
 #include <QMap>
 #include "taskmanager.h"
+#include "httpclient.h"
 
 class UploadTask : public QObject, public QRunnable
 {
@@ -33,6 +34,8 @@ private slots:
     void onChunkCompleted(int chunkNumber);
     void onChunkError(int chunkNumber, const QString &errorMessage);
     void onChunkProgress(int chunkNumber, qint64 bytesSent, qint64 bytesTotal);
+    void onInitUploadFinished(const QByteArray &response);
+    void onInitUploadError(const QString &error);
 
 private:
     bool initializeUpload();
@@ -50,6 +53,9 @@ private:
     QMutex m_mutex;
     QMap<int, qint64> m_chunkProgress;
     const int CHUNK_SIZE = 1024 * 1024; // 1MB chunks
+
+    HttpClient *m_httpClient;
+    QEventLoop *m_eventLoop;
 };
 
 #endif // UPLOADTASK_H

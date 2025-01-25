@@ -26,10 +26,15 @@ int main(int argc, char *argv[])
     QString config_path = QDir::toNativeSeparators(app_path +
                                                    QDir::separator() + fileName);
     QSettings settings(config_path, QSettings::IniFormat);
-    QString gate_host = settings.value("GateServer/host").toString();
-    QString gate_port = settings.value("GateServer/port").toString();
+    QString gate_host = settings.value("GateServer/Host").toString();
+    QString gate_port = settings.value("GateServer/Port").toString();
     gate_url_prefix = "http://" + gate_host + ":" + gate_port;
     qDebug() << "gate_url_prefix:" << gate_url_prefix;
+
+    QString resource_host = settings.value("ResourceServer/Host").toString();
+    QString resource_port = settings.value("ResourceServer/Port").toString();
+    resource_url_prefix = "http://" + resource_host + ":" + resource_port;
+    qDebug() << "resource_url_prefix:" << resource_url_prefix;
 
     MainWindow w;
 

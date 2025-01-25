@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QRunnable>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QByteArray>
+#include <QEventLoop>>
+#include "httpclient.h"
 
 class ChunkUploadTask : public QObject, public QRunnable
 {
@@ -18,6 +18,7 @@ public:
                              int chunkNumber,
                              int totalChunks,
                              QObject *parent = nullptr);
+    ~ChunkUploadTask();
     void run() override;
 
 signals:
@@ -26,12 +27,19 @@ signals:
     void progressUpdated(int chunkNumber, qint64 bytesSent, qint64 bytesTotal);
     void finished();
 
+private slots:
+    void handleUploadFinished(const QByteArray &response);
+    void handleUploadError(const QString &error);
+    void handleUploadProgress(qint64 bytesSent, qint64 bytesTotal);
+
 private:
     QString m_fileId;
     QString m_uploadId;
     QByteArray m_chunkData;
     int m_chunkNumber;
     int m_totalChunks;
+    HttpClient *m_httpClient;
+    QEventLoop *m_eventLoop;
     QByteArray calculateMD5(const QByteArray &data);
 };
 

@@ -6,11 +6,13 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QFileInfo>
+#include <QThreadPool>
 
 UploadTask::UploadTask(const QString &filePath, const QString &fileId,
                        const QString &token, const QString &uid,
                        QObject *parent)
-    : QObject(parent), m_filePath(filePath), m_fileId(fileId), m_token(token), m_uid(uid), m_file(filePath)
+    : QObject(parent), m_filePath(filePath), m_fileId(fileId), m_token(token), m_uid(uid),
+      m_file(filePath), m_httpClient(nullptr), m_eventLoop(nullptr)
 {
     setAutoDelete(false);
 
@@ -30,6 +32,15 @@ UploadTask::~UploadTask()
     {
         m_file.close();
     }
+    if (m_eventLoop)
+    {
+        m_eventLoop->quit();
+        delete m_eventLoop;
+    }
+    if (m_httpClient)
+    {
+        m_httpClient->deleteLater();
+    }
 }
 
 void UploadTask::run()
@@ -43,8 +54,14 @@ void UploadTask::run()
 
 bool UploadTask::initializeUpload()
 {
-    QNetworkAccessManager networkManager;
-    QEventLoop eventLoop;
+    // 创建事件循环和HttpClient
+    m_eventLoop = new QEventLoop();
+    m_httpClient = new HttpClient();
+    m_httpClient->moveToThread(QThread::currentThread());
+
+    // 连接信号
+    connect(m_httpClient, &HttpClient::requestFinished, this, &UploadTask::onInitUploadFinished);
+    connect(m_httpClient, &HttpClient::requestError, this, &UploadTask::onInitUploadError);
 
     // 准备初始化请求数据
     QJsonObject json;
@@ -53,42 +70,43 @@ bool UploadTask::initializeUpload()
     json["uid"] = m_uid;
 
     QJsonDocument doc(json);
+    QByteArray postData = doc.toJson();
 
-    // 发送初始化请求
-    QUrl url("http://localhost:8080/upload/init");
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("Authorization", m_token.toUtf8());
+    // 准备请求头
+    QMap<QString, QString> headers;
+    headers["Content-Type"] = "application/json";
+    headers["Authorization"] = m_token;
 
-    QNetworkReply *reply = networkManager.post(request, doc.toJson());
+    // 发送请求
+    m_httpClient->sendPostRequest("http://localhost:8080/upload/init", postData, headers);
 
     // 等待响应
-    connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
-    eventLoop.exec();
+    m_eventLoop->exec();
 
-    if (reply->error() != QNetworkReply::NoError)
-    {
-        emit error(m_fileId, "初始化上传失败: " + reply->errorString());
-        reply->deleteLater();
-        return false;
-    }
+    return !m_uploadId.isEmpty();
+}
 
-    // 解析响应
-    QJsonDocument response = QJsonDocument::fromJson(reply->readAll());
-    QJsonObject responseObj = response.object();
+void UploadTask::onInitUploadFinished(const QByteArray &response)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(response);
+    QJsonObject responseObj = doc.object();
 
     if (responseObj["code"].toInt() != 200)
     {
         emit error(m_fileId, "初始化上传失败: " + responseObj["message"].toString());
-        reply->deleteLater();
-        return false;
+        m_eventLoop->quit();
+        return;
     }
 
     // 保存uploadId
     m_uploadId = responseObj["data"].toObject()["upload_id"].toString();
+    m_eventLoop->quit();
+}
 
-    reply->deleteLater();
-    return true;
+void UploadTask::onInitUploadError(const QString &error)
+{
+    emit this->error(m_fileId, "初始化上传失败: " + error);
+    m_eventLoop->quit();
 }
 
 void UploadTask::startChunkUploads()

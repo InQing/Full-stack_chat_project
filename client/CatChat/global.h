@@ -11,6 +11,8 @@
 
 // 网关服务器的url前缀
 extern QString gate_url_prefix;
+// 资源服务器的url前缀
+extern QString resource_url_prefix;
 
 // 刷新qss
 extern std::function<void(QWidget*)> repolish;
@@ -47,21 +49,26 @@ enum ReqId{
 };
 
 // 错误码
-enum ErrorCodes{
-    SUCCESS = 0, // 成功
-    ERR_JSON = 1, // Json解析失败
-    ERR_NETWORK = 2,  // 其它网络错误
-    ERR_VARIFY_REPEAT = 3, // 重复请求验证码
-    ERR_VARIFY_EXPIRED = 4, // 验证码过期
-    ERR_VARIFY_CODE_ERR = 5, // 验证码错误
-    ERR_RPC = 6, // RPC错误
-    ERR_REDIS = 7, // Redis错误
-    ERR_USER_EXIT = 8, // 用户名已存在
-    ERR_UNKOWN = 9 ,// 未知错误
+enum ErrorCodes
+{
+    SUCCESS = 0,              // 成功
+    ERR_JSON = 1,             // Json解析失败
+    ERR_NETWORK = 2,          // 其它网络错误
+    ERR_VARIFY_REPEAT = 3,    // 重复请求验证码
+    ERR_VARIFY_EXPIRED = 4,   // 验证码过期
+    ERR_VARIFY_CODE_ERR = 5,  // 验证码错误
+    ERR_RPC = 6,              // RPC错误
+    ERR_REDIS = 7,            // Redis错误
+    ERR_USER_EXIT = 8,        // 用户名已存在
+    ERR_UNKOWN = 9,           // 未知错误
     ERR_EMAIL_NOT_MATCH = 10, // 用户名与邮箱不匹配
-    ERR_MYSQL = 11, // MySql错误
-    ERR_PWD_INVALID = 12, // 密码错误
-
+    ERR_MYSQL = 11,           // MySql错误
+    ERR_PWD_INVALID = 12,     // 密码错误
+    ERR_UID_INVALID = 13,     // uid错误
+    ERR_TOKEN_INVALID = 14,   // token错误
+    ERR_SERVER = 15,          // 服务器错误
+    ERR_UPLOAD_INIT = 16,     // 上传初始化错误
+    ERR_UPLOAD_CHUNK = 17,     // 上传分片错误
 };
 
 enum TipErr{

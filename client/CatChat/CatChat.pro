@@ -34,12 +34,15 @@ SOURCES += \
     conuseritem.cpp \
     customizeedit.cpp \
     customizetextedit.cpp \
+    filemanager.cpp \
+    fileuploadtask.cpp \
     findfaildlg.cpp \
     findsuccessdlg.cpp \
     friendinfopage.cpp \
     friendlabel.cpp \
     global.cpp \
     grouptipitem.cpp \
+    httpclient.cpp \
     httpmgr.cpp \
     invaliditem.cpp \
     lineitem.cpp \
@@ -84,12 +87,15 @@ HEADERS += \
     conuseritem.h \
     customizeedit.h \
     customizetextedit.h \
+    filemanager.h \
+    fileuploadtask.h \
     findfaildlg.h \
     findsuccessdlg.h \
     friendinfopage.h \
     friendlabel.h \
     global.h \
     grouptipitem.h \
+    httpclient.h \
     httpmgr.h \
     invaliditem.h \
     lineitem.h \
