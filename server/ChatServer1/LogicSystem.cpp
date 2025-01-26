@@ -126,6 +126,7 @@ void LogicSystem::LoginHandler(std::shared_ptr<CSession> session, const short& m
 		return;
 	}
 	rt_value["uid"] = uid;
+	rt_value["token"] = token;
 	rt_value["pwd"] = user_info->pwd;
 	rt_value["name"] = user_info->name;
 	rt_value["email"] = user_info->email;

@@ -15,7 +15,7 @@ class FileManager : public QObject, public Singleton<FileManager>
     Q_OBJECT
     friend class Singleton<FileManager>;
 public:
-    void addUploadTask(const QString& filePath, const QString& fileId);
+    void addUploadTask(const QString& filePath, const QString& fileName, const QString& fileId, const QString& fileSize);
     // void addDownloadTask(const QString& fileId, const QString& savePath);
     void startTask(QRunnable* task);
     void setMaxThreadCount(int count);

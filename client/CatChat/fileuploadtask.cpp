@@ -39,8 +39,15 @@ UploadTask::~UploadTask()
 
 void UploadTask::run()
 {
+    if (!file_.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Failed to open file:" << filePath_;
+        return;
+    }
+
     if (!InitializeUpload())
     {
+        file_.close();
         return;
     }
     StartChunkUploads();
@@ -50,12 +57,12 @@ bool UploadTask::InitializeUpload()
 {
     // 创建事件循环和HttpClient
     eventLoop_ = new QEventLoop();
-    httpClient_ = new HttpClient();
+    httpClient_ = std::make_shared<HttpClient>();
     httpClient_->moveToThread(QThread::currentThread());
 
     // 连接信号
-    connect(httpClient_, &HttpClient::sig_http_finish, this, &UploadTask::on_upload_init_finished);
-    connect(httpClient_, &HttpClient::sig_http_error, this, &UploadTask::on_upload_init_error);
+    connect(httpClient_.get(), &HttpClient::sig_http_finish, this, &UploadTask::on_upload_init_finished);
+    connect(httpClient_.get(), &HttpClient::sig_http_error, this, &UploadTask::on_upload_init_error);
 
     // 准备初始化请求数据
     QJsonObject json;
@@ -72,7 +79,7 @@ bool UploadTask::InitializeUpload()
     headers["Authorization"] = token_;
 
     // 发送请求
-    httpClient_->PostRequest("http://localhost:8080/upload/init", postData, headers);
+    httpClient_->PostRequest(resource_url_prefix + "/upload/init", postData, headers);
 
     // 等待响应
     eventLoop_->exec();
@@ -106,11 +113,27 @@ void UploadTask::on_upload_init_error(const QString &error)
 
 void UploadTask::StartChunkUploads()
 {
+    if (!file_.isOpen())
+    {
+        qDebug() << "File is not open:" << filePath_;
+        return;
+    }
+
     // 读取所有分片并创建上传任务
     for (int i = 0; i < totalChunks_; ++i)
     {
-        file_.seek(i * CHUNK_SIZE);
+        if (!file_.seek(i * CHUNK_SIZE))
+        {
+            qDebug() << "Failed to seek file to position:" << i * CHUNK_SIZE;
+            continue;
+        }
+
         QByteArray chunkData = file_.read(CHUNK_SIZE);
+        if (chunkData.isEmpty())
+        {
+            qDebug() << "Failed to read chunk" << i + 1;
+            continue;
+        }
 
         // 创建ChunkUploadTask，分片编号从1开始
         ChunkUploadTask *chunkTask = new ChunkUploadTask(
@@ -199,12 +222,12 @@ void ChunkUploadTask::run()
     eventLoop_ = new QEventLoop();
 
     // 创建HttpClient并移动到当前线程
-    httpClient_ = new HttpClient();
+    httpClient_ = std::make_shared<HttpClient>();
     httpClient_->moveToThread(QThread::currentThread());
 
     // 连接信号
-    connect(httpClient_, &HttpClient::sig_http_finish, this, &ChunkUploadTask::on_upload_chunk_finished);
-    connect(httpClient_, &HttpClient::sig_http_error, this, &ChunkUploadTask::on_upload_chunk_error);
+    connect(httpClient_.get(), &HttpClient::sig_http_finish, this, &ChunkUploadTask::on_upload_chunk_finished);
+    connect(httpClient_.get(), &HttpClient::sig_http_error, this, &ChunkUploadTask::on_upload_chunk_error);
 
     // 计算MD5
     QString md5 = CalculateMD5(chunkData_);
@@ -257,4 +280,9 @@ void ChunkUploadTask::on_upload_chunk_error(const QString &error)
     qDebug() << "分片" << chunkNumber_ << "上传错误:" << error;
     emit sig_error(chunkNumber_);
     eventLoop_->quit();
+}
+
+QByteArray ChunkUploadTask::CalculateMD5(const QByteArray &data)
+{
+    return QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex();
 }

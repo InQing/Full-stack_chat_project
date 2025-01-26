@@ -15,6 +15,7 @@ public:
     void SetUserInfo(std::shared_ptr<UserInfo> user_info);
     void SetToken(QString token);
     int GetUid();
+    QString GetToken();
     QString GetName();
     QString GetIcon();
     std::shared_ptr<UserInfo> GetUserInfo();
@@ -33,7 +34,7 @@ public:
     void AddFriend(std::shared_ptr<AuthRsp> auth_rsp);
     void AddFriend(std::shared_ptr<AuthInfo> auth_info);
     std::shared_ptr<FriendInfo> GetFriendById(int uid);
-    void AppendFriendChatMsg(int friend_id,std::vector<std::shared_ptr<TextChatData>>);
+    void AppendFriendChatMsg(int friend_id,std::vector<std::shared_ptr<ChatData>>);
 private:
     UserMgr();
     std::shared_ptr<UserInfo> _user_info;

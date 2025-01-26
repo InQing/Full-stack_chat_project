@@ -13,6 +13,7 @@
 #include <QMap>
 #include "httpclient.h"
 #include "global.h"
+#include <memory>
 
 class UploadTask : public QObject, public QRunnable
 {
@@ -29,7 +30,7 @@ signals:
     void sig_upload_init_finished();
     void sig_upload_init_error(ErrorCodes code);
     void sig_upload_chunk_finished(int chunkNumber);
-    void sig_upload_chunk_error(int chunkNumber,ErrorCodes code);
+    void sig_upload_chunk_error(int chunkNumber, ErrorCodes code);
     void sig_upload_finished();
 
 private slots:
@@ -55,7 +56,7 @@ private:
     QMap<int, qint64> chunkProgress_;
     const int CHUNK_SIZE = 2 * 1024 * 1024; // 2MB
 
-    HttpClient *httpClient_;
+    std::shared_ptr<HttpClient> httpClient_;
     QEventLoop *eventLoop_;
 };
 
@@ -87,10 +88,9 @@ private:
     QByteArray chunkData_;
     int chunkNumber_;
     int totalChunks_;
-    HttpClient *httpClient_;
+    std::shared_ptr<HttpClient> httpClient_;
     QEventLoop *eventLoop_;
     QByteArray CalculateMD5(const QByteArray &data);
 };
-
 
 #endif // FILEUPLOADTASK_H

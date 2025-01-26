@@ -19,9 +19,10 @@ void FileManager::startTask(QRunnable* task)
     thread_pool_.start(task);
 }
 
-void FileManager::addUploadTask(const QString& filePath, const QString& fileId)
+void FileManager::addUploadTask(const QString& filePath,  const QString& fileId, const QString& token, const QString& uid)
 {
-    UploadTask* task = new UploadTask(filePath, fileId, "5225f70b-1662-488f-a055-c11dbd856574", "3");
+
+    UploadTask* task = new UploadTask(filePath, fileId, token, uid);
 
     // 连接信号
     // connect(task, &UploadTask::progressUpdated,

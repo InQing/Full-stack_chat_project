@@ -63,15 +63,21 @@ std::shared_ptr<UserInfo> ChatUserWid::GetUserInfo()
     return _user_info;
 }
 
-void ChatUserWid::updateLastMsg(std::vector<std::shared_ptr<TextChatData>> msgs) {
+void ChatUserWid::updateLastMsg(std::vector<std::shared_ptr<ChatData>> msgs) {
 
-    QString last_msg = "";
     for (auto& msg : msgs) {
-        last_msg = msg->_msg_content;
         _user_info->_chat_msgs.push_back(msg);
     }
+
+    auto last_msg = msgs.back();
+    if(last_msg->_data_type == DataType::TEXT){
+        auto text_msg = std::dynamic_pointer_cast<TextChatData>(last_msg);
+        _user_info->_last_msg = text_msg->_msg_content;
+    }else if(last_msg->_data_type == DataType::FILE){
+        auto file_msg = std::dynamic_pointer_cast<FileChatData>(last_msg);
+        _user_info->_last_msg = "[文件消息] " + file_msg->_file_name;
+    }
     
-    _user_info->_last_msg = last_msg;
     ui->user_chat_lb->setText(_user_info->_last_msg);
 }
 

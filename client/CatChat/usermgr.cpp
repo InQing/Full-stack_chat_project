@@ -20,6 +20,11 @@ int UserMgr::GetUid()
     return _user_info->_uid;
 }
 
+QString UserMgr::GetToken()
+{
+    return _token;
+}
+
 QString UserMgr::GetName()
 {
     return _user_info->_name;
@@ -228,7 +233,7 @@ std::shared_ptr<FriendInfo> UserMgr::GetFriendById(int uid)
     return *find_it;
 }
 
-void UserMgr::AppendFriendChatMsg(int friend_id,std::vector<std::shared_ptr<TextChatData> > msgs)
+void UserMgr::AppendFriendChatMsg(int friend_id,std::vector<std::shared_ptr<ChatData> > msgs)
 {
     auto find_iter = _friend_map.find(friend_id);
     if(find_iter == _friend_map.end()){

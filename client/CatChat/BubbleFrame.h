@@ -8,11 +8,10 @@ class BubbleFrame : public QFrame
 {
     Q_OBJECT
 public:
-    BubbleFrame(ChatRole role, QWidget *parent = nullptr);
+    BubbleFrame(ChatRole role, QWidget *parent);
     void setMargin(int margin);
     // inline int margin(){return margin;}
     void setWidget(QWidget *w);
-
 protected:
     void paintEvent(QPaintEvent *e);
 

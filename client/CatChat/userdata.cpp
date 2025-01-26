@@ -12,9 +12,10 @@ AddFriendApply::AddFriendApply(int from_uid, QString name, QString desc,
 
 }
 
-void FriendInfo::AppendChatMsgs(const std::vector<std::shared_ptr<TextChatData> > text_vec)
+void FriendInfo::AppendChatMsgs(const std::vector<std::shared_ptr<ChatData>> msg_vec)
 {
-    for(const auto & text: text_vec){
-      _chat_msgs.push_back(text);
+    for(const auto & msg: msg_vec){
+      _chat_msgs.push_back(msg);
     }
 }
+
