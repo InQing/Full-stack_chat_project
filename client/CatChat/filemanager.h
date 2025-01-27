@@ -15,16 +15,16 @@ class FileManager : public QObject, public Singleton<FileManager>
     Q_OBJECT
     friend class Singleton<FileManager>;
 public:
-    void addUploadTask(const QString& filePath, const QString& fileName, const QString& fileId, const QString& fileSize);
-    // void addDownloadTask(const QString& fileId, const QString& savePath);
+    void addUploadTask(const QString &filePath, const QString &fileName, const QString &token, const QString &uid);
+    void addDownloadTask(const QString& fileId, const QString& savePath, const QString &token, const QString &uid);
     void startTask(QRunnable* task);
     void setMaxThreadCount(int count);
     QString formatFileSize(qint64 bytes);
 
 signals:
-    void progressUpdated(const QString& fileId, int progress);
-    void taskCompleted(const QString& fileId);
-    void taskError(const QString& fileId, const QString& errorMessage);
+    // void progressUpdated(const QString& fileId, int progress);
+    // void taskCompleted(const QString& fileId);
+    // void taskError(const QString& fileId, const QString& errorMessage);
 
 private:
     FileManager();

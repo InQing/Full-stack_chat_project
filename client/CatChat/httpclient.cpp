@@ -8,10 +8,9 @@ HttpClient::HttpClient(QObject *parent) : QObject(parent)
 
 HttpClient::~HttpClient()
 {
-    
 }
 
-void HttpClient:: PostRequest(const QString &url, const QByteArray &data, const QMap<QString, QString> &headers)
+void HttpClient::PostRequest(const QString &url, const QByteArray &data, const QMap<QString, QString> &headers)
 {
     // 创建请求
     QNetworkRequest request(url);
@@ -32,7 +31,8 @@ void HttpClient:: PostRequest(const QString &url, const QByteArray &data, const 
     // 发送请求
     QNetworkReply *reply = manager_->post(request, data);
     // 设置信号与槽等待发送完成并接收到回复
-    connect(reply, &QNetworkReply::finished, [reply, _self](){
+    connect(reply, &QNetworkReply::finished, [reply, _self]()
+            {
         // 处理错误情况
         if(reply->error() != QNetworkReply::NoError){
             qDebug() << reply->errorString();
@@ -45,6 +45,5 @@ void HttpClient:: PostRequest(const QString &url, const QByteArray &data, const 
         QString res = reply->readAll();
         emit _self->sig_http_finish(res);
         reply->deleteLater();
-        return;
-    });
+        return; });
 }

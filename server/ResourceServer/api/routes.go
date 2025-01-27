@@ -29,7 +29,5 @@ func RegisterRoutes(r *gin.Engine, tempDir string, storage storage.Storage) {
 	}
 
 	// 下载相关路由
-	r.GET("/download/:fileId", downloadHandler.Download)
+	r.GET("/download/:fileId", middleware.DownloadTokenAuth(), downloadHandler.Download)
 }
-
-// TODO: 实现具体的处理函数

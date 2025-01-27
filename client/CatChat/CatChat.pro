@@ -34,6 +34,7 @@ SOURCES += \
     conuseritem.cpp \
     customizeedit.cpp \
     customizetextedit.cpp \
+    filedownloadtask.cpp \
     filemanager.cpp \
     fileuploadtask.cpp \
     findfaildlg.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
     conuseritem.h \
     customizeedit.h \
     customizetextedit.h \
+    filedownloadtask.h \
     filemanager.h \
     fileuploadtask.h \
     findfaildlg.h \

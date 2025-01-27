@@ -237,10 +237,12 @@ void ChatPage::on_file_lb_clicked()
             QString file_id = currentDateTime + "_" + file_name; // 日期 + 文件名
 
             // 创建文件气泡并发送到聊天界面
+            // 测试用
+            role = ChatRole::Other;
             ChatItemBase *pChatItem = new ChatItemBase(role);
             pChatItem->setUserName(self_info->_name);
             pChatItem->setUserIcon(QPixmap(self_info->_icon));
-            QWidget *pBubble = new FileBubble(role, file_name, file_size);
+            QWidget *pBubble = new FileBubble(role, file_name, file_size, file_id);
             pChatItem->setWidget(pBubble);
             ui->chat_data_list->appendChatItem(pChatItem);
 
@@ -294,7 +296,7 @@ void ChatPage::CreateAndAppendChatItem(ChatRole role, QString name, QString icon
     else if (msg->_data_type == DataType::FILE)
     {
         auto file_msg = std::dynamic_pointer_cast<FileChatData>(msg);
-        pBubble = new FileBubble(role, file_msg->_file_name, file_msg->_file_size);
+        pBubble = new FileBubble(role, file_msg->_file_name, file_msg->_file_size, file_msg->_file_id);
     }
     pChatItem->setWidget(pBubble);
     ui->chat_data_list->appendChatItem(pChatItem);

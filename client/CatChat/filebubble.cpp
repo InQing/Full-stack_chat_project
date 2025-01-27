@@ -1,10 +1,14 @@
 #include "FileBubble.h"
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QPixmap>
 #include <QDebug>
+#include <QFileDialog>
+#include "filemanager.h"
+#include "usermgr.h"
 
-FileBubble::FileBubble(ChatRole role, const QString &fileName, const QString &fileSize, QWidget *parent)
-    : BubbleFrame(role, parent)
+FileBubble::FileBubble(ChatRole role, const QString &fileName, const QString &fileSize, const QString fileId, QWidget *parent)
+    : BubbleFrame(role, parent), m_role(role), m_fileId(fileId)
 {
     initUI(fileName, fileSize);
     initStyleSheet();
@@ -48,6 +52,34 @@ void FileBubble::initUI(const QString &fileName, const QString &fileSize)
     pHLayout->setSpacing(8);
     pHLayout->setContentsMargins(0, 5, 10, 5); // 添加右边距10像素
 
+    // 如果是接收方，添加下载图标
+    if (m_role == ChatRole::Other)
+    {
+        m_pDownloadLabel = new ClickedLabel(m_pContentWidget);
+        QPixmap downloadIcon(":/res/download.png");
+        if (!downloadIcon.isNull())
+        {
+            m_pDownloadLabel->setPixmap(downloadIcon.scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            m_pDownloadLabel->setFixedSize(24, 24);
+            m_pDownloadLabel->setObjectName("downloadIcon");
+            m_pDownloadLabel->setCursor(Qt::PointingHandCursor);
+
+            // 连接点击信号
+            connect(m_pDownloadLabel, &ClickedLabel::clicked, this, &FileBubble::onDownloadClicked);
+
+            // 将下载图标添加到布局中，放在文件图标后面
+            pHLayout->addWidget(m_pDownloadLabel, 0, Qt::AlignRight | Qt::AlignBottom);
+        }
+        else
+        {
+            qDebug() << "Download icon not found!";
+        }
+    }
+    else
+    {
+        m_pDownloadLabel = nullptr;
+    }
+
     // 使用BubbleFrame的setWidget方法设置内容
     setWidget(m_pContentWidget);
 }
@@ -72,6 +104,10 @@ void FileBubble::initStyleSheet()
         #fileIcon {
             padding: 2px;
         }
+
+        #downloadIcon {
+            margin: 2px;
+        }
     )";
 
     this->setStyleSheet(styleSheet);
@@ -82,4 +118,24 @@ void FileBubble::initStyleSheet()
     // 设置文件名标签自动换行
     m_pFileNameLabel->setWordWrap(true);
     m_pFileNameLabel->setMaximumWidth(200);
+}
+
+void FileBubble::onDownloadClicked()
+{
+    // 获取保存路径
+    QString savePath = QFileDialog::getSaveFileName(
+        this,
+        "选择保存位置",
+        m_pFileNameLabel->text(), // 默认使用文件原名
+        "所有文件 (*.*)");
+
+    if (!savePath.isEmpty())
+    {
+        // 添加下载任务
+        FileManager::GetInstance()->addDownloadTask(
+            m_fileId,
+            savePath,
+            UserMgr::GetInstance()->GetToken(),
+            QString::number(UserMgr::GetInstance()->GetUid()));
+    }
 }

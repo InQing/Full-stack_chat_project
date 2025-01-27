@@ -1,6 +1,6 @@
 #include "filemanager.h"
 #include "fileuploadtask.h"
-// #include "downloadtask.h"
+#include "filedownloadtask.h"
 #include <QThread>
 
 FileManager::FileManager()
@@ -39,24 +39,24 @@ void FileManager::addUploadTask(const QString& filePath,  const QString& fileId,
     thread_pool_.start(task);
 }
 
-// void FileManager::addDownloadTask(const QString& fileId, const QString& savePath)
-// {
-//     DownloadTask* task = new DownloadTask(fileId, savePath);
+void FileManager::addDownloadTask(const QString& fileId, const QString& savePath, const QString &token, const QString &uid)
+{
+    DownloadTask* task = new DownloadTask(fileId, savePath, token, uid);
 
-//     // 连接信号
-//     connect(task, &DownloadTask::progressUpdated,
-//             this, &TaskManager::progressUpdated,
-//             Qt::QueuedConnection);
-//     connect(task, &DownloadTask::completed,
-//             this, &TaskManager::taskCompleted,
-//             Qt::QueuedConnection);
-//     connect(task, &DownloadTask::error,
-//             this, &TaskManager::taskError,
-//             Qt::QueuedConnection);
+    // 连接信号
+    // connect(task, &DownloadTask::progressUpdated,
+    //         this, &TaskManager::progressUpdated,
+    //         Qt::QueuedConnection);
+    // connect(task, &DownloadTask::completed,
+    //         this, &TaskManager::taskCompleted,
+    //         Qt::QueuedConnection);
+    // connect(task, &DownloadTask::error,
+    //         this, &TaskManager::taskError,
+    //         Qt::QueuedConnection);
 
-//     // 将任务提交到线程池
-//     thread_pool_.start(task);
-// }
+    // 将任务提交到线程池
+    thread_pool_.start(task);
+}
 
 QString FileManager::formatFileSize(qint64 bytes)
 {
