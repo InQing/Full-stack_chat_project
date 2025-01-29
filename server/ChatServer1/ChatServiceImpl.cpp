@@ -96,7 +96,7 @@ Status ChatServiceImpl::NotifyTextChatMsg(::grpc::ServerContext* context,
 	reply->set_error(ErrorCodes::SUCCESS);
 
 	// 用户不在内存中则直接返回
-	// TODO.. 用户不在线则存入Redis离线消息队列
+	// TODO.. 用户不在线则存入kafka离线消息队列
 	if (session == nullptr) {
 		return Status::OK;
 	}
@@ -132,7 +132,7 @@ Status ChatServiceImpl::NotifyFileChatMsg(ServerContext* context, const FileChat
 	reply->set_error(ErrorCodes::SUCCESS);
 
 	// 用户不在内存中则直接返回
-	// TODO.. 用户不在线则存入Redis离线消息队列
+	// TODO.. 用户不在线则存入kafka离线消息队列
 	if (session == nullptr) {
 		return Status::OK;
 	}

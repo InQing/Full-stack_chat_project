@@ -466,7 +466,8 @@ void LogicSystem::DealChatTextMsg(std::shared_ptr<CSession> session, const short
 	std::string to_ip_value = "";
 	bool is_ip = RedisMgr::GetInstance()->Get(to_ip_key, to_ip_value);
 	// 对方不在线，不推送消息
-	// TODO... 将消息存入redis，待对方上线后再推送
+	// TODO... 将消息推送入kafka，待对方上线后再推送
+
 	if (!is_ip) {
 		return;
 	}
@@ -531,7 +532,7 @@ void LogicSystem::DealChatFileMsg(std::shared_ptr<CSession> session, const short
 	std::string to_ip_value = "";
 	bool is_ip = RedisMgr::GetInstance()->Get(to_ip_key, to_ip_value);
 	// 对方不在线，不推送消息
-	// TODO... 将消息存入redis，待对方上线后再推送
+	// TODO... 将消息存入kafka，待对方上线后再推送
 	if (!is_ip) {
 		return;
 	}
