@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package status_server;
+
+// 服务器健康状态消息
+message HealthStatus {
+    string server_type = 1;
+    string server_ip = 2;
+    int32 server_port = 3;
+    double cpu_usage = 4;
+    double memory_usage = 5;
+    int32 connection_count = 6;
+}
+
+// 心跳响应消息
+message HeartbeatResponse {
+    bool success = 1;
+    string message = 2;
+    string leader_addr = 3;  // 如果当前节点不是leader，返回leader地址
+}
+
+// 状态服务定义
+service StatusService {
+    // 心跳服务
+    rpc SendHeartbeat(HealthStatus) returns (HeartbeatResponse) {}
+}
