@@ -1,0 +1,44 @@
+Date : 2025-08-03 15:39:35
+Directory : d:\Cat_Codes\ChatProject\server\AIServer\eino
+Total : 16 files,  2432 codes, 227 comments, 97 blanks, all 2756 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| JSON     |          2 |      1,977 |          0 |          0 |      1,977 |
+| Go       |         14 |        455 |        227 |         97 |        779 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                |         16 |      2,432 |        227 |         97 |      2,756 |
+| . (Files)                                                                        |          2 |      1,977 |          0 |          0 |      1,977 |
+| einoagent                                                                        |          9 |        307 |        145 |         65 |        517 |
+| knowledgeindexing                                                                |          5 |        148 |         82 |         32 |        262 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                         | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\eino_agent.json                    | JSON     |      1,465 |          0 |          0 |      1,465 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\embedding.go             | Go       |         18 |         16 |          5 |         39 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\flow.go                  | Go       |         30 |         17 |          5 |         52 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\lambda_func.go           | Go       |         15 |         17 |          5 |         37 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\model.go                 | Go       |         18 |         16 |          5 |         39 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\orchestration.go         | Go       |         45 |         15 |          5 |         65 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\prompt.go                | Go       |         48 |         17 |         13 |         78 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\retriever.go             | Go       |         58 |         17 |          7 |         82 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\tools_node.go            | Go       |         68 |         15 |         16 |         99 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\einoagent\types.go                 | Go       |          7 |         15 |          4 |         26 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\knowledge_indexing.json            | JSON     |        512 |          0 |          0 |        512 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\knowledgeindexing\embedding.go     | Go       |         19 |         16 |          5 |         40 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\knowledgeindexing\indexer.go       | Go       |         59 |         17 |         11 |         87 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\knowledgeindexing\loader.go        | Go       |         14 |         17 |          5 |         36 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\knowledgeindexing\orchestration.go | Go       |         38 |         15 |          6 |         59 |
+| d:\Cat_Codes\ChatProject\server\AIServer\eino\knowledgeindexing\transformer.go   | Go       |         18 |         17 |          5 |         40 |
+| Total                                                                            |          |      2,432 |        227 |         97 |      2,756 |
++----------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
